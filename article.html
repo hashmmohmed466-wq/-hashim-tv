@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هاشم TV - إدارة ونشر المقالات</title>
+    <!-- استدعاء مكتبة Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+    <!-- رأس الصفحة -->
+    <header class="bg-indigo-900 text-white shadow-md py-4 px-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">هاشم TV | منصة المقالات</h1>
+            <a href="index.html" class="bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-lg text-sm transition">الرئيسية</a>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container mx-auto px-4 py-8 flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- قسم عرض المقال الحالي -->
+        <section class="lg:col-span-2 bg-white rounded-xl shadow-md p-6 md:p-8 h-fit">
+            <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded">ثقافة ومجتمع</span>
+            <h2 id="display-title" class="text-3xl font-bold mt-4 mb-3 text-slate-900">مرحباً بك في منصة هاشم TV</h2>
+            <div class="text-sm text-slate-500 mb-6 flex items-center gap-4">
+                <span id="display-date">📅 التاريخ: 12 أكتوبر 2026</span>
+                <span>✍️ الكاتب: هاشم TV</span>
+            </div>
+            <div id="display-content" class="prose max-w-none text-slate-700 leading-relaxed space-y-4">
+                <p>اختر مقالاً من القائمة الجانبية أو قم بنشر مقال جديد باستخدام نموذج النشر الفوري. يتم حفظ المقالات بشكل دائم في متصفحك.</p>
+            </div>
+        </section>
+
+        <!-- لوحة التحكم (نشر وإدارة المقالات) -->
+        <aside class="space-y-6">
+            <!-- نموذج النشر -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-xl font-bold mb-4 text-indigo-900 border-b pb-2">نشر مقال جديد</h3>
+                <form id="article-form" class="space-y-4" onsubmit="event.preventDefault(); publishArticle();">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">عنوان المقال:</label>
+                        <input type="text" id="article-title" required class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="اكتب عنوان المقال...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">محتوى المقال:</label>
+                        <textarea id="article-text" rows="4" required class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="اكتب محتوى المقال هنا..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg transition shadow">
+                        حفظ ونشر المقال
+                    </button>
+                </form>
+            </div>
+
+            <!-- قائمة المقالات المحفوظة -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-xl font-bold mb-4 text-indigo-900 border-b pb-2">المقالات المنشورة</h3>
+                <div id="articles-list" class="space-y-2 max-h-60 overflow-y-auto">
+                    <!-- سيتم تعبئة القائمة تلقائياً -->
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- تذييل الصفحة -->
+    <footer class="bg-slate-900 text-slate-400 text-center py-4 text-sm mt-auto">
+        <p>جميع الحقوق محفوظة © 2026 - منصة هاشم TV</p>
+    </footer>
+
+    <!-- جافاسكريبت لإدارة الحفظ والعرض -->
+    <script>
+        // استرجاع المقالات من LocalStorage أو البدء بمقال افتراضي
+        let articles = JSON.parse(localStorage.getItem('hashim_tv_articles')) || [
+            {
+                id: 1,
+                title: "مرحباً بك في منصة هاشم TV",
+                content: "اختر مقالاً من القائمة الجانبية أو قم بنشر مقال جديد باستخدام نموذج النشر الفوري. يتم حفظ المقالات بشكل دائم في متصفحك.",
+                date: "12 أكتوبر 2026"
+            }
+        ];
+
+        function saveAndRender() {
+            localStorage.setItem('hashim_tv_articles', JSON.stringify(articles));
+            renderArticlesList();
+        }
+
+        function renderArticlesList() {
+            const listContainer = document.getElementById('articles-list');
+            listContainer.innerHTML = '';
+            
+            articles.forEach((art, index) => {
+                const item = document.createElement('div');
+                item.className = "flex justify-between items-center p-2 bg-slate-50 hover:bg-slate-100 rounded-lg cursor-pointer transition border";
+                item.innerHTML = `
+                    <span onclick="viewArticle(${art.id})" class="text-sm font-semibold text-slate-700 truncate w-3/4">${art.title}</span>
+                    <button onclick="deleteArticle(${art.id})" class="text-red-500 hover:text-red-700 text-xs px-2 py-1">حذف</button>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        function publishArticle() {
+            const title = document.getElementById('article-title').value.trim();
+            const content = document.getElementById('article-text').value.trim();
+
+            if(!title || !content) return;
+
+            const newArticle = {
+                id: Date.now(),
+                title: title,
+                content: content,
+                date: new Date().toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' })
+            };
+
+            articles.unshift(newArticle); // إضافة المقال في البداية
+            saveAndRender();
+            viewArticle(newArticle.id);
+
+            // تفريغ الحقول
+            document.getElementById('article-title').value = '';
+            document.getElementById('article-text').value = '';
+        }
+
+        function viewArticle(id) {
+            const art = articles.find(a => a.id === id);
+            if(art) {
+                document.getElementById('display-title').innerText = art.title;
+                document.getElementById('display-date').innerText = `📅 التاريخ: ${art.date}`;
+                document.getElementById('display-content').innerHTML = art.content.split('\n').map(p => `<p>${p}</p>`).join('');
+            }
+        }
+
+        function deleteArticle(id) {
+            if(confirm('هل أنت متأكد من حذف هذا المقال؟')) {
+                articles = articles.filter(a => a.id !== id);
+                saveAndRender();
+                if(articles.length > 0) {
+                    viewArticle(articles[0].id);
+                } else {
+                    document.getElementById('display-title').innerText = "لا توجد مقالات";
+                    document.getElementById('display-content').innerHTML = "<p>قم بإضافة مقال جديد لعرضه هنا.</p>";
+                }
+            }
+        }
+
+        // التشغيل الأولي عند فتح الصفحة
+        renderArticlesList();
+        if(articles.length > 0) {
+            viewArticle(articles[0].id);
+        }
+    </script>
+</body>
+</html>
+
+article.html
