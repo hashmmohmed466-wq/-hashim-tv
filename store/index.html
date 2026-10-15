@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>متجر هاشم TV</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+  <div class="max-w-6xl mx-auto p-6">
+    <header class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl font-bold">متجر هاشم TV</h1>
+      <a href="/" class="text-sm text-blue-600">العودة للموقع</a>
+    </header>
+
+    <main class="grid md:grid-cols-3 gap-6">
+      <section class="md:col-span-2">
+        <div id="products" class="grid sm:grid-cols-2 gap-4"></div>
+      </section>
+
+      <aside class="bg-white p-4 rounded-lg shadow">
+        <h3 class="font-bold mb-4">السلة</h3>
+        <div id="cartItems" class="space-y-3 text-sm text-right"></div>
+        <div class="mt-4 border-t pt-4">
+          <p>الإجمالي: <span id="cartTotal">0</span> ج.س</p>
+
+          <div class="mt-4 space-y-2">
+            <button id="checkoutWhatsapp" class="w-full bg-green-500 text-white px-4 py-2 rounded">دفع عبر واتساب (كاش / اتفاق)</button>
+            <div class="border p-3 rounded">
+              <p class="font-semibold">تحويل بنكي</p>
+              <p class="text-xs text-slate-600">بنك الخرطوم / بنك المشرق / بنك المستقبل</p>
+              <select id="bankSelect" class="w-full mt-2 p-2 border rounded">
+                <option value="Bank of Khartoum">بنك الخرطوم</option>
+                <option value="Al Mashreq Bank">بنك المشرق</option>
+                <option value="Al Mustaqbal Bank">بنك المستقبل</option>
+              </select>
+              <button id="checkoutBank" class="w-full mt-2 bg-blue-600 text-white px-4 py-2 rounded">تم التحويل - أرسل الطلب</button>
+            </div>
+          </div>
+
+          <div class="mt-4 text-xs text-slate-500">
+            بعد إرسال الطلب سيتم التواصل معك عبر واتساب للتأكيد وإرسال بيانات التحويل إن لزم.
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <section class="mt-8 text-sm text-right text-slate-700">
+      <h4 class="font-bold mb-2">تفاصيل الحسابات البنكية للتحويل</h4>
+      <ul class="list-disc list-inside text-right">
+        <li>بنك الخرطوم - اسم الحساب: شركة إتش إم إي للتجارة - رقم الحساب: 123456789</li>
+        <li>بنك المشرق - اسم الحساب: شركة إتش إم إي للتجارة - رقم الحساب: 987654321</li>
+        <li>بنك المستقبل - اسم الحساب: شركة إتش إم إي للتجارة - رقم الحساب: 555666777</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <script src="/store/app.js"></script>
+</body>
+</html>

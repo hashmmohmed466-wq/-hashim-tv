@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>لوحة إدارة - أوامر المتجر</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-6">
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-xl font-bold mb-4">لوحة إدارة - عرض الأوامر</h1>
+    <p class="text-sm text-slate-600 mb-4">أدخل كلمة المرور الإدارية للوصول إلى الأوامر.</p>
+    <div class="flex gap-2 mb-4">
+      <input id="pass" type="password" class="flex-1 p-2 border rounded" placeholder="كلمة المرور">
+      <button id="load" class="bg-blue-600 text-white px-4 py-2 rounded">تحميل الأوامر</button>
+    </div>
+    <div id="ordersList" class="space-y-3 text-sm"></div>
+  </div>
+
+  <script>
+    document.getElementById('load').addEventListener('click', async ()=>{
+      const pass = document.getElementById('pass').value;
+      try{
+        const res = await fetch('/admin/orders?pass=' + encodeURIComponent(pass));
+        if(res.status===401){ alert('كلمة المرور خاطئة'); return; }
+        const orders = await res.json();
+        const el = document.getElementById('ordersList');
+        if(!orders || orders.length===0){ el.innerHTML = '<div class="text-slate-500">لا توجد أوامر</div>'; return; }
+        el.innerHTML = '';
+        orders.slice().reverse().forEach(o=>{
+          const div = document.createElement('div');
+          div.className = 'border p-3 rounded';
+          div.innerHTML = `<div class="flex justify-between items-start"><div><div class="font-semibold">طلب ${o.id}</div><div class="text-xs text-slate-500">${o.created_at}</div></div><div class="text-sm">${o.status}</div></div>`;
+          const items = document.createElement('div');
+          items.className='mt-2 text-xs text-right';
+          items.innerHTML = o.items.map(it=>`<div>${it.quantity} × ${it.name} — ${it.price} ${o.currency}</div>`).join('');
+          div.appendChild(items);
+          el.appendChild(div);
+        });
+      }catch(e){ alert('خطأ في الاتصال'); }
+    });
+  </script>
+</body>
+</html>
