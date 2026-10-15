@@ -1,0 +1,23 @@
+[
+  {
+    "id": "p1",
+    "name": "تيشيرت هاشم الرسمي",
+    "price": 1500,
+    "currency": "ج.س",
+    "image": "https://via.placeholder.com/300x200?text=تيشرت"
+  },
+  {
+    "id": "p2",
+    "name": "كوب القهوة - هاشم TV",
+    "price": 450,
+    "currency": "ج.س",
+    "image": "https://via.placeholder.com/300x200?text=كوب"
+  },
+  {
+    "id": "p3",
+    "name": "باقة إعلانية لمدة أسبوع",
+    "price": 5000,
+    "currency": "ج.س",
+    "image": "https://via.placeholder.com/300x200?text=اعلان"
+  }
+]
