@@ -1,23 +1,112 @@
 [
   {
-    "id": "p1",
-    "name": "تيشيرت هاشم الرسمي",
-    "price": 1500,
-    "currency": "ج.س",
-    "image": "https://via.placeholder.com/300x200?text=تيشرت"
+    "id": "p-001",
+    "category": "هواتف سامسونج",
+    "brand": "Samsung",
+    "model": "Galaxy S24",
+    "description": "هاتف ذكي بشاشة 6.2 بوصة وكاميرا متقدمة.",
+    "images": ["/images/phones/s24.jpg"],
+    "tags": ["phone", "samsung", "mobile"],
+    "stock": 12
   },
   {
-    "id": "p2",
-    "name": "كوب القهوة - هاشم TV",
-    "price": 450,
-    "currency": "ج.س",
-    "image": "https://via.placeholder.com/300x200?text=كوب"
+    "id": "p-002",
+    "category": "هواتف سامسونج",
+    "brand": "Samsung",
+    "model": "Galaxy A55",
+    "description": "هاتف متوسط المواصفات للاستخدام اليومي.",
+    "images": ["/images/phones/a55.jpg"],
+    "tags": ["phone", "samsung"],
+    "stock": 20
   },
   {
-    "id": "p3",
-    "name": "باقة إعلانية لمدة أسبوع",
-    "price": 5000,
-    "currency": "ج.س",
-    "image": "https://via.placeholder.com/300x200?text=اعلان"
+    "id": "p-003",
+    "category": "هواتف سامسونج",
+    "brand": "Samsung",
+    "model": "Galaxy Z Flip",
+    "description": "هاتف قابل للطي بشاشة مبتكرة وتصميم مدمج.",
+    "images": ["/images/phones/zflip.jpg"],
+    "tags": ["phone", "samsung", "foldable"],
+    "stock": 6
+  },
+  {
+    "id": "p-010",
+    "category": "اكسسورات",
+    "brand": "Generic",
+    "model": "غطاء حماية شفاف",
+    "description": "غطاء سيليكون شفاف للحماية اليومية.",
+    "images": ["/images/accessories/case-transparent.jpg"],
+    "tags": ["case", "cover", "accessory"],
+    "stock": 50
+  },
+  {
+    "id": "p-011",
+    "category": "اكسسورات",
+    "brand": "Anker",
+    "model": "شاحن سريع USB-C",
+    "description": "شاحن سريع متوافق مع أحدث الهواتف.",
+    "images": ["/images/accessories/charger.jpg"],
+    "tags": ["charger", "cable"],
+    "stock": 40
+  },
+  {
+    "id": "p-012",
+    "category": "اكسسورات",
+    "brand": "Samsung",
+    "model": "سماعات Galaxy Buds",
+    "description": "سماعات لاسلكية بجودة صوت عالية.",
+    "images": ["/images/accessories/buds.jpg"],
+    "tags": ["earbuds", "audio"],
+    "stock": 25
+  },
+  {
+    "id": "p-020",
+    "category": "ساعات ذكية",
+    "brand": "Samsung",
+    "model": "Galaxy Watch 6",
+    "description": "ساعة ذكية بمراقبة اللياقة وقياس نبضات القلب.",
+    "images": ["/images/watches/watch6.jpg"],
+    "tags": ["watch", "smartwatch"],
+    "stock": 15
+  },
+  {
+    "id": "p-021",
+    "category": "ساعات ذكية",
+    "brand": "Amazfit",
+    "model": "GTR 4",
+    "description": "ساعة ذكية بعمر بطارية طويل ومميزات رياضية.",
+    "images": ["/images/watches/gtr4.jpg"],
+    "tags": ["watch", "fitness"],
+    "stock": 18
+  },
+  {
+    "id": "p-030",
+    "category": "أجهزة منزلية",
+    "brand": "Samsung",
+    "model": "ثلاجة ذكية 400ل",
+    "description": "ثلاجة بسعة 400 لتر مع تقنية حفظ ذكية.",
+    "images": ["/images/appliances/fridge.jpg"],
+    "tags": ["fridge", "appliance"],
+    "stock": 5
+  },
+  {
+    "id": "p-031",
+    "category": "أجهزة منزلية",
+    "brand": "LG",
+    "model": "شاشة 55 بوصة 4K",
+    "description": "شاشة ذكية بدقة 4K مع منافذ HDMI متعددة.",
+    "images": ["/images/appliances/tv55.jpg"],
+    "tags": ["tv", "screen", "appliance"],
+    "stock": 7
+  },
+  {
+    "id": "p-032",
+    "category": "أجهزة منزلية",
+    "brand": "Sony",
+    "model": "مكبر صوت منزلي",
+    "description": "نظام صوتي منزلي لمشاهدة الأفلام والموسيقى.",
+    "images": ["/images/appliances/speaker.jpg"],
+    "tags": ["speaker", "audio"],
+    "stock": 9
   }
 ]
