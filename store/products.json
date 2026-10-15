@@ -5,7 +5,7 @@
     "brand": "Samsung",
     "model": "Galaxy S24",
     "description": "هاتف ذكي بشاشة 6.2 بوصة وكاميرا متقدمة.",
-    "images": ["/images/phones/s24.jpg"],
+    "images": ["images/phones/s24.svg"],
     "tags": ["phone", "samsung", "mobile"],
     "stock": 12
   },
@@ -15,7 +15,7 @@
     "brand": "Samsung",
     "model": "Galaxy A55",
     "description": "هاتف متوسط المواصفات للاستخدام اليومي.",
-    "images": ["/images/phones/a55.jpg"],
+    "images": ["images/phones/a55.svg"],
     "tags": ["phone", "samsung"],
     "stock": 20
   },
@@ -25,7 +25,7 @@
     "brand": "Samsung",
     "model": "Galaxy Z Flip",
     "description": "هاتف قابل للطي بشاشة مبتكرة وتصميم مدمج.",
-    "images": ["/images/phones/zflip.jpg"],
+    "images": ["images/phones/zflip.svg"],
     "tags": ["phone", "samsung", "foldable"],
     "stock": 6
   },
@@ -35,7 +35,7 @@
     "brand": "Generic",
     "model": "غطاء حماية شفاف",
     "description": "غطاء سيليكون شفاف للحماية اليومية.",
-    "images": ["/images/accessories/case-transparent.jpg"],
+    "images": ["images/accessories/case-transparent.svg"],
     "tags": ["case", "cover", "accessory"],
     "stock": 50
   },
@@ -45,7 +45,7 @@
     "brand": "Anker",
     "model": "شاحن سريع USB-C",
     "description": "شاحن سريع متوافق مع أحدث الهواتف.",
-    "images": ["/images/accessories/charger.jpg"],
+    "images": ["images/accessories/charger.svg"],
     "tags": ["charger", "cable"],
     "stock": 40
   },
@@ -55,7 +55,7 @@
     "brand": "Samsung",
     "model": "سماعات Galaxy Buds",
     "description": "سماعات لاسلكية بجودة صوت عالية.",
-    "images": ["/images/accessories/buds.jpg"],
+    "images": ["images/accessories/buds.svg"],
     "tags": ["earbuds", "audio"],
     "stock": 25
   },
@@ -65,7 +65,7 @@
     "brand": "Samsung",
     "model": "Galaxy Watch 6",
     "description": "ساعة ذكية بمراقبة اللياقة وقياس نبضات القلب.",
-    "images": ["/images/watches/watch6.jpg"],
+    "images": ["images/watches/watch6.svg"],
     "tags": ["watch", "smartwatch"],
     "stock": 15
   },
@@ -75,7 +75,7 @@
     "brand": "Amazfit",
     "model": "GTR 4",
     "description": "ساعة ذكية بعمر بطارية طويل ومميزات رياضية.",
-    "images": ["/images/watches/gtr4.jpg"],
+    "images": ["images/watches/gtr4.svg"],
     "tags": ["watch", "fitness"],
     "stock": 18
   },
@@ -85,7 +85,7 @@
     "brand": "Samsung",
     "model": "ثلاجة ذكية 400ل",
     "description": "ثلاجة بسعة 400 لتر مع تقنية حفظ ذكية.",
-    "images": ["/images/appliances/fridge.jpg"],
+    "images": ["images/appliances/fridge.svg"],
     "tags": ["fridge", "appliance"],
     "stock": 5
   },
@@ -95,7 +95,7 @@
     "brand": "LG",
     "model": "شاشة 55 بوصة 4K",
     "description": "شاشة ذكية بدقة 4K مع منافذ HDMI متعددة.",
-    "images": ["/images/appliances/tv55.jpg"],
+    "images": ["images/appliances/tv55.svg"],
     "tags": ["tv", "screen", "appliance"],
     "stock": 7
   },
@@ -105,7 +105,7 @@
     "brand": "Sony",
     "model": "مكبر صوت منزلي",
     "description": "نظام صوتي منزلي لمشاهدة الأفلام والموسيقى.",
-    "images": ["/images/appliances/speaker.jpg"],
+    "images": ["images/appliances/speaker.svg"],
     "tags": ["speaker", "audio"],
     "stock": 9
   }
