@@ -6,6 +6,10 @@
   <title>متجر الإلكترونيات</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 16px; direction: rtl; background:#fff; color:#222 }
+    .topbar { display:flex; align-items:center; justify-content:space-between }
+    .lang-switch { display:flex; gap:8px }
+    .lang-btn { padding:6px 10px; border-radius:6px; border:1px solid #ddd; background:#fff; cursor:pointer; font-size:14px }
+    .lang-btn.active { background:#0366d6; color:#fff; border-color: #0366d6 }
     .category { margin-top: 24px; }
     .category h2 { margin: 0 0 8px 0; }
     .category .subtitle { color:#555; font-size:13px; margin-bottom:6px }
@@ -17,49 +21,112 @@
     .tags { margin-top:8px }
     .tag { background:#f0f0f0;padding:4px 8px;border-radius:12px;margin-left:6px;font-size:12px;display:inline-block }
     h1 { margin-top:0 }
-    .lang-switch { float:left; font-size:14px }
   </style>
 </head>
 <body>
-  <h1>فئات المبيعات — أجهزة إلكترونية</h1>
+  <div class="topbar">
+    <h1 id="page-title">فئات المبيعات — أجهزة إلكترونية</h1>
+    <div class="lang-switch" aria-label="Language switch">
+      <button id="btn-ar" class="lang-btn">العربية</button>
+      <button id="btn-en" class="lang-btn">English</button>
+    </div>
+  </div>
+
   <div id="content">جارٍ التحميل...</div>
 
   <script>
-    // ننزل products.json و translations.json ونستخدم الترجمة إذا كانت متاحة
+    // Language switcher: saves selection in localStorage as 'lang' ('ar' or 'en')
+    const btnAr = document.getElementById('btn-ar');
+    const btnEn = document.getElementById('btn-en');
+    function setActiveButton(lang) {
+      if (lang === 'ar') {
+        btnAr.classList.add('active'); btnEn.classList.remove('active');
+      } else {
+        btnEn.classList.add('active'); btnAr.classList.remove('active');
+      }
+    }
+
+    function setPageDirection(lang) {
+      if (lang === 'ar') {
+        document.documentElement.lang = 'ar';
+        document.documentElement.dir = 'rtl';
+      } else {
+        document.documentElement.lang = 'en';
+        document.documentElement.dir = 'ltr';
+      }
+    }
+
+    let lang = localStorage.getItem('lang') || 'ar';
+    setActiveButton(lang);
+    setPageDirection(lang);
+
+    btnAr.addEventListener('click', () => { lang = 'ar'; localStorage.setItem('lang', lang); setActiveButton(lang); setPageDirection(lang); renderProducts(currentProducts, currentTranslations); });
+    btnEn.addEventListener('click', () => { lang = 'en'; localStorage.setItem('lang', lang); setActiveButton(lang); setPageDirection(lang); renderProducts(currentProducts, currentTranslations); });
+
+    let currentProducts = [];
+    let currentTranslations = {};
+
+    // Load data
     Promise.all([
       fetch('products.json').then(r => r.json()),
       fetch('translations.json').then(r => r.json()).catch(() => ({}))
     ])
     .then(([products, translations]) => {
-      // grouped by category key as-is
+      currentProducts = products;
+      currentTranslations = translations;
+      renderProducts(products, translations);
+    })
+    .catch(e => {
+      document.getElementById('content').textContent = 'فشل تحميل المنتجات.';
+      console.error(e);
+    });
+
+    function renderProducts(products, translations) {
+      // Build reverse map: arabic -> english (for categories that are stored in Arabic)
+      const rev = {};
+      Object.entries(translations).forEach(([en, ar]) => { rev[ar] = en; });
+
+      // Group products by english key (determine canonical English key)
       const grouped = {};
       products.forEach(p => {
-        grouped[p.category] = grouped[p.category] || [];
-        grouped[p.category].push(p);
+        const possibleEnglish = rev[p.category] || p.category; // if p.category is Arabic and in translations, map to English
+        const englishKey = possibleEnglish;
+        grouped[englishKey] = grouped[englishKey] || [];
+        grouped[englishKey].push(p);
       });
 
       const container = document.getElementById('content');
       container.innerHTML = '';
 
-      for (const category in grouped) {
+      for (const englishKey in grouped) {
         const catDiv = document.createElement('div');
         catDiv.className = 'category';
 
-        // display translated label if available, otherwise category as-is
-        const arabicLabel = translations[category] || category;
+        // Determine label to show based on lang
+        const arLabel = translations[englishKey] || rev[englishKey] || englishKey;
+        const enLabel = englishKey;
+        const label = (lang === 'ar') ? (arLabel) : enLabel;
+
         const h = document.createElement('h2');
-        h.textContent = arabicLabel;
+        h.textContent = label;
         catDiv.appendChild(h);
 
-        // if original category is different (e.g., English), show it as subtitle
-        if (arabicLabel !== category) {
+        // if showing Arabic but original english label exists, show english subtitle
+        if (lang === 'ar' && enLabel && enLabel !== arLabel) {
           const sub = document.createElement('div');
           sub.className = 'subtitle';
-          sub.textContent = '(' + category + ')';
+          sub.textContent = '(' + enLabel + ')';
+          catDiv.appendChild(sub);
+        }
+        // if showing English and arabic label exists, show arabic subtitle
+        if (lang === 'en' && arLabel && arLabel !== enLabel) {
+          const sub = document.createElement('div');
+          sub.className = 'subtitle';
+          sub.textContent = '(' + arLabel + ')';
           catDiv.appendChild(sub);
         }
 
-        grouped[category].forEach(p => {
+        grouped[englishKey].forEach(p => {
           const div = document.createElement('div');
           div.className = 'product';
           const img = document.createElement('img');
@@ -69,7 +136,13 @@
           info.className = 'info';
           const name = document.createElement('div');
           name.className = 'name';
-          name.textContent = (p.brand ? p.brand + ' ' : '') + (p.model || p.name || '');
+          // Show product name localized: brand + model (brand stays as-is)
+          if (lang === 'ar') {
+            // if model is English but translations map exists for category only; keep product model as-is
+            name.textContent = (p.brand ? p.brand + ' ' : '') + (p.model || p.name || '');
+          } else {
+            name.textContent = (p.brand ? p.brand + ' ' : '') + (p.model || p.name || '');
+          }
           const desc = document.createElement('div');
           desc.className = 'desc';
           desc.textContent = p.description || '';
@@ -85,13 +158,14 @@
           div.appendChild(info);
           catDiv.appendChild(div);
         });
+
         container.appendChild(catDiv);
       }
-    })
-    .catch(e => {
-      document.getElementById('content').textContent = 'فشل تحميل المنتجات.';
-      console.error(e);
-    });
+
+      // update page title localization
+      const pageTitle = document.getElementById('page-title');
+      pageTitle.textContent = (lang === 'ar') ? 'فئات المبيعات — أجهزة إلكترونية' : 'Sales categories — Electronics';
+    }
   </script>
 </body>
 </html>
