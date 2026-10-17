@@ -1,0 +1,21 @@
+{
+  "brand": "MyPlatform",
+  "home": "Home",
+  "products": "Products",
+  "reports": "Reports",
+  "users": "Users",
+  "settings": "Settings",
+  "welcome": "Welcome, Mohammed",
+  "totalUsers": "Total users",
+  "revenue": "Revenue (mo)",
+  "activeToday": "Active today",
+  "recentOrders": "Recent orders",
+  "customer": "Customer",
+  "service": "Service",
+  "status": "Status",
+  "date": "Date",
+  "summary": "Summary chart",
+  "summaryDesc": "Space for a chart or quick metrics",
+  "cta": "Create new",
+  "search": "Search..."
+}

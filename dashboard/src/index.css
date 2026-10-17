@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-dark: #0b1220;
+  --glass: rgba(255,255,255,0.03);
+}
+
+body {
+  @apply bg-gradient-to-b from-[#0f172a] to-[#061426] text-slate-100;
+  font-family: 'Cairo', 'Inter', sans-serif;
+  transition: background .3s, color .2s;
+}
+body.light {
+  @apply bg-gray-50 text-slate-900;
+  font-family: 'Inter', 'Cairo', sans-serif;
+}
+
+.card {
+  @apply rounded-xl border p-4 bg-opacity-20;
+  border-color: rgba(255,255,255,0.04);
+}
+.logo {
+  @apply w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold;
+  background: linear-gradient(135deg, #7C3AED, #06B6D4);
+  box-shadow: 0 8px 24px rgba(6,182,212,0.12);
+}
+
+html[dir="ltr"] .align-start { text-align: left; }
+html[dir="rtl"] .align-start { text-align: right; }
