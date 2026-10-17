@@ -1,326 +1,473 @@
-[https://wa.me/249998040864](https://wa.me/249998040864)
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كُنترول - للمبيعات والمخازن والفروع</title>
-    <!-- استدعاء مكتبة Tailwind CSS للتصميم والأيقونات -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>هاشم تي في | Hashim TV</title>
+    <meta
+      name="description"
+      content="منصة هاشم تي في تقدم خدمات رقمية، محتوى، ومنتجات مميزة باللغة العربية والإنجليزية."
+    />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-slate-100 font-sans">
-
-    <!-- حاوية الصفحة الرئيسية -->
-    <div class="flex h-screen overflow-hidden">
-        
-        <!-- الشريط الجانبي (Sidebar) -->
-        <div class="w-64 bg-slate-900 text-white flex flex-col justify-between hidden md:flex">
-            <div>
-                <div class="p-5 text-2xl font-bold border-b border-slate-800 flex items-center gap-2">
-                    <i class="fa-solid fa-boxes-stacked text-blue-500"></i>
-                    <span>هاشم TV - كُنترول</span>
-                </div>
-                <nav class="p-4 space-y-2">
-                    <a href="#" class="flex items-center gap-3 p-3 bg-blue-600 rounded-lg text-white font-medium">
-                        <i class="fa-solid fa-chart-pie"></i> لوحة القيادة
-                    </a>
-                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-slate-800 rounded-lg text-slate-300 transition">
-                        <i class="fa-solid fa-store"></i> إدارة المخازن
-                    </a>
-                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-slate-800 rounded-lg text-slate-300 transition">
-                        <i class="fa-solid fa-file-invoice-dollar"></i> المبيعات والفواتير
-                    </a>
-                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-slate-800 rounded-lg text-slate-300 transition">
-                        <i class="fa-solid fa-code-branch"></i> الفروع
-                    </a>
-                </nav>
-            </div>
-            <div class="p-4 border-t border-slate-800 text-sm text-slate-400">
-                شركة إتش إم إي للتجارة المحدودة
-            </div>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            boxShadow: {
+              soft: '0 20px 45px rgba(15, 23, 42, 0.12)',
+            },
+            colors: {
+              brand: {
+                50: '#eef8ff',
+                100: '#d9f0ff',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                700: '#0369a1',
+                900: '#0f172a',
+              },
+              accent: '#7c3aed',
+              mint: '#14b8a6',
+              gold: '#fbbf24',
+            }
+          }
+        }
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      html { scroll-behavior: smooth; }
+      body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+      .rtl-shadow { box-shadow: 0 20px 45px rgba(15,23,42,0.08); }
+      .dark-glow {
+        background: radial-gradient(circle at top, rgba(59,130,246,0.22), transparent 45%),
+                    radial-gradient(circle at left, rgba(124,58,237,0.22), transparent 35%);
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased">
+    <header class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 via-brand-600 to-accent text-lg font-black text-white shadow-soft">
+            H
+          </div>
+          <div>
+            <div class="text-lg font-black tracking-tight">Hashim TV</div>
+            <div class="text-[10px] uppercase tracking-[0.25em] text-slate-500">platform</div>
+          </div>
         </div>
 
-        <!-- المحتوى الرئيسي (Main Content) -->
-        <div class="flex-1 flex flex-col overflow-y-auto">
-            
-            <!-- الشريط العلوي -->
-            <header class="bg-white shadow-sm p-4 flex justify-between items-center">
-                <h1 class="text-xl font-bold text-slate-800">كُنترول للمبيعات والمخازن والفروع</h1>
-                <div class="flex items-center gap-4">
-                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full">فترة تجريبية مجانية لمدة أسبوع[span_0](start_span)[span_0](end_span)</span>
-                    <div class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">هـ</div>
-                </div>
-            </header>
-
-            <!-- محتوى اللوحة والإحصائيات -->
-            <main class="p-6 space-y-6">
-                
-                <!-- بانر الإعلان الترويجي -->
-                <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div>
-                        <h2 class="text-2xl font-bold mb-2">تحكم بمخازنك ومبيعاتك وأنت في أي مكان[span_1](start_span)[span_1](end_span)</h2>
-                        <p class="text-blue-100 text-sm">مع تطبيق الهاتف النقال ولوحة التحكم المركزية، كل أرباحك وعملياتك بين يديك بدقة متناهية[span_2](start_span)[span_2](end_span).</p>
-                    </div>
-                    <a href="https://wa.me/249998040864" target="_blank" class="bg-white text-blue-800 font-bold px-6 py-3 rounded-xl shadow hover:bg-blue-50 transition text-center whitespace-nowrap">
-                        <i class="fa-brands fa-whatsapp text-emerald-600 text-lg ml-2"></i> اطلب نسختك التجريبية
-                    </a>
-                </div>
-
-                <!-- إحصائيات سريعة -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-slate-500 font-medium">إجمالي مبيعات اليوم</p>
-                            <h3 class="text-2xl font-bold text-slate-800 mt-1">450,000 ج.س</h3>
-                        </div>
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-arrow-trend-up"></i>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-slate-500 font-medium">المنتجات بالمخزن</p>
-                            <h3 class="text-2xl font-bold text-slate-800 mt-1">1,240 منتج</h3>
-                        </div>
-                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-box"></i>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-slate-500 font-medium">تنبيهات انخفاض المخزون</p>
-                            <h3 class="text-2xl font-bold text-red-600 mt-1">3 منتجات</h3>
-                        </div>
-                        <div class="w-12 h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- جدول العمليات الأخيرة -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-4 border-b border-slate-200 font-bold text-slate-800 flex justify-between items-center">
-                        <span>آخر الفواتير المسجلة</span>
-                        <span class="text-xs text-blue-600 font-semibold">تحديث مباشر</span>
-                    </div>
-                    <table class="w-full text-right border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50 text-slate-600 text-sm border-b border-slate-200">
-                                <th class="p-3">رقم الفاتورة</th>
-                                <th class="p-3">العميل</th>
-                                <th class="p-3">المبلغ الإجمالي</th>
-                                <th class="p-3">طريقة الدفع</th>
-                                <th class="p-3">الوقت</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm text-slate-700 divide-y divide-slate-100">
-                            <tr>
-                                <td class="p-3 font-semibold">#INV-1004</td>
-                                <td class="p-3">عثمان أحمد</td>
-                                <td class="p-3">25,000 ج.س</td>
-                                <td class="p-3"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs">نقدي</span></td>
-                                <td class="p-3 text-slate-500">منذ 10 دقائق</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-semibold">#INV-1003</td>
-                                <td class="p-3">محمد الحسن</td>
-                                <td class="p-3">48,000 ج.س</td>
-                                <td class="p-3"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs">تحويل بنكي</span></td>
-                                <td class="p-3 text-slate-500">منذ ساعة</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </main>
-        </div>
-    </div>
-
-</body>
-</html>
-<!-- شريط التنقل العلوي -->
-<header class="bg-white shadow-sm sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold text-blue-600">HMA Company</h1>
-        <nav class="hidden md:flex gap-6 text-sm font-medium">
-            <a href="#about" class="hover:text-blue-600">من نحن</a>
-            <a href="#services" class="hover:text-blue-600">خدماتنا</a>
-            <a href="#contact" class="hover:text-blue-600">اتصل بنا</a>
+        <nav class="hidden items-center gap-8 text-sm font-semibold text-slate-600 md:flex">
+          <a href="#home" class="transition hover:text-brand-600">الرئيسية</a>
+          <a href="#features" class="transition hover:text-brand-600">الخدمات</a>
+          <a href="#solutions" class="transition hover:text-brand-600">الحلول</a>
+          <a href="#contact" class="transition hover:text-brand-600">تواصل</a>
         </nav>
-    </div>
-</header>
 
-<!-- الواجهة الرئيسية (Hero Section) -->
-<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20 px-4 text-center">
-    <div class="max-w-3xl mx-auto">
-        <h2 class="text-4xl font-extrabold mb-4">شركة إتش إم إي للتجارة الإلكترونية المحدودة</h2>
-        <p class="text-lg text-blue-100 mb-8">بوابتك الموثوقة لأحدث المنتجات والخدمات الرقمية والتجارية بجودة عالية وأسعار منافسة.</p>
-        <a href="https://wa.me/249998040864?text=السلام%20عليكم،%20أرغب%20بالاستفسار%20عن%20منتجات%20وخدمات%20شركة%20إتش%20إم%20إي" 
-           target="_blank" 
-           class="bg-white text-blue-700 font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-blue-50 transition duration-300 inline-block">
-           تواصل معنا عبر واتساب
-        </a>
-    </div>
-</section>
-
-<!-- قسم من نحن -->
-<section id="about" class="py-16 px-4 max-w-4xl mx-auto text-center">
-    <h3 class="text-2xl font-bold mb-4 text-gray-900">من نحن</h3>
-    <p class="text-gray-600 leading-relaxed text-lg">
-        نحن شركة إتش إم إي للتجارة الإلكترونية، نسعى لتقديم تجربة تسوق رقمية فريدة ومبتكرة. نلتزم بتوفير أفضل المنتجات والخدمات التي تلبي احتياجات عملائنا وتواكب تطلعاتهم بكل احترافية ومصداقية.
-    </p>
-</section>
-
-<!-- قسم الخدمات والحلول الرقمية -->
-<section id="services" class="bg-gray-100 py-16 px-4">
-    <div class="max-w-6xl mx-auto text-center">
-        <h3 class="text-2xl font-bold mb-4 text-gray-900">حلول رقمية وإعلامية متكاملة</h3>
-        <p class="text-gray-600 mb-10 max-w-2xl mx-auto">نقدم منظومات برمجية، وتصميم مواقع وتطبيقات حسب الطلب، بالإضافة إلى خدمات الإنتاج الإعلامي والإعلاني المبتكرة.</p>
-        
-        <div class="grid md:grid-cols-3 gap-6 text-right">
-            <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <h4 class="font-bold text-lg mb-2 text-blue-600">تصميم وتطوير المواقع</h4>
-                <p class="text-gray-600 text-sm">بناء واجهات رقمية احترافية وسريعة تناسب أنشطتك التجارية.</p>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <h4 class="font-bold text-lg mb-2 text-blue-600">الحلول البرمجية</h4>
-                <p class="text-gray-600 text-sm">منظومات برمجية وحلول مخصصة لتسهيل إدارة أعمالك ومخزونك.</p>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <h4 class="font-bold text-lg mb-2 text-blue-600">الإنتاج الإعلامي</h4>
-                <p class="text-gray-600 text-sm">فيديوهات ترويجية وحملات إعلانية تزيد من انتشار نشاطك التجاري.</p>
-            </div>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <div class="flex items-center rounded-xl border border-slate-200 bg-slate-100 p-1">
+            <button data-lang="ar" class="lang-btn rounded-lg px-3 py-1.5 text-sm font-bold text-slate-700 transition hover:bg-white">AR</button>
+            <button data-lang="en" class="lang-btn rounded-lg px-3 py-1.5 text-sm font-bold text-slate-500 transition hover:bg-white">EN</button>
+          </div>
+          <button id="themeToggle" class="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-brand-200 hover:text-brand-600">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          <a href="#contact" class="hidden rounded-xl bg-gradient-to-r from-brand-600 to-accent px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-500/25 transition hover:scale-[1.02] sm:inline-flex">
+            <span data-i18n="cta">اطلب الخدمة</span>
+          </a>
         </div>
-    </div>
-</section>
-
-<!-- قسم تواصل معنا ودعوة اتخاذ إجراء -->
-<section id="contact" class="py-16 px-4 text-center">
-    <div class="max-w-3xl mx-auto">
-        <h3 class="text-2xl font-bold mb-4 text-gray-900">تواصل معنا واستفسر عن خدماتنا</h3>
-        <p class="text-gray-600 mb-8">نرحب دائماً باستفساراتكم وطلباتكم التجارية عبر الأرقام الرسمية.</p>
-        <a href="https://wa.me/249998040864?text=السلام%20عليكم،%20أرغب%20في%20طلب%20خدمة%20من%20شركة%20إتش%20إم%20إي" 
-           target="_blank" 
-           class="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-blue-700 transition duration-300 inline-block">
-           اطلب الخدمة عبر واتساب
-        </a>
-    </div>
-</section>
-
-<!-- الفوتر -->
-<footer class="bg-gray-900 text-white py-6 text-center text-sm">
-    <p>جميع حقوق الطبع والنشر محفوظة © 2026 شركة إتش إم إي للتجارة الإلكترونية المحدودة</p>
-</footer>
-
-<!-- زر الواتساب العائم في أسفل الشاشة -->
-<a href="https://wa.me/249998040864?text=السلام%20عليكم،%20أرغب%20بالاستفسار%20عن%20خدماتكم%20في%20شركة%20إتش%20إم%20إي" 
-   target="_blank" 
-   class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all duration-300 flex items-center justify-center z-50 animate-bounce"
-   title="تواصل معنا عبر واتساب">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 fill-current" viewBox="0 0 24 24">
-        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-    </svg>
-</a>
-https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4%22%3E%3C/script%3E
-https://youtube.com/shorts/chWknBREM8U?si=SC1RfTbeZQGRjA_q
-<!DOCTYPE html>
-https://youtube.com/shorts/vG55KZtmk2I?si=g3kgf7pUsJHTUaXL
-<html lang="ar" dir="rtl">
-    https://youtube.com/shorts/rqccApcGDgA?si=0L4K9bojadVkPj30
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شركة إتش إم إي للتجارة الإلكترونية المحدودة</title>
-    <!-- استدعاء مكتبة التصميم Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-
-    <!-- شريط التنقل العلوي -->
-    <header class="bg-white shadow-sm sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-blue-600">HMA Company</h1>
-            <nav class="hidden md:flex gap-6 text-sm font-medium">
-                <a href="#about" class="hover:text-blue-600">من نحن</a>
-                <a href="#services" class="hover:text-blue-600">خدماتنا</a>
-                <a href="#contact" class="hover:text-blue-600">اتصل بنا</a>
-            </nav>
-        </div>
+      </div>
     </header>
 
-    <!-- الواجهة الرئيسية -->
-    <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20 px-4 text-center">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-4xl font-extrabold mb-4">شركة إتش إم إي للتجارة الإلكترونية المحدودة</h2>
-            <p class="text-lg text-blue-100 mb-8">بوابتك الموثوقة لأحدث المنتجات والخدمات الرقمية والتجارية بجودة عالية وأسعار منافسة.</p>
-            <a href="https://wa.me/249998040864?text=السلام%20عليكم،%20أرغب%20بالاستفسار%20عن%20منتجات%20وخدمات%20شركة%20إتش%20إم%20إي" 
-               target="_blank" 
-               class="bg-white text-blue-700 font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-blue-50 transition duration-300 inline-block">
-               تواصل معنا عبر واتساب
-            </a>
-        </div>
-    </section>
-
-    <!-- قسم من نحن -->
-    <section id="about" class="py-16 px-4 max-w-4xl mx-auto text-center">
-        <h3 class="text-2xl font-bold mb-4 text-gray-900">من نحن</h3>
-        <p class="text-gray-600 leading-relaxed text-lg">
-            نحن شركة إتش إم إي للتجارة الإلكترونية، نسعى لتقديم تجربة تسوق رقمية فريدة ومبتكرة. نلتزم بتوفير أفضل المنتجات والخدمات التي تلبي احتياجات عملائنا وتواكب تطلعاتهم بكل احترافية ومصداقية.
-        </p>
-    </section>
-
-    <!-- قسم الخدمات -->
-    <section id="services" class="bg-gray-100 py-16 px-4">
-        <div class="max-w-6xl mx-auto text-center">
-            <h3 class="text-2xl font-bold mb-4 text-gray-900">حلول رقمية وإعلامية متكاملة</h3>
-            <p class="text-gray-600 mb-10 max-w-2xl mx-auto">نقدم منظومات برمجية، وتصميم مواقع وتطبيقات حسب الطلب، بالإضافة إلى خدمات الإنتاج الإعلامي والإعلاني المبتكرة.</p>
-            
-            <div class="grid md:grid-cols-3 gap-6 text-right">
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <h4 class="font-bold text-lg mb-2 text-blue-600">تصميم وتطوير المواقع</h4>
-                    <p class="text-gray-600 text-sm">بناء واجهات رقمية احترافية وسريعة تناسب أنشطتك التجارية.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <h4 class="font-bold text-lg mb-2 text-blue-600">الحلول البرمجية</h4>
-                    <p class="text-gray-600 text-sm">منظومات برمجية وحلول مخصصة لتسهيل إدارة أعمالك ومخزونك.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <h4 class="font-bold text-lg mb-2 text-blue-600">الإنتاج الإعلامي</h4>
-                    <p class="text-gray-600 text-sm">فيديوهات ترويجية وحملات إعلانية تزيد من انتشار نشاطك التجاري.</p>
-                </div>
+    <main id="home" class="dark-glow overflow-hidden">
+      <section class="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8 lg:pb-20 lg:pt-16">
+        <div class="grid items-center gap-10 lg:grid-cols-[1.1fr,0.9fr]">
+          <div>
+            <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1.5 text-xs font-bold text-brand-700">
+              <span class="h-2 w-2 rounded-full bg-brand-500"></span>
+              <span data-i18n="badge">منصة رقمية حديثة</span>
             </div>
-        </div>
-    </section>
 
-    <!-- قسم تواصل معنا -->
-    <section id="contact" class="py-16 px-4 text-center">
-        <div class="max-w-3xl mx-auto">
-            <h3 class="text-2xl font-bold mb-4 text-gray-900">تواصل معنا واستفسر عن خدماتنا</h3>
-            <p class="text-gray-600 mb-8">نرحب دائماً باستفساراتكم وطلباتكم التجارية عبر الأرقام الرسمية.</p>
-            <a href="https://wa.me/249998040864?text=السلام%20عليكم،%20أرغب%20في%20طلب%20خدمة%20من%20شركة%20إتش%20إم%20إي" 
-               target="_blank" 
-               class="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-blue-700 transition duration-300 inline-block">
-               اطلب الخدمة عبر واتساب
+            <h1 class="max-w-xl text-4xl font-black leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl" data-i18n="heroTitle">
+              منصة مميزة تجمع المحتوى، الخدمات، والنجاح الرقمي.
+            </h1>
+
+            <p class="mt-6 max-w-xl text-lg leading-8 text-slate-600" data-i18n="heroText">
+              نوفر حلولاً احترافية في التصميم، البرمجة، التسويق الرقمي، والخدمات الإلكترونية مع تجربة مستخدم واضحة وقوية باللغة العربية والإنجليزية.
+            </p>
+
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              <a href="#contact" class="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-brand-600 to-accent px-6 py-3.5 text-base font-bold text-white shadow-xl shadow-brand-500/25 transition hover:-translate-y-0.5">
+                <span data-i18n="primaryCta">ابدأ الآن</span>
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+              <a href="#features" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-3.5 text-base font-bold text-slate-700 shadow-sm transition hover:border-brand-200 hover:text-brand-600">
+                <span data-i18n="secondaryCta">اكتشف الخدمات</span>
+                <i class="fa-solid fa-play"></i>
+              </a>
+            </div>
+
+            <div class="mt-10 flex flex-wrap items-center gap-8 text-sm text-slate-500">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-brand-600"></i>
+                <span data-i18n="stat1">تصميم احترافي</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-brand-600"></i>
+                <span data-i18n="stat2">دعم فني سريع</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-brand-600"></i>
+                <span data-i18n="stat3">تفاعل عالمي</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="rtl-shadow absolute -left-6 top-8 h-24 w-24 rounded-full bg-brand-200/40 blur-3xl"></div>
+            <div class="rtl-shadow absolute -right-6 bottom-10 h-28 w-28 rounded-full bg-accent/20 blur-3xl"></div>
+
+            <div class="relative rounded-[28px] border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
+              <div class="rounded-[24px] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-5 text-white">
+                <div class="mb-5 flex items-center justify-between">
+                  <div>
+                    <p class="text-[11px] uppercase tracking-[0.25em] text-slate-300" data-i18n="panelTitle">Dashboard</p>
+                    <h2 class="mt-2 text-2xl font-black">Hashim TV</h2>
+                  </div>
+                  <div class="rounded-xl bg-white/10 px-2.5 py-1 text-xs font-bold text-emerald-300">
+                    <i class="fa-solid fa-signal mr-1"></i> Live
+                  </div>
+                </div>
+
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <div class="rounded-2xl bg-white/5 p-4">
+                    <div class="flex items-center justify-between">
+                      <p class="text-xs text-slate-300" data-i18n="panelUsers">Users</p>
+                      <i class="fa-solid fa-users text-brand-300"></i>
+                    </div>
+                    <p class="mt-3 text-2xl font-black">12.4K</p>
+                  </div>
+                  <div class="rounded-2xl bg-white/5 p-4">
+                    <div class="flex items-center justify-between">
+                      <p class="text-xs text-slate-300" data-i18n="panelRevenue">Revenue</p>
+                      <i class="fa-solid fa-arrow-trend-up text-emerald-300"></i>
+                    </div>
+                    <p class="mt-3 text-2xl font-black">$42K</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 rounded-2xl bg-white/5 p-4">
+                  <div class="mb-3 flex items-center justify-between text-xs text-slate-300">
+                    <span data-i18n="panelGrowth">Growth</span>
+                    <span class="font-bold text-emerald-300">+28.4%</span>
+                  </div>
+                  <div class="flex h-24 items-end gap-2">
+                    <span class="flex-1 rounded-t-xl bg-brand-500/80" style="height: 35%"></span>
+                    <span class="flex-1 rounded-t-xl bg-brand-400/80" style="height: 50%"></span>
+                    <span class="flex-1 rounded-t-xl bg-brand-300/80" style="height: 68%"></span>
+                    <span class="flex-1 rounded-t-xl bg-brand-200/80" style="height: 78%"></span>
+                    <span class="flex-1 rounded-t-xl bg-accent/80" style="height: 92%"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-16">
+        <div class="mb-8 text-center">
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-brand-600" data-i18n="featuresLabel">Features</p>
+          <h2 class="mt-4 text-3xl font-black text-slate-900 sm:text-4xl" data-i18n="featuresTitle">حلول متكاملة لتنمية حضورك الرقمي</h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-xl text-brand-700">
+              <i class="fa-solid fa-display"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900" data-i18n="card1Title">تصميم واجهات</h3>
+            <p class="mt-3 text-sm leading-7 text-slate-600" data-i18n="card1Text">واجهة حديثة وواضحة ومتجاوبة تعكس هويتك وتزيد ثقة الزبائن.</p>
+          </div>
+
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-mint/10 text-xl text-mint">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900" data-i18n="card2Title">تطوير احترافي</h3>
+            <p class="mt-3 text-sm leading-7 text-slate-600" data-i18n="card2Text">برمجة موثوقة، سريعة الأداء، ومصممة بشكل يضمن تجربة مستخدم ممتازة.</p>
+          </div>
+
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-xl text-amber-600">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900" data-i18n="card3Title">تسويق رقمي</h3>
+            <p class="mt-3 text-sm leading-7 text-slate-600" data-i18n="card3Text">استراتيجيات تسويق دقيقة لتوسيع الوصول ورفع معدلات التحويل.</p>
+          </div>
+
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 text-xl text-violet-600">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900" data-i18n="card4Title">دعم مستمر</h3>
+            <p class="mt-3 text-sm leading-7 text-slate-600" data-i18n="card4Text">فريق دعم متفاعل يساعدك في كل مرحلة من مرحلة التنفيذ والتطوير.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="solutions" class="bg-slate-900 py-16 text-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid items-center gap-8 lg:grid-cols-[0.9fr,1.1fr]">
+            <div>
+              <p class="text-sm font-bold uppercase tracking-[0.25em] text-brand-300" data-i18n="solutionsLabel">Solutions</p>
+              <h2 class="mt-3 text-3xl font-black sm:text-4xl" data-i18n="solutionsTitle">منصة مناسبة لكل نوع من الأعمال</h2>
+              <p class="mt-4 max-w-lg text-base leading-8 text-slate-300" data-i18n="solutionsText">
+                سواء كنت شركة، متجرًا، مؤسسة تعليمية أو منصة محتوى، فإننا نصمم لك تجربة تحقق أهدافك وتواكب احتياجات جمهورك.
+              </p>
+
+              <ul class="mt-8 space-y-4">
+                <li class="flex items-start gap-3"><i class="fa-solid fa-circle-check mt-1 text-brand-300"></i><span data-i18n="featureA">واجهة المبيعات والمنتجات عبر موقع احترافي.</span></li>
+                <li class="flex items-start gap-3"><i class="fa-solid fa-circle-check mt-1 text-brand-300"></i><span data-i18n="featureB">لوحة تحكم لتحليل الأداء والمتابعة.</span></li>
+                <li class="flex items-start gap-3"><i class="fa-solid fa-circle-check mt-1 text-brand-300"></i><span data-i18n="featureC">تجربة متعددة اللغات مع دعم عربي/إنجليزي.</span></li>
+              </ul>
+            </div>
+
+            <div class="grid gap-5 md:grid-cols-2">
+              <div class="rounded-3xl border border-slate-700 bg-slate-800 p-5">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-500/20 text-xl text-brand-300">
+                  <i class="fa-solid fa-store"></i>
+                </div>
+                <h3 class="text-xl font-bold" data-i18n="miniCard1Title">المتاجر الإلكترونية</h3>
+                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="miniCard1Text">منتجات، عربات، دفع، ووظائف سريعة وسهلة الاستخدام.</p>
+              </div>
+
+              <div class="rounded-3xl border border-slate-700 bg-slate-800 p-5">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-500/20 text-xl text-violet-300">
+                  <i class="fa-solid fa-tv"></i>
+                </div>
+                <h3 class="text-xl font-bold" data-i18n="miniCard2Title">المنصات الإعلامية</h3>
+                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="miniCard2Text">عرض محتوى، إعلانات، ومقاطع بجودة عالية وتنسيق جذاب.</p>
+              </div>
+
+              <div class="rounded-3xl border border-slate-700 bg-slate-800 p-5 md:col-span-2">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20 text-xl text-emerald-300">
+                  <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <h3 class="text-xl font-bold" data-i18n="miniCard3Title">لوحة الأداء</h3>
+                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="miniCard3Text">أرقام، تقارير، ومؤشرات تساعدك على متابعة النمو وفهم سلوك المستخدمين بدقة.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="rounded-[32px] border border-slate-200 bg-white p-6 shadow-soft sm:p-8 lg:p-10">
+          <div class="grid items-center gap-6 lg:grid-cols-[1fr,auto]">
+            <div>
+              <p class="text-sm font-bold uppercase tracking-[0.25em] text-brand-600" data-i18n="ctaLabel">Ready to launch</p>
+              <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl" data-i18n="ctaTitle">دع منصتك تبدأ بقوة من اليوم</h2>
+            </div>
+            <a href="#contact" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-brand-600 to-accent px-6 py-3.5 text-base font-bold text-white shadow-xl shadow-brand-500/25 transition hover:-translate-y-0.5">
+              <span data-i18n="ctaBtnText">تواصل الآن</span>
+              <i class="fa-solid fa-arrow-left"></i>
             </a>
+          </div>
         </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- الفوتر -->
-    <footer class="bg-gray-900 text-white py-6 text-center text-sm">
-        <p>جميع حقوق الطبع والنشر محفوظة © 2026 شركة إتش إم إي للتجارة الإلكترونية المحدودة</p>
+    <footer id="contact" class="border-t border-slate-200 bg-white">
+      <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr,0.9fr] lg:px-8">
+        <div>
+          <div class="flex items-center gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 via-brand-600 to-accent text-lg font-black text-white shadow-soft">
+              H
+            </div>
+            <div>
+              <div class="text-lg font-black">Hashim TV</div>
+              <div class="text-[10px] uppercase tracking-[0.25em] text-slate-500">digital solutions</div>
+            </div>
+          </div>
+
+          <p class="mt-5 max-w-md text-base leading-8 text-slate-600" data-i18n="footerText">
+            نساعدك في بناء هوية رقمية قوية، منصة احترافية، وتجربة مستخدم مميزة تناسب توقعات جمهورك وتحقق أهدافك.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+          <h3 class="text-xl font-black text-slate-900" data-i18n="contactTitle">تواصل معنا</h3>
+          <div class="mt-5 space-y-4 text-sm text-slate-600">
+            <div class="flex items-center gap-3">
+              <i class="fa-brands fa-whatsapp text-emerald-600"></i>
+              <a href="https://wa.me/249998040864" target="_blank" class="font-semibold hover:text-brand-600">+249 99 804 0864</a>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-envelope text-brand-600"></i>
+              <span>hello@hashimtv.com</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-location-dot text-brand-600"></i>
+              <span data-i18n="address">السودان / الخرطوم</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 bg-slate-50">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 text-sm text-slate-500 sm:px-6 lg:px-8">
+          <span>© 2026 Hashim TV</span>
+          <span data-i18n="footerNote">جميع الحقوق محفوظة</span>
+        </div>
+      </div>
     </footer>
 
-    <!-- زر الواتساب العائم -->
-    <a href="https://wa.me/249998040864?text=السلام%20عليكم،%20أرغب%20بالاستفسار%20عن%20خدماتكم%20في%20شركة%20إتش%20إم%20إي" 
-       target="_blank" 
-       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all duration-300 flex items-center justify-center z-50 animate-bounce"
-       title="تواصل معنا عبر واتساب">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 fill-current" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-        </svg>
-    </a>
+    <script>
+      const translations = {
+        ar: {
+          badge: 'منصة رقمية حديثة',
+          heroTitle: 'منصة مميزة تجمع المحتوى، الخدمات، والنجاح الرقمي.',
+          heroText: 'نوفر حلولاً احترافية في التصميم، البرمجة، التسويق الرقمي، والخدمات الإلكترونية مع تجربة مستخدم واضحة وقوية باللغة العربية والإنجليزية.',
+          primaryCta: 'ابدأ الآن',
+          secondaryCta: 'اكتشف الخدمات',
+          stat1: 'تصميم احترافي',
+          stat2: 'دعم فني سريع',
+          stat3: 'تفاعل عالمي',
+          panelTitle: 'لوحة التحكم',
+          panelUsers: 'المستخدمون',
+          panelRevenue: 'الإيرادات',
+          panelGrowth: 'النمو',
+          featuresLabel: 'Features',
+          featuresTitle: 'حلول متكاملة لتنمية حضورك الرقمي',
+          card1Title: 'تصميم واجهات',
+          card1Text: 'واجهة حديثة وواضحة ومتجاوبة تعكس هويتك وتزيد ثقة الزبائن.',
+          card2Title: 'تطوير احترافي',
+          card2Text: 'برمجة موثوقة، سريعة الأداء، ومصممة بشكل يضمن تجربة مستخدم ممتازة.',
+          card3Title: 'تسويق رقمي',
+          card3Text: 'استراتيجيات تسويق دقيقة لتوسيع الوصول ورفع معدلات التحويل.',
+          card4Title: 'دعم مستمر',
+          card4Text: 'فريق دعم متفاعل يساعدك في كل مرحلة من مرحلة التنفيذ والتطوير.',
+          solutionsLabel: 'Solutions',
+          solutionsTitle: 'منصة مناسبة لكل نوع من ��لأعمال',
+          solutionsText: 'سواء كنت شركة، متجرًا، مؤسسة تعليمية أو منصة محتوى، فإننا نصمم لك تجربة تحقق أهدافك وتواكب احتياجات جمهورك.',
+          featureA: 'واجهة المبيعات والمنتجات عبر موقع احترافي.',
+          featureB: 'لوحة تحكم لتحليل الأداء والمتابعة.',
+          featureC: 'تجربة متعددة اللغات مع دعم عربي/إنجليزي.',
+          miniCard1Title: 'المتاجر الإلكترونية',
+          miniCard1Text: 'منتجات، عربات، دفع، ووظائف سريعة وسهلة الاستخدام.',
+          miniCard2Title: 'المنصات الإعلامية',
+          miniCard2Text: 'عرض محتوى، إعلانات، ومقاطع بجودة عالية وتنسيق جذاب.',
+          miniCard3Title: 'لوحة الأداء',
+          miniCard3Text: 'أرقام، تقارير، ومؤشرات تساعدك على متابعة النمو وفهم سلوك المستخدمين بدقة.',
+          ctaLabel: 'Ready to launch',
+          ctaTitle: 'دع منصتك تبدأ بقوة من اليوم',
+          ctaBtnText: 'تواصل الآن',
+          footerText: 'نساعدك في بناء هوية رقمية قوية، منصة احترافية، وتجربة مستخدم مميزة تناسب توقعات جمهورك وتحقق أهدافك.',
+          contactTitle: 'تواصل معنا',
+          address: 'السودان / الخرطوم',
+          footerNote: 'جميع الحقوق محفوظة',
+          cta: 'اطلب الخدمة',
+        },
+        en: {
+          badge: 'Modern digital platform',
+          heroTitle: 'A powerful platform that brings content, services, and digital growth together.',
+          heroText: 'We deliver professional solutions in design, development, digital marketing, and online services with a clear and strong user experience in Arabic and English.',
+          primaryCta: 'Get Started',
+          secondaryCta: 'Explore Services',
+          stat1: 'Professional design',
+          stat2: 'Fast technical support',
+          stat3: 'Global engagement',
+          panelTitle: 'Dashboard',
+          panelUsers: 'Users',
+          panelRevenue: 'Revenue',
+          panelGrowth: 'Growth',
+          featuresLabel: 'Features',
+          featuresTitle: 'Integrated solutions to grow your digital presence',
+          card1Title: 'UI/UX Design',
+          card1Text: 'Modern, clear, and responsive interfaces that reflect your identity and increase customer trust.',
+          card2Title: 'Professional Development',
+          card2Text: 'Reliable, fast, and scalable development tailored to a smooth user experience.',
+          card3Title: 'Digital Marketing',
+          card3Text: 'Accurate marketing strategies that expand reach and improve conversion rates.',
+          card4Title: 'Continuous Support',
+          card4Text: 'A responsive support team to help you through every stage of execution and growth.',
+          solutionsLabel: 'Solutions',
+          solutionsTitle: 'A platform suitable for every type of business',
+          solutionsText: 'Whether you run a company, a store, an educational institution, or a content platform, we design an experience that matches your goals and audience needs.',
+          featureA: 'Sales and products interface through a professional website.',
+          featureB: 'Dashboard for monitoring performance and business insights.',
+          featureC: 'Multi-language experience with Arabic and English support.',
+          miniCard1Title: 'E-Commerce',
+          miniCard1Text: 'Products, carts, payments, and user-friendly features built for speed.',
+          miniCard2Title: 'Media Platforms',
+          miniCard2Text: 'High-quality content, promotions, and media presentation with a polished look.',
+          miniCard3Title: 'Performance Dashboard',
+          miniCard3Text: 'Metrics, reports, and insights that help you track growth and understand user behavior.',
+          ctaLabel: 'Ready to launch',
+          ctaTitle: 'Let your platform start strong today',
+          ctaBtnText: 'Contact Us',
+          footerText: 'We help you build a strong digital identity, a professional platform, and a remarkable user experience tailored to your audience.',
+          contactTitle: 'Contact Us',
+          address: 'Sudan / Khartoum',
+          footerNote: 'All rights reserved',
+          cta: 'Request service',
+        }
+      };
 
-</body>
+      const root = document.documentElement;
+      const langButtons = document.querySelectorAll('.lang-btn');
+      const i18nTargets = document.querySelectorAll('[data-i18n]');
+      const appBody = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+
+      let currentLang = 'ar';
+      let darkMode = true;
+
+      function applyLanguage(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        root.lang = lang;
+        root.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+        i18nTargets.forEach((el) => {
+          const key = el.getAttribute('data-i18n');
+          if (t[key]) el.textContent = t[key];
+        });
+
+        langButtons.forEach((btn) => {
+          const active = btn.dataset.lang === lang;
+          btn.classList.toggle('bg-white', active);
+          btn.classList.toggle('text-slate-700', active);
+          btn.classList.toggle('text-slate-500', !active);
+          btn.classList.toggle('shadow-sm', active);
+        });
+      }
+
+      function applyTheme(isDark) {
+        darkMode = isDark;
+        if (isDark) {
+          appBody.classList.remove('bg-slate-100', 'text-slate-900');
+          appBody.classList.add('bg-slate-50', 'text-slate-900');
+          themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        } else {
+          appBody.classList.remove('bg-slate-50', 'text-slate-900');
+          appBody.classList.add('bg-slate-900', 'text-slate-50');
+          themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        }
+      }
+
+      langButtons.forEach((btn) => {
+        btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+      });
+
+      themeToggle.addEventListener('click', () => applyTheme(!darkMode));
+
+      applyLanguage(currentLang);
+      applyTheme(darkMode);
+    </script>
+  </body>
 </html>
-
