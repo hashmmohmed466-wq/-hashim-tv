@@ -39,3 +39,8 @@ https://youtube.com/shorts/SkhgLldIYzQ?si=gG0ZOHve2X0wh_Xc
 https://youtube.com/shorts/vG55KZtmk2I?si=TRtDg86osW6dtyhW
 https://youtube.com/shorts/_32WvpJFgww?si=gYJxeQPl4ypsgxKh
 https://youtube.com/shorts/rqccApcGDgA?si=JuDcoRj3FI3cPfIb
+
+إليك الصورة المصممة خصيصًا لمنصتك هاشم TV مع رمز الاستجابة السريعة (QR Code) بشكل واضح وعالي التباين لضمان سهولة قراءتها ومسحها بكاميرا الهاتف مباشرة:
+[file-tag: code-generated-file-0000000002]
+رابط المنصة المضمن:
+[https://github.com/hashmmohmed466-wq/-hashim-tv.git](https://github.com/hashmmohmed466-wq/-hashim-tv.git)
