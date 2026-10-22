@@ -13,6 +13,24 @@
         راسلنا عبر واتساب
     </span>
 </a>
+
+
+
+
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 max-w-sm mx-auto text-center">
+    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">
+        💬
+    </div>
+    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-1">خدمة الإعلانات والعملاء</h3>
+    <p class="text-gray-500 dark:text-gray-400 text-sm mb-4">تواصل معنا مباشرة عبر الواتساب للاستفسارات والخدمات</p>
+    <a href="https://wa.me/249998040864?text=%Dالسلام%20عليكم،%20أريد%20الاستفسار%20عن%20الخدمات" 
+       target="_blank"
+       class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2.5 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 shadow-sm">
+       <span>راسلنا الآن</span>
+       <span dir="ltr" class="font-mono">+249 99 804 0864</span>
+    </a>
+</div>
+
 https://youtube.com/shorts/Y0QqATc_xW0?si=w-DHP9GNDc8PITxH
 https://youtube.com/shorts/rqccApcGDgA?si=JuDcoRj3FI3cPfIb
 https://youtube.com/shorts/EbNl-olYjg4?si=9tibRK3Vd2mUTe2M
