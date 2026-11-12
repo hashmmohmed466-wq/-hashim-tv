@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>منصة هاشم TV | المساعد الذكي واستوديو الإنتاج</title>
+  <title>منصة هاشم TV | استوديو الذكاء الاصطناعي المتكامل</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
+      --bg: #090e1a;
+      --card-bg: #131c31;
+      --card-hover: #1e293b;
       --accent: #f97316;
-      --accent-hover: #ea580c;
+      --accent-glow: rgba(249, 115, 22, 0.25);
       --text: #f8fafc;
       --text-muted: #94a3b8;
-      --border: #334155;
+      --border: #26334d;
       --success: #10b981;
+      --info: #38bdf8;
     }
     * {
       box-sizing: border-box;
@@ -30,8 +32,8 @@
       overflow: hidden;
     }
     header {
-      background-color: var(--card-bg);
-      padding: 12px 16px;
+      background: linear-gradient(180deg, #162038 0%, #111827 100%);
+      padding: 11px 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -44,45 +46,47 @@
       gap: 8px;
     }
     .badge {
-      background-color: #ef4444;
+      background: linear-gradient(135deg, #ef4444, #f97316);
       color: #fff;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 5px;
-      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
     }
     .title {
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       font-weight: 700;
     }
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
     .icon-btn {
-      background-color: #0f172a;
+      background-color: rgba(15, 23, 42, 0.8);
       color: var(--text-muted);
       border: 1px solid var(--border);
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 5px 9px;
+      border-radius: 7px;
       font-size: 0.76rem;
       cursor: pointer;
+      transition: 0.2s;
     }
     .icon-btn:active {
       border-color: var(--accent);
-      color: var(--text);
+      color: #fff;
     }
     .status-dot {
       width: 9px;
       height: 9px;
       background-color: var(--success);
       border-radius: 50%;
-      box-shadow: 0 0 6px var(--success);
+      box-shadow: 0 0 8px var(--success);
     }
     .nav-tabs {
       display: flex;
-      background-color: #0b1120;
+      background-color: #070b14;
       padding: 6px 10px;
       gap: 6px;
       overflow-x: auto;
@@ -92,21 +96,22 @@
     .nav-btn {
       background: transparent;
       color: var(--text-muted);
-      border: none;
-      padding: 7px 13px;
+      border: 1px solid transparent;
+      padding: 7px 12px;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
     .nav-btn.active {
       background-color: var(--accent);
       color: #fff;
+      box-shadow: 0 2px 10px var(--accent-glow);
     }
     main {
       flex: 1;
-      padding: 12px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -120,6 +125,210 @@
     }
     .tab-content.active {
       display: flex;
+    }
+    .mode-selector {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+    .mode-pill {
+      background-color: var(--card-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .mode-pill.active {
+      background-color: rgba(249, 115, 22, 0.18);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      height: 100%;
+      min-height: 0;
+      gap: 8px;
+    }
+    .chat-box {
+      flex: 1;
+      overflow-y: auto;
+      background-color: #060911;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+    }
+    .chat-msg {
+      padding: 11px 14px;
+      border-radius: 12px;
+      max-width: 92%;
+      line-height: 1.7;
+      font-size: 0.94rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .chat-msg.user {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      align-self: flex-start;
+      border-bottom-right-radius: 3px;
+    }
+    .chat-msg.bot {
+      background-color: var(--card-bg);
+      color: var(--text);
+      align-self: flex-end;
+      border-bottom-left-radius: 3px;
+      border: 1px solid var(--border);
+    }
+    .chat-msg img {
+      max-width: 100%;
+      max-height: 260px;
+      border-radius: 8px;
+      display: block;
+      margin-bottom: 8px;
+      object-fit: contain;
+      background: #000;
+    }
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .action-btn, .tool-link-btn {
+      background-color: #0b1120;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 7px;
+      font-size: 0.77rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+    .action-btn.green {
+      color: var(--success);
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .tool-link-btn {
+      color: var(--info);
+    }
+    .chips-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      flex-shrink: 0;
+      padding-bottom: 2px;
+    }
+    .chip {
+      background-color: #131c31;
+      color: #cbd5e1;
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 14px;
+      font-size: 0.76rem;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .chip:active {
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .preview-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--card-bg);
+      border: 1px solid var(--accent);
+      border-radius: 9px;
+      padding: 6px 10px;
+      flex-shrink: 0;
+    }
+    .preview-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+    .preview-info img {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+    .remove-img-btn {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.76rem;
+      cursor: pointer;
+    }
+    .input-bar {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+      padding-bottom: 3px;
+      align-items: center;
+    }
+    .img-upload-btn {
+      background-color: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .input-bar input[type="text"] {
+      flex: 1;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 11px 12px;
+      border-radius: 9px;
+      outline: none;
+      font-size: 0.92rem;
+      min-width: 0;
+    }
+    .input-bar input[type="text"]:focus {
+      border-color: var(--accent);
+    }
+    .input-bar button.send-btn {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      border: none;
+      padding: 11px 16px;
+      border-radius: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.92rem;
+      flex-shrink: 0;
+    }
+    .input-bar button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
     .card {
       background-color: var(--card-bg);
@@ -136,14 +345,14 @@
     .card p {
       font-size: 0.88rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.55;
       margin-bottom: 10px;
     }
     .quick-btn {
-      background-color: #334155;
+      background-color: #1e293b;
       color: #fff;
       border: 1px solid var(--border);
-      padding: 8px 12px;
+      padding: 9px 12px;
       border-radius: 8px;
       font-size: 0.85rem;
       font-weight: 600;
@@ -156,169 +365,8 @@
       background-color: var(--accent);
     }
     .share-btn {
-      background-color: var(--accent);
-      border-color: var(--accent);
-    }
-    .task-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      font-size: 0.9rem;
-    }
-    .chat-container {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      height: 100%;
-      min-height: 0;
-      gap: 8px;
-    }
-    .chat-box {
-      flex: 1;
-      overflow-y: auto;
-      background-color: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 0;
-    }
-    .chat-msg {
-      padding: 11px 13px;
-      border-radius: 10px;
-      max-width: 92%;
-      line-height: 1.7;
-      font-size: 0.94rem;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-    .chat-msg.user {
-      background-color: var(--accent);
-      color: #fff;
-      align-self: flex-start;
-      border-bottom-right-radius: 2px;
-    }
-    .chat-msg.bot {
-      background-color: var(--card-bg);
-      color: var(--text);
-      align-self: flex-end;
-      border-bottom-left-radius: 2px;
-      border: 1px solid var(--border);
-    }
-    .chat-msg img {
-      max-width: 100%;
-      max-height: 190px;
-      border-radius: 8px;
-      display: block;
-      margin-bottom: 6px;
-      object-fit: cover;
-    }
-    .action-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
-    }
-    .copy-btn, .prompt-copy-btn, .tool-link-btn {
-      background-color: #0f172a;
-      color: var(--accent);
-      border: 1px solid var(--border);
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      font-weight: 600;
-    }
-    .prompt-copy-btn {
-      color: #10b981;
-      border-color: #10b981;
-    }
-    .tool-link-btn {
-      color: #38bdf8;
-    }
-    .preview-bar {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      background-color: var(--card-bg);
-      border: 1px solid var(--accent);
-      border-radius: 8px;
-      padding: 6px 10px;
-      flex-shrink: 0;
-    }
-    .preview-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--text);
-    }
-    .preview-info img {
-      width: 36px;
-      height: 36px;
-      border-radius: 6px;
-      object-fit: cover;
-    }
-    .remove-img-btn {
-      background: #ef4444;
-      color: #fff;
+      background: linear-gradient(135deg, #f97316, #ea580c);
       border: none;
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 0.78rem;
-      cursor: pointer;
-    }
-    .input-bar {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-      padding-bottom: 4px;
-      align-items: center;
-    }
-    .img-upload-btn {
-      background-color: var(--card-bg);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .input-bar input[type="text"] {
-      flex: 1;
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 11px 12px;
-      border-radius: 8px;
-      outline: none;
-      font-size: 0.92rem;
-      min-width: 0;
-    }
-    .input-bar button.send-btn {
-      background-color: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 11px 15px;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 0.92rem;
-      flex-shrink: 0;
-    }
-    .input-bar button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
     }
   </style>
 </head>
@@ -332,35 +380,51 @@
     <div class="header-actions">
       <button class="icon-btn" onclick="clearChat()" title="بدء محادثة جديدة">🗑️ جديد</button>
       <button class="icon-btn" onclick="resetApiKey()" title="إعداد المفتاح">🔑 المفتاح</button>
-      <span class="status-dot" title="متصل"></span>
+      <span class="status-dot" title="متصل وجاهز"></span>
     </div>
   </header>
 
   <nav class="nav-tabs">
-    <button class="nav-btn active" id="btn-assistantTab" onclick="switchTab('assistantTab')">🤖 مساعد هاشم الشامل</button>
-    <button class="nav-btn" id="btn-projectsTab" onclick="switchTab('projectsTab')">📋 المشاريع الجاهزة</button>
+    <button class="nav-btn active" id="btn-assistantTab" onclick="switchTab('assistantTab')">🤖 الاستوديو الذكي</button>
+    <button class="nav-btn" id="btn-projectsTab" onclick="switchTab('projectsTab')">📋 القوالب الاحترافية</button>
     <button class="nav-btn" id="btn-tasksTab" onclick="switchTab('tasksTab')">🔗 رابط العملاء</button>
   </nav>
 
   <main>
     <section id="assistantTab" class="tab-content active">
+      <div class="mode-selector">
+        <button class="mode-pill active" id="mode-general" onclick="setMode('general')">🧠 مساعد شامل (كل المعلومات)</button>
+        <button class="mode-pill" id="mode-image" onclick="setMode('image')">🎨 توليد وتعديل الصور</button>
+        <button class="mode-pill" id="mode-video" onclick="setMode('video')">🎬 مخرج الفيديو والمشاهد</button>
+      </div>
+
       <div class="chat-container">
         <div class="chat-box" id="chatBox">
-          <div class="chat-msg bot">أهلاً بك في منصة هاشم TV! أنا مساعدك الذكي الشامل؛ اسألني في أي مجال (معلومات عامة، دراسة، تجارة، تسويق، برمجة) أو أرفق صورة واطلب تصميم سكربتات ومشاهد فيديو احترافية وسأجيبك فوراً وبالتفصيل الكامل.</div>
+          <div class="chat-msg bot">أهلاً بك في منصة هاشم TV الاحترافية! اختر الوضع المناسب أو اكتب طلبك مباشرة:
+• اسأل في أي مجال (دراسة، تجارة، سفر، برمجة، استشارات) لتحصل على إجابة كاملة ومقنعة.
+• أرفق أي صورة واطلب تعديلها أو إضافة عناصر عليها أو توليد صورة جديدة بالذكاء الاصطناعي.
+• اطلب تصميم فيديو أو إعلان وسأقسمه لك إلى مشاهد مع أوامر التنفيذ الجاهزة.</div>
+        </div>
+
+        <div class="chips-bar" id="chipsBar">
+          <span class="chip" onclick="quickFill('ارسم صورة احترافية لـ ')">🎨 توليد صورة جديدة</span>
+          <span class="chip" onclick="quickFill('عدّل الصورة المرفقة وأضف عليها ')">✨ تعديل صورة مرفقة</span>
+          <span class="chip" onclick="quickFill('صمّم لي فيديو ريلز احترافي عن ')">🎬 سكربت ومشاهد فيديو</span>
+          <span class="chip" onclick="quickFill('اشرح لي بالتفصيل الكامل ')">📚 استشارة ومعلومات</span>
         </div>
 
         <div class="preview-bar" id="previewBar">
           <div class="preview-info">
             <img id="previewThumb" src="" alt="معاينة">
-            <span>تم إرفاق صورة جاهزة للتحليل</span>
+            <span>الصورة جاهزة للتعديل أو التحليل</span>
           </div>
           <button class="remove-img-btn" onclick="clearImage()">✖ إلغاء</button>
         </div>
 
         <div class="input-bar">
           <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImageSelect(event)">
-          <button class="img-upload-btn" onclick="document.getElementById('imageInput').click()" title="إرفاق صورة">📷</button>
-          <input type="text" id="userInput" placeholder="اسأل أي سؤال أو اطلب تصميم فيديو..." onkeydown="if(event.key === 'Enter') sendPrompt()">
+          <button class="img-upload-btn" onclick="document.getElementById('imageInput').click()" title="إرفاق صورة للتعديل أو التحليل">📷</button>
+          <input type="text" id="userInput" placeholder="اكتب سؤالك، أو صف الصورة لتوليدها/تعديلها..." onkeydown="if(event.key === 'Enter') sendPrompt()">
           <button class="send-btn" id="sendBtn" onclick="sendPrompt()">إرسال</button>
         </div>
       </div>
@@ -368,33 +432,27 @@
 
     <section id="projectsTab" class="tab-content">
       <div class="card">
-        <h3 class="card-title">1. صناعة الفيديوهات بدون ظهور (Faceless Reels)</h3>
-        <p>توليد أفكار وسكربتات قوية مع تقسيم المشاهد البصرية وأوامر التوليد الإنجليزية.</p>
-        <button class="quick-btn" onclick="runTemplate('صمّم لي فيديو ريلز قصير بدون ظهور (35 ثانية) عن فوائد الذكاء الاصطناعي في زيادة الدخل، مقسماً إلى مشاهد بالثواني مع الوصف البصري والتعليق الصوتي وأوامر التوليد بالإنجليزية.')">⚡ تصميم فيديو ريلز ومشاهد الآن</button>
+        <h3 class="card-title">1. تعديل الصور وإضافة المؤثرات</h3>
+        <p>ارفع صورتك الشخصية أو صورة منتج، واطلب تغيير الخلفية، تحسين الإضاءة، أو دمج عناصر احترافية عليها.</p>
+        <button class="quick-btn" onclick="activateImageStudio()">🎨 فتح استوديو تعديل وتوليد الصور</button>
       </div>
       <div class="card">
-        <h3 class="card-title">2. كتابة الإعلانات التسويقية الاحترافية</h3>
-        <p>صياغة نصوص إعلانية مقنعة للمتاجر والمشاريع لجذب العملاء (يدعم إرفاق صورة المنتج).</p>
-        <button class="quick-btn" onclick="runTemplate('اكتب لي نص إعلان تسويقي جذاب لمنشور فيسبوك وإنستغرام يعرض خدمات صناعة المحتوى بالذكاء الاصطناعي بأسلوب مقنع ومباشر.')">⚡ توليد إعلان تسويقي الآن</button>
+        <h3 class="card-title">2. صناعة الفيديوهات والريلز (Faceless Reels)</h3>
+        <p>كتابة السكربت الكامل وتقسيم المشاهد بالثواني مع أوامر التوليد الإنجليزية جاهزة للتنفيذ.</p>
+        <button class="quick-btn" onclick="runTemplate('video', 'صمّم لي فيديو ريلز احترافي (30 ثانية) عن مستقبل التجارة الإلكترونية والذكاء الاصطناعي، مقسماً إلى مشاهد بالثواني مع الوصف البصري والتعليق الصوتي وأوامر التوليد بالإنجليزية.')">🎬 تصميم فيديو ريلز الآن</button>
       </div>
       <div class="card">
-        <h3 class="card-title">3. التوثيق الثقافي والقصصي</h3>
-        <p>إعداد نصوص وثائقية ومشاهد مصورة مشوقة للتعليق الصوتي والمونتاج.</p>
-        <button class="quick-btn" onclick="runTemplate('صمّم لي مشروع فيديو وثائقي قصير عن جمال الطبيعة والتاريخ الثقافي في زالنجي وجبل مرة ودارفور، شاملاً التعليق الصوتي ووصف المشاهد البصرية وأوامر التوليد بالإنجليزية.')">⚡ تصميم وثائقي ومشاهد الآن</button>
+        <h3 class="card-title">3. كتابة الإعلانات التسويقية المقنعة</h3>
+        <p>صياغة حملات إعلانية احترافية للمتاجر والشركات بأسلوب تسويقي يجذب العملاء.</p>
+        <button class="quick-btn" onclick="runTemplate('general', 'اكتب لي خطة تسويقية ونص إعلان احترافي مقنع لمتجر إلكتروني حديث يستهدف زيادة المبيعات.')">📢 توليد إعلان تسويقي الآن</button>
       </div>
     </section>
 
     <section id="tasksTab" class="tab-content">
       <div class="card">
-        <h3 class="card-title">🔗 مشاركة المنصة الجاهزة مع العملاء</h3>
-        <p>انسخ الرابط المباشر المُفعّل تلقائياً وأرسله لعميلك في واتساب؛ سيعمل معه المساعد الشامل واستوديو الفيديو فوراً دون طلب أي مفتاح:</p>
+        <h3 class="card-title">🔗 رابط التشغيل المباشر للعملاء</h3>
+        <p>انسخ الرابط المُفعّل وأرسله لعميلك في واتساب؛ سيفتح معه الاستوديو بكامل مميزاته (المحادثة الشاملة، توليد وتعديل الصور، وتصميم الفيديو) دون طلب أي مفتاح:</p>
         <button class="quick-btn share-btn" onclick="copyMagicLink()">📋 نسخ رابط العميل الجاهز للتشغيل الفوري</button>
-      </div>
-      <div class="card">
-        <h3 class="card-title">حالة الأنظمة في المنصة</h3>
-        <div class="task-item"><input type="checkbox" id="m1" checked disabled><label for="m1">محرك المعرفة الشامل والردود المفصلة الكاملة (مفعّل)</label></div>
-        <div class="task-item"><input type="checkbox" id="m2" checked disabled><label for="m2">نظام الاستجابة الفورية بدون تأخير (مفعّل)</label></div>
-        <div class="task-item"><input type="checkbox" id="m3" checked disabled><label for="m3">استخراج أوامر الفيديو الإنجليزية وأدوات التنفيذ المجانية (مفعّل)</label></div>
       </div>
     </section>
   </main>
@@ -404,6 +462,7 @@
     let selectedImageMime = "image/jpeg";
     let selectedImageDataUrl = null;
     let conversationHistory = [];
+    let currentMode = 'general';
 
     (function initMagicKey() {
       const params = new URLSearchParams(window.location.search);
@@ -430,17 +489,47 @@
 
     function resetApiKey() {
       const current = localStorage.getItem('hashim_tv_api_key') || "";
-      const newKey = prompt("أدخل مفتاح Gemini API Key الجديد (أو مفتاح مخصص لعميل):", current);
+      const newKey = prompt("أدخل مفتاح Gemini API Key الجديد:", current);
       if (newKey && newKey.trim().length > 20) {
         localStorage.setItem('hashim_tv_api_key', newKey.trim());
         alert("تم حفظ المفتاح بنجاح!");
       }
     }
 
+    function setMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.mode-pill').forEach(p => p.classList.remove('active'));
+      document.getElementById('mode-' + mode).classList.add('active');
+
+      const input = document.getElementById('userInput');
+      if (mode === 'image') {
+        input.placeholder = "صف الصورة التي تريد رسمها أو التعديل المطلوب على صورتك...";
+      } else if (mode === 'video') {
+        input.placeholder = "اكتب فكرة الفيديو أو الإعلان لتقسيمه إلى مشاهد...";
+      } else {
+        input.placeholder = "اسأل في أي مجال أو اطلب أي مهمة...";
+      }
+    }
+
+    function quickFill(prefix) {
+      const input = document.getElementById('userInput');
+      input.value = prefix;
+      input.focus();
+      if (prefix.includes('صورة')) setMode('image');
+      else if (prefix.includes('فيديو')) setMode('video');
+      else setMode('general');
+    }
+
+    function activateImageStudio() {
+      switchTab('assistantTab');
+      setMode('image');
+      document.getElementById('imageInput').click();
+    }
+
     function clearChat() {
       conversationHistory = [];
       const chatBox = document.getElementById('chatBox');
-      chatBox.innerHTML = '<div class="chat-msg bot">تم بدء محادثة جديدة! اسأل في أي موضوع أو اطلب تصميم فيديو وسأساعدك فوراً.</div>';
+      chatBox.innerHTML = '<div class="chat-msg bot">تم بدء جلسة جديدة! تفضل بطرح سؤالك، أو ارفع صورة لتعديلها، أو اطلب تصميم فيديو.</div>';
     }
 
     function copyMagicLink() {
@@ -449,7 +538,7 @@
       const baseUrl = window.location.origin + window.location.pathname;
       const magicUrl = `${baseUrl}?k=${encodeURIComponent(key)}`;
       navigator.clipboard.writeText(magicUrl).then(() => {
-        alert("✅ تم نسخ رابط العميل الذاتي!\n\nأرسله مباشرة إلى عميلك، وسيعمل معه المساعد تلقائياً بدون طلب أي مفتاح.");
+        alert("✅ تم نسخ رابط العميل الاحترافي!\n\nأرسله لعميلك وسيعمل معه الاستوديو فوراً بدون أي إعدادات.");
       });
     }
 
@@ -462,7 +551,7 @@
         const img = new Image();
         img.onload = function() {
           const canvas = document.createElement('canvas');
-          const maxDim = 800;
+          const maxDim = 900;
           let width = img.width;
           let height = img.height;
 
@@ -479,7 +568,7 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
 
-          selectedImageDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+          selectedImageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
           selectedImageBase64 = selectedImageDataUrl.split(',')[1];
           selectedImageMime = 'image/jpeg';
 
@@ -514,9 +603,20 @@
       return text;
     }
 
-    function isVideoOrCreativeRequest(promptText, outputText, hadImage) {
-      if (hadImage) return true;
-      const keywords = ['فيديو', 'مشهد', 'مشاهد', 'ريلز', 'سكربت', 'سيناريو', 'إعلان', 'اعلان', 'وثائقي', 'prompt', 'لقطة', 'تصوير'];
+    function detectImageGenerationRequest(text, hadImage) {
+      if (currentMode === 'image') return true;
+      const imgKeywords = ['ارسم', 'صمم صورة', 'صمّم صورة', 'ولد صورة', 'ولّد صورة', 'انشئ صورة', 'أنشئ صورة', 'عدل الصورة', 'عدّل الصورة', 'تعديل الصورة', 'اضف على الصورة', 'أضف على الصورة', 'غير الخلفية', 'غيّر الخلفية', 'دمج'];
+      const lower = text.toLowerCase();
+      if (imgKeywords.some(k => lower.includes(k))) return true;
+      if (hadImage && (lower.includes('عدل') || lower.includes('عدّل') || lower.includes('اضف') || lower.includes('أضف') || lower.includes('غير') || lower.includes('غيّر') || lower.includes('حول') || lower.includes('حوّل'))) {
+        return true;
+      }
+      return false;
+    }
+
+    function detectVideoRequest(promptText, outputText) {
+      if (currentMode === 'video') return true;
+      const keywords = ['فيديو', 'مشهد', 'مشاهد', 'ريلز', 'سكربت', 'سيناريو', 'وثائقي', 'لقطة', 'تصوير'];
       const combined = (promptText + " " + outputText).toLowerCase();
       return keywords.some(k => combined.includes(k));
     }
@@ -528,8 +628,9 @@
       document.getElementById('btn-' + tabId).classList.add('active');
     }
 
-    function runTemplate(promptText) {
+    function runTemplate(mode, promptText) {
       switchTab('assistantTab');
+      setMode(mode);
       document.getElementById('userInput').value = promptText;
       sendPrompt();
     }
@@ -537,12 +638,21 @@
     function copyText(btn, textToCopy) {
       navigator.clipboard.writeText(textToCopy).then(() => {
         const oldText = btn.innerText;
-        btn.innerText = '✅ تم النسخ!';
+        btn.innerText = '✅ تم النسخ';
         setTimeout(() => btn.innerText = oldText, 2000);
       });
     }
 
-    async function fetchWithTimeout(url, options, timeout = 18000) {
+    function downloadGeneratedImage(dataUrl) {
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = 'hashim-tv-ai-' + Date.now() + '.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    async function fetchWithTimeout(url, options, timeout = 22000) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), timeout);
       try {
@@ -553,6 +663,54 @@
         clearTimeout(id);
         throw err;
       }
+    }
+
+    async function generateOrEditImage(apiKey, promptText, base64Img, mimeType) {
+      const imageModels = ['gemini-2.5-flash-image-preview', 'gemini-2.0-flash-exp-image-generation'];
+      const parts = [{ text: promptText }];
+      if (base64Img) {
+        parts.push({ inlineData: { mimeType: mimeType, data: base64Img } });
+      }
+
+      for (let model of imageModels) {
+        try {
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+          const res = await fetchWithTimeout(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-goog-api-key': apiKey
+            },
+            body: JSON.stringify({
+              contents: [{ role: 'user', parts: parts }],
+              generationConfig: {
+                responseModalities: ["IMAGE", "TEXT"]
+              }
+            })
+          }, 25000);
+
+          const data = await res.json();
+          const candidateParts = data.candidates?.[0]?.content?.parts || [];
+          let generatedImgDataUrl = null;
+          let replyText = "";
+
+          for (let part of candidateParts) {
+            if (part.inlineData && part.inlineData.data) {
+              const outMime = part.inlineData.mimeType || 'image/png';
+              generatedImgDataUrl = `data:${outMime};base64,${part.inlineData.data}`;
+            } else if (part.text) {
+              replyText += part.text;
+            }
+          }
+
+          if (generatedImgDataUrl) {
+            return { imageUrl: generatedImgDataUrl, text: cleanFormatting(replyText) };
+          }
+        } catch (e) {
+          // الانتقال للنموذج الاحتياطي فوراً
+        }
+      }
+      return null;
     }
 
     async function sendPrompt() {
@@ -592,9 +750,42 @@
 
       const loadingDiv = document.createElement('div');
       loadingDiv.className = 'chat-msg bot';
-      loadingDiv.innerText = 'جاري الكتابة...';
+
+      const isImgTask = detectImageGenerationRequest(displayPrompt, hadImage);
+      loadingDiv.innerText = isImgTask ? '🎨 جاري معالجة وتصميم الصورة بالذكاء الاصطناعي...' : '⚡ جاري إعداد الإجابة الكاملة...';
       chatBox.appendChild(loadingDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
+
+      if (isImgTask) {
+        const imgResult = await generateOrEditImage(apiKey, displayPrompt, currentBase64, currentMime);
+        if (imgResult && imgResult.imageUrl) {
+          loadingDiv.innerHTML = '';
+          const resImg = document.createElement('img');
+          resImg.src = imgResult.imageUrl;
+          loadingDiv.appendChild(resImg);
+
+          if (imgResult.text) {
+            const captionDiv = document.createElement('div');
+            captionDiv.innerText = imgResult.text;
+            loadingDiv.appendChild(captionDiv);
+          }
+
+          const actionRow = document.createElement('div');
+          actionRow.className = 'action-row';
+
+          const dlBtn = document.createElement('button');
+          dlBtn.className = 'action-btn green';
+          dlBtn.innerText = '⬇️ تحميل الصورة بجودة عالية';
+          dlBtn.onclick = () => downloadGeneratedImage(imgResult.imageUrl);
+
+          actionRow.appendChild(dlBtn);
+          loadingDiv.appendChild(actionRow);
+
+          sendBtn.disabled = false;
+          chatBox.scrollTop = chatBox.scrollHeight;
+          return;
+        }
+      }
 
       const userParts = [{ text: displayPrompt }];
       if (currentBase64) {
@@ -611,10 +802,9 @@
         conversationHistory = conversationHistory.slice(-6);
       }
 
-      const systemInstructionText = "أنت المساعد الذكي الشامل والمخرج الإبداعي في (منصة هاشم TV). لديك معرفة موسوعية غير محدودة في جميع المجالات (الدراسة، الجامعات، التجارة، السفر، التقنية، الصحة، التسويق، وصناعة المحتوى). عندما يسألك المستخدم أي سؤال معرفي أو استفسار عام، أجب عليه بإجابة وافية، مقنعة، منظمة، ومفصلة تغطي كافة الجوانب دون اختصار مخل. وعندما يطلب منك تصميم فيديو أو مشاهد أو إعلان أو يرفق صورة، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً بدون أي كلمات عربية في نفس السطر. التزم دائماً بالدخول في صلب الإجابة مباشرة باللغة العربية الفصحى المبسطة وبدون استخدام رموز النجوم أو الهاشتاق.";
+      const systemInstructionText = "أنت المساعد الذكي الخبير والموسوعي في (منصة هاشم TV). تجيب على جميع الأسئلة في كل مجالات المعرفة (التعليم، الجامعات، التجارة، السفر، البرمجة، التسويق، الاستشارات، وصناعة المحتوى) بإجابات وافية، دقيقة، منظمة، ومقنعة تغطي كافة الجوانب بوضوح دون اختصار مخل. وعندما يطلب منك المستخدم تصميم فيديو أو إعلان أو مشاهد أو يرفق صورة لتحليلها، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً بدون أي كلمات عربية في نفس السطر. التزم بالدخول في صلب الإجابة مباشرة باللغة العربية الواضحة وبدون استخدام رموز النجوم أو الهاشتاق.";
 
       const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-3.5-flash-lite', 'gemini-3.8-flash'];
-
       let output = "";
       let lastError = "";
 
@@ -646,14 +836,14 @@
             conversationHistory.push({ role: 'model', parts: [{ text: output }] });
             break;
           } else if (data.error) {
-            lastError = data.error.message || "خطأ مؤقت في الخادم";
+            lastError = data.error.message || "خطأ مؤقت";
             if (lastError.includes("API key")) {
               localStorage.removeItem('hashim_tv_api_key');
               break;
             }
           }
         } catch (e) {
-          lastError = (e.name === 'AbortError') ? "انتهت مهلة الاتصال" : e.message;
+          lastError = e.message;
         }
       }
 
@@ -663,25 +853,25 @@
         const actionRow = document.createElement('div');
         actionRow.className = 'action-row';
 
-        const showVideoTools = isVideoOrCreativeRequest(displayPrompt, output, hadImage);
+        const isVideo = detectVideoRequest(displayPrompt, output);
 
-        if (showVideoTools) {
+        if (isVideo) {
           const promptCopyBtn = document.createElement('button');
-          promptCopyBtn.className = 'prompt-copy-btn';
-          promptCopyBtn.innerText = '🎯 نسخ أمر الفيديو الإنجليزي فقط';
+          promptCopyBtn.className = 'action-btn green';
+          promptCopyBtn.innerText = '🎯 نسخ أمر الفيديو الإنجليزي';
           promptCopyBtn.onclick = () => copyText(promptCopyBtn, extractEnglishPrompts(output));
 
           const pixverseLink = document.createElement('a');
           pixverseLink.className = 'tool-link-btn';
           pixverseLink.href = 'https://app.pixverse.ai';
           pixverseLink.target = '_blank';
-          pixverseLink.innerText = '🎬 تنفيذ الفيديو مجاناً (PixVerse)';
+          pixverseLink.innerText = '🎬 تنفيذ الفيديو (PixVerse)';
 
           const klingLink = document.createElement('a');
           klingLink.className = 'tool-link-btn';
           klingLink.href = 'https://klingai.com';
           klingLink.target = '_blank';
-          klingLink.innerText = '🎥 بديل مجاني (Kling AI)';
+          klingLink.innerText = '🎥 بديل (Kling AI)';
 
           actionRow.appendChild(promptCopyBtn);
           actionRow.appendChild(pixverseLink);
@@ -689,14 +879,14 @@
         }
 
         const copyBtn = document.createElement('button');
-        copyBtn.className = 'copy-btn';
-        copyBtn.innerText = showVideoTools ? '📋 نسخ النص الكامل' : '📋 نسخ الإجابة';
+        copyBtn.className = 'action-btn';
+        copyBtn.innerText = isVideo ? '📋 نسخ السكربت الكامل' : '📋 نسخ الإجابة';
         copyBtn.onclick = () => copyText(copyBtn, output);
         actionRow.appendChild(copyBtn);
 
         loadingDiv.appendChild(actionRow);
       } else {
-        loadingDiv.innerText = "عذراً، يرجى المحاولة مرة أخرى الآن.";
+        loadingDiv.innerText = "عذراً، الخادم مشغول حالياً. اضغط (إرسال) مرة أخرى.";
       }
 
       sendBtn.disabled = false;
