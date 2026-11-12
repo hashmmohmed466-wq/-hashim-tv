@@ -1,3 +1,17 @@
+    function getApiKey() {
+      let key = localStorage.getItem('hashim_tv_api_key');
+      if (!key) {
+        key = prompt("أدخل مفتاح Gemini API Key الخاص بمنصة هاشم TV:");
+        if (key && key.trim().length > 20) {
+          localStorage.setItem('hashim_tv_api_key', key.trim());
+        } else {
+          alert("يرجى إدخال مفتاح API صحيح.");
+          return null;
+        }
+      }
+      return key.trim();
+    }
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
