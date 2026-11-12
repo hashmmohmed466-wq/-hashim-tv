@@ -146,9 +146,14 @@
       cursor: pointer;
       width: 100%;
       text-align: center;
+      margin-top: 6px;
     }
     .quick-btn:active {
       background-color: var(--accent);
+    }
+    .share-btn {
+      background-color: var(--accent);
+      border-color: var(--accent);
     }
     .task-item {
       display: flex;
@@ -181,7 +186,7 @@
       padding: 10px 12px;
       border-radius: 10px;
       max-width: 88%;
-      line-height: 1.6;
+      line-height: 1.65;
       font-size: 0.93rem;
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -258,7 +263,7 @@
   <nav class="nav-tabs">
     <button class="nav-btn active" id="btn-assistantTab" onclick="switchTab('assistantTab')">🤖 مساعد هاشم الذكي</button>
     <button class="nav-btn" id="btn-projectsTab" onclick="switchTab('projectsTab')">📋 المشاريع العملية</button>
-    <button class="nav-btn" id="btn-tasksTab" onclick="switchTab('tasksTab')">🎯 المهام والإطلاق</button>
+    <button class="nav-btn" id="btn-tasksTab" onclick="switchTab('tasksTab')">🔗 رابط العملاء والمهام</button>
   </nav>
 
   <main>
@@ -288,21 +293,35 @@
       <div class="card">
         <h3 class="card-title">3. التوثيق الثقافي والقصصي</h3>
         <p>إعداد نصوص وثائقية مشوقة للتعليق الصوتي والمونتاج.</p>
-        <button class="quick-btn" onclick="runTemplate('اكتب لي نص تعليق صوتي وثائقي قصير وجذاب عن جمال الطبيعة والتاريخ الثقافي في دارفور وجبل مرة بأسلوب سردي مشوق.')">⚡ توليد نص وثائقي الآن</button>
+        <button class="quick-btn" onclick="runTemplate('اكتب لي نص تعليق صوتي وثائقي قصير وجذاب عن جمال الطبيعة والتاريخ الثقافي في زالنجي وجبل مرة ودارفور بأسلوب سردي مشوق.')">⚡ توليد نص وثائقي الآن</button>
       </div>
     </section>
 
     <section id="tasksTab" class="tab-content">
       <div class="card">
+        <h3 class="card-title">🔗 مشاركة المنصة الجاهزة مع العملاء</h3>
+        <p>انسخ الرابط المباشر المُفعّل تلقائياً وأرسله لعميلك في واتساب؛ سيفتح معه الاستوديو فوراً دون أن يطلب منه أي مفتاح حتى لو لم تكن متاحاً:</p>
+        <button class="quick-btn share-btn" onclick="copyMagicLink()">📋 نسخ رابط العميل الجاهز للتشغيل الفوري</button>
+      </div>
+      <div class="card">
         <h3 class="card-title">مهام الانطلاق والتشغيل</h3>
         <div class="task-item"><input type="checkbox" id="m1" checked><label for="m1">ربط محرك الذكاء الاصطناعي بالمنصة</label></div>
-        <div class="task-item"><input type="checkbox" id="m2"><label for="m2">تجهيز أول سكربت فيديو بدون ظهور</label></div>
-        <div class="task-item"><input type="checkbox" id="m3"><label for="m3">نشر المنصة عبر رابط ويب للعملاء</label></div>
+        <div class="task-item"><input type="checkbox" id="m2" checked><label for="m2">تجهيز أول سكربت فيديو بدون ظهور</label></div>
+        <div class="task-item"><input type="checkbox" id="m3" checked><label for="m3">تفعيل الرابط الذاتي للعملاء</label></div>
       </div>
     </section>
   </main>
 
   <script>
+    (function initMagicKey() {
+      const params = new URLSearchParams(window.location.search);
+      const urlKey = params.get('k');
+      if (urlKey && urlKey.trim().length > 20) {
+        localStorage.setItem('hashim_tv_api_key', urlKey.trim());
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    })();
+
     function getApiKey() {
       let key = localStorage.getItem('hashim_tv_api_key');
       if (!key) {
@@ -319,11 +338,29 @@
 
     function resetApiKey() {
       const current = localStorage.getItem('hashim_tv_api_key') || "";
-      const newKey = prompt("أدخل مفتاح Gemini API Key الجديد:", current);
+      const newKey = prompt("أدخل مفتاح Gemini API Key الجديد (أو مفتاح مخصص لعميل):", current);
       if (newKey && newKey.trim().length > 20) {
         localStorage.setItem('hashim_tv_api_key', newKey.trim());
         alert("تم حفظ المفتاح بنجاح!");
       }
+    }
+
+    function copyMagicLink() {
+      const key = getApiKey();
+      if (!key) return;
+      const baseUrl = window.location.origin + window.location.pathname;
+      const magicUrl = `${baseUrl}?k=${encodeURIComponent(key)}`;
+      navigator.clipboard.writeText(magicUrl).then(() => {
+        alert("✅ تم نسخ رابط العميل الذاتي!\n\nأرسله مباشرة إلى عميلك، وسيعمل معه الاستوديو تلقائياً بدون طلب أي مفتاح.");
+      });
+    }
+
+    function cleanFormatting(text) {
+      return text
+        .replace(/\*\*/g, '')
+        .replace(/###\s*/g, '')
+        .replace(/##\s*/g, '')
+        .replace(/---\s*/g, '\n');
     }
 
     function switchTab(tabId) {
@@ -386,7 +423,7 @@
       chatBox.appendChild(loadingDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 
-      const systemPrompt = "أنت المساعد الذكي الرسمي لمنصة هاشم TV. أجب دائماً باللغة العربية حصراً بأسلوب عملي واحترافي ومباشر ومفيد للمستخدم والعملاء. الطلب: " + text;
+      const systemPrompt = "أنت المساعد الذكي الرسمي لمنصة هاشم TV. أجب دائماً باللغة العربية حصراً بأسلوب عملي واحترافي ومباشر ومفيد للمستخدم والعملاء بدون استخدام رموز ماركداون مثل النجوم أو الهاشتاق. الطلب: " + text;
       const models = ['gemini-3.5-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'];
       let output = "";
       let lastError = "";
@@ -408,7 +445,7 @@
           const data = await res.json();
 
           if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-            output = data.candidates[0].content.parts[0].text;
+            output = cleanFormatting(data.candidates[0].content.parts[0].text);
             break;
           } else if (data.error) {
             lastError = data.error.message || "خطأ غير معروف";
