@@ -1,17 +1,3 @@
-    function getApiKey() {
-      let key = localStorage.getItem('hashim_tv_api_key');
-      if (!key) {
-        key = prompt("أدخل مفتاح Gemini API Key الخاص بمنصة هاشم TV:");
-        if (key && key.trim().length > 20) {
-          localStorage.setItem('hashim_tv_api_key', key.trim());
-        } else {
-          alert("يرجى إدخال مفتاح API صحيح.");
-          return null;
-        }
-      }
-      return key.trim();
-    }
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -66,8 +52,22 @@
       font-size: 0.8rem;
     }
     .title {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .key-btn {
+      background-color: #0f172a;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
     }
     .status-dot {
       width: 9px;
@@ -247,9 +247,12 @@
   <header>
     <div class="brand">
       <span class="badge">TV</span>
-      <span class="title">منصة هاشم TV | استوديو الذكاء الاصطناعي</span>
+      <span class="title">منصة هاشم TV</span>
     </div>
-    <span class="status-dot" title="متصل"></span>
+    <div class="header-actions">
+      <button class="key-btn" onclick="resetApiKey()">🔑 المفتاح</button>
+      <span class="status-dot" title="متصل"></span>
+    </div>
   </header>
 
   <nav class="nav-tabs">
@@ -300,7 +303,28 @@
   </main>
 
   <script>
-    const API_KEY = "AQ.Ab8RN6KKn2qNabAklCKxxPvOd-zNvbaLHON_u-E8txJXSZPlng";
+    function getApiKey() {
+      let key = localStorage.getItem('hashim_tv_api_key');
+      if (!key) {
+        key = prompt("أدخل مفتاح Gemini API Key الخاص بمنصة هاشم TV:");
+        if (key && key.trim().length > 20) {
+          localStorage.setItem('hashim_tv_api_key', key.trim());
+        } else {
+          alert("يرجى إدخال مفتاح API صحيح.");
+          return null;
+        }
+      }
+      return key.trim();
+    }
+
+    function resetApiKey() {
+      const current = localStorage.getItem('hashim_tv_api_key') || "";
+      const newKey = prompt("أدخل مفتاح Gemini API Key الجديد:", current);
+      if (newKey && newKey.trim().length > 20) {
+        localStorage.setItem('hashim_tv_api_key', newKey.trim());
+        alert("تم حفظ المفتاح بنجاح!");
+      }
+    }
 
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -337,6 +361,9 @@
     }
 
     async function sendPrompt() {
+      const apiKey = getApiKey();
+      if (!apiKey) return;
+
       const input = document.getElementById('userInput');
       const text = input.value.trim();
       if (!text) return;
@@ -360,14 +387,13 @@
       chatBox.scrollTop = chatBox.scrollHeight;
 
       const systemPrompt = "أنت المساعد الذكي الرسمي لمنصة هاشم TV. أجب دائماً باللغة العربية حصراً بأسلوب عملي واحترافي ومباشر ومفيد للمستخدم والعملاء. الطلب: " + text;
-
       const models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'];
       let output = "";
       let lastError = "";
 
       for (let model of models) {
         try {
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${API_KEY}`;
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
           const res = await fetchWithTimeout(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -383,6 +409,7 @@
             break;
           } else if (data.error) {
             lastError = data.error.message || "خطأ غير معروف";
+            if (lastError.includes("API key")) localStorage.removeItem('hashim_tv_api_key');
           }
         } catch (e) {
           lastError = (e.name === 'AbortError') ? "انتهت مهلة الاتصال بالخادم" : e.message;
@@ -398,7 +425,7 @@
         loadingDiv.appendChild(document.createElement('br'));
         loadingDiv.appendChild(copyBtn);
       } else {
-        loadingDiv.innerText = "تعذر التوليد حالياً (" + lastError + "). تأكد من فتح الصفحة عبر رابط ويب (http/https) أو أعد المحاولة.";
+        loadingDiv.innerText = "تعذر التوليد: " + lastError;
       }
 
       sendBtn.disabled = false;
