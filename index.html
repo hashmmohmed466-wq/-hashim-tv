@@ -8,7 +8,6 @@
     :root {
       --bg: #090e1a;
       --card-bg: #131c31;
-      --card-hover: #1e293b;
       --accent: #f97316;
       --accent-glow: rgba(249, 115, 22, 0.25);
       --text: #f8fafc;
@@ -52,7 +51,6 @@
       padding: 3px 8px;
       border-radius: 6px;
       font-size: 0.78rem;
-      letter-spacing: 0.5px;
     }
     .title {
       font-size: 0.98rem;
@@ -71,11 +69,6 @@
       border-radius: 7px;
       font-size: 0.76rem;
       cursor: pointer;
-      transition: 0.2s;
-    }
-    .icon-btn:active {
-      border-color: var(--accent);
-      color: #fff;
     }
     .status-dot {
       width: 9px;
@@ -96,7 +89,7 @@
     .nav-btn {
       background: transparent;
       color: var(--text-muted);
-      border: 1px solid transparent;
+      border: none;
       padding: 7px 12px;
       border-radius: 8px;
       font-weight: 600;
@@ -193,7 +186,7 @@
     }
     .chat-msg img {
       max-width: 100%;
-      max-height: 260px;
+      max-height: 280px;
       border-radius: 8px;
       display: block;
       margin-bottom: 8px;
@@ -245,10 +238,6 @@
       font-size: 0.76rem;
       white-space: nowrap;
       cursor: pointer;
-    }
-    .chip:active {
-      border-color: var(--accent);
-      color: #fff;
     }
     .preview-bar {
       display: none;
@@ -312,9 +301,6 @@
       font-size: 0.92rem;
       min-width: 0;
     }
-    .input-bar input[type="text"]:focus {
-      border-color: var(--accent);
-    }
     .input-bar button.send-btn {
       background: linear-gradient(135deg, #f97316, #ea580c);
       color: #fff;
@@ -361,9 +347,6 @@
       text-align: center;
       margin-top: 6px;
     }
-    .quick-btn:active {
-      background-color: var(--accent);
-    }
     .share-btn {
       background: linear-gradient(135deg, #f97316, #ea580c);
       border: none;
@@ -402,13 +385,13 @@
         <div class="chat-box" id="chatBox">
           <div class="chat-msg bot">أهلاً بك في منصة هاشم TV الاحترافية! اختر الوضع المناسب أو اكتب طلبك مباشرة:
 • اسأل في أي مجال (دراسة، جامعات، تجارة، سفر، برمجة، استشارات) لتحصل على إجابة كاملة ومفصلة للنهاية.
-• أرفق أي صورة واطلب تعديلها أو إضافة عناصر عليها أو توليد صورة جديدة بالذكاء الاصطناعي.
-• اطلب تصميم فيديو أو إعلان وسأقسمه لك إلى مشاهد مع أوامر التنفيذ الجاهزة.</div>
+• اطلب رسم أو توليد أي صورة وسأنشئها لك فوراً داخل الشاشة.
+• أرفق أي صورة قديمة أو صورة منتج لتحليلها وإعادة صياغتها أو تعديلها.</div>
         </div>
 
         <div class="chips-bar" id="chipsBar">
-          <span class="chip" onclick="quickFill('ارسم صورة احترافية لـ ')">🎨 توليد صورة جديدة</span>
-          <span class="chip" onclick="quickFill('عدّل الصورة المرفقة وأضف عليها ')">✨ تعديل صورة مرفقة</span>
+          <span class="chip" onclick="quickFill('ارسم صورة احترافية لـ ')">🎨 توليد صورة فورية</span>
+          <span class="chip" onclick="quickFill('حلل هذه الصورة وأعد تصميمها بجودة عالية مع ')">✨ ترميم وتعديل صورة</span>
           <span class="chip" onclick="quickFill('صمّم لي فيديو ريلز احترافي عن ')">🎬 سكربت ومشاهد فيديو</span>
           <span class="chip" onclick="quickFill('اشرح لي بالتفصيل الكامل ')">📚 استشارة ومعلومات</span>
         </div>
@@ -416,15 +399,15 @@
         <div class="preview-bar" id="previewBar">
           <div class="preview-info">
             <img id="previewThumb" src="" alt="معاينة">
-            <span>الصورة جاهزة للتعديل أو التحليل</span>
+            <span>الصورة جاهزة للتحليل أو التعديل</span>
           </div>
           <button class="remove-img-btn" onclick="clearImage()">✖ إلغاء</button>
         </div>
 
         <div class="input-bar">
           <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImageSelect(event)">
-          <button class="img-upload-btn" onclick="document.getElementById('imageInput').click()" title="إرفاق صورة للتعديل أو التحليل">📷</button>
-          <input type="text" id="userInput" placeholder="اكتب سؤالك، أو صف الصورة لتوليدها/تعديلها..." onkeydown="if(event.key === 'Enter') sendPrompt()">
+          <button class="img-upload-btn" onclick="document.getElementById('imageInput').click()" title="إرفاق صورة">📷</button>
+          <input type="text" id="userInput" placeholder="اكتب سؤالك، أو صف الصورة التي تريد توليدها..." onkeydown="if(event.key === 'Enter') sendPrompt()">
           <button class="send-btn" id="sendBtn" onclick="sendPrompt()">إرسال</button>
         </div>
       </div>
@@ -432,9 +415,9 @@
 
     <section id="projectsTab" class="tab-content">
       <div class="card">
-        <h3 class="card-title">1. تعديل الصور وإضافة المؤثرات</h3>
-        <p>ارفع صورتك الشخصية أو صورة منتج، واطلب تغيير الخلفية، تحسين الإضاءة، أو دمج عناصر احترافية عليها.</p>
-        <button class="quick-btn" onclick="activateImageStudio()">🎨 فتح استوديو تعديل وتوليد الصور</button>
+        <h3 class="card-title">1. توليد الصور بالذكاء الاصطناعي</h3>
+        <p>اكتب وصف أي صورة (منتج، شعار، شخصية، أو مشهد طبيعي) وسيتم توليدها وعرضها للتحميل فوراً.</p>
+        <button class="quick-btn" onclick="quickFillAndGo('image', 'ارسم صورة سينمائية عالية الجودة لـ ')">🎨 ابدأ توليد صورة الآن</button>
       </div>
       <div class="card">
         <h3 class="card-title">2. صناعة الفيديوهات والريلز (Faceless Reels)</h3>
@@ -451,7 +434,7 @@
     <section id="tasksTab" class="tab-content">
       <div class="card">
         <h3 class="card-title">🔗 رابط التشغيل المباشر للعملاء</h3>
-        <p>انسخ الرابط المُفعّل وأرسله لعميلك في واتساب؛ سيفتح معه الاستوديو بكامل مميزاته (المحادثة الشاملة، توليد وتعديل الصور، وتصميم الفيديو) دون طلب أي مفتاح:</p>
+        <p>انسخ الرابط المُفعّل وأرسله لعميلك في واتساب؛ سيفتح معه الاستوديو بكامل مميزاته دون طلب أي مفتاح:</p>
         <button class="quick-btn share-btn" onclick="copyMagicLink()">📋 نسخ رابط العميل الجاهز للتشغيل الفوري</button>
       </div>
     </section>
@@ -503,9 +486,9 @@
 
       const input = document.getElementById('userInput');
       if (mode === 'image') {
-        input.placeholder = "صف الصورة التي تريد رسمها أو التعديل المطلوب على صورتك...";
+        input.placeholder = "صف الصورة التي تريد توليدها أو التعديل المطلوب...";
       } else if (mode === 'video') {
-        input.placeholder = "اكتب فكرة الفيديو أو الإعلان لتقسيمه إلى مشاهد...";
+        input.placeholder = "اكتب فكرة الفيديو لتقسيمه إلى مشاهد...";
       } else {
         input.placeholder = "اسأل في أي مجال أو اطلب أي مهمة...";
       }
@@ -520,16 +503,16 @@
       else setMode('general');
     }
 
-    function activateImageStudio() {
+    function quickFillAndGo(mode, prefix) {
       switchTab('assistantTab');
-      setMode('image');
-      document.getElementById('imageInput').click();
+      setMode(mode);
+      quickFill(prefix);
     }
 
     function clearChat() {
       conversationHistory = [];
       const chatBox = document.getElementById('chatBox');
-      chatBox.innerHTML = '<div class="chat-msg bot">تم بدء جلسة جديدة! تفضل بطرح سؤالك، أو ارفع صورة لتعديلها، أو اطلب تصميم فيديو.</div>';
+      chatBox.innerHTML = '<div class="chat-msg bot">تم بدء جلسة جديدة! تفضل بطرح سؤالك، أو اطلب توليد صورة، أو تصميم فيديو.</div>';
     }
 
     function copyMagicLink() {
@@ -538,7 +521,7 @@
       const baseUrl = window.location.origin + window.location.pathname;
       const magicUrl = `${baseUrl}?k=${encodeURIComponent(key)}`;
       navigator.clipboard.writeText(magicUrl).then(() => {
-        alert("✅ تم نسخ رابط العميل الاحترافي!\n\nأرسله لعميلك وسيعمل معه الاستوديو فوراً بدون أي إعدادات.");
+        alert("✅ تم نسخ رابط العميل الاحترافي!");
       });
     }
 
@@ -603,15 +586,11 @@
       return text;
     }
 
-    function detectImageGenerationRequest(text, hadImage) {
+    function detectImageRequest(text) {
       if (currentMode === 'image') return true;
-      const imgKeywords = ['ارسم', 'صمم صورة', 'صمّم صورة', 'ولد صورة', 'ولّد صورة', 'انشئ صورة', 'أنشئ صورة', 'عدل الصورة', 'عدّل الصورة', 'تعديل الصورة', 'اضف على الصورة', 'أضف على الصورة', 'غير الخلفية', 'غيّر الخلفية', 'دمج'];
+      const imgKeywords = ['ارسم', 'صمم صورة', 'صمّم صورة', 'ولد صورة', 'ولّد صورة', 'انشئ صورة', 'أنشئ صورة', 'عدل الصورة', 'عدّل الصورة', 'تعديل الصورة', 'حسن الصورة', 'حسّن الصورة', 'ترميم'];
       const lower = text.toLowerCase();
-      if (imgKeywords.some(k => lower.includes(k))) return true;
-      if (hadImage && (lower.includes('عدل') || lower.includes('عدّل') || lower.includes('اضف') || lower.includes('أضف') || lower.includes('غير') || lower.includes('غيّر') || lower.includes('حول') || lower.includes('حوّل'))) {
-        return true;
-      }
-      return false;
+      return imgKeywords.some(k => lower.includes(k));
     }
 
     function detectVideoRequest(promptText, outputText) {
@@ -644,17 +623,8 @@
     }
 
     function continueAnswer() {
-      document.getElementById('userInput').value = "أكمل الشرح والتفاصيل من حيث توقفت تماماً بدون تكرار ما سبق.";
+      document.getElementById('userInput').value = "أكمل الإجابة والتفاصيل من حيث توقفت تماماً بدون تكرار.";
       sendPrompt();
-    }
-
-    function downloadGeneratedImage(dataUrl) {
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'hashim-tv-ai-' + Date.now() + '.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
     }
 
     async function fetchWithTimeout(url, options, timeout = 45000) {
@@ -670,52 +640,41 @@
       }
     }
 
-    async function generateOrEditImage(apiKey, promptText, base64Img, mimeType) {
-      const imageModels = ['gemini-2.5-flash-image-preview', 'gemini-2.0-flash-exp-image-generation'];
-      const parts = [{ text: promptText }];
-      if (base64Img) {
-        parts.push({ inlineData: { mimeType: mimeType, data: base64Img } });
-      }
-
-      for (let model of imageModels) {
+    async function callGemini(apiKey, contentsArray, sysInstruction) {
+      const models = ['gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-3.5-flash-lite'];
+      for (let model of models) {
         try {
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+          const payload = {
+            systemInstruction: { parts: [{ text: sysInstruction }] },
+            contents: contentsArray,
+            generationConfig: {
+              maxOutputTokens: 8192,
+              temperature: 0.7
+            }
+          };
+          if (model.includes('2.5')) {
+            payload.generationConfig.thinkingConfig = { thinkingBudget: 0 };
+          }
           const res = await fetchWithTimeout(url, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'x-goog-api-key': apiKey
             },
-            body: JSON.stringify({
-              contents: [{ role: 'user', parts: parts }],
-              generationConfig: {
-                responseModalities: ["IMAGE", "TEXT"]
-              }
-            })
+            body: JSON.stringify(payload)
           }, 45000);
 
           const data = await res.json();
-          const candidateParts = data.candidates?.[0]?.content?.parts || [];
-          let generatedImgDataUrl = null;
-          let replyText = "";
-
-          for (let part of candidateParts) {
-            if (part.inlineData && part.inlineData.data) {
-              const outMime = part.inlineData.mimeType || 'image/png';
-              generatedImgDataUrl = `data:${outMime};base64,${part.inlineData.data}`;
-            } else if (part.text) {
-              replyText += part.text;
-            }
+          if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+            return cleanFormatting(data.candidates[0].content.parts[0].text);
+          } else if (data.error && data.error.message?.includes("API key")) {
+            localStorage.removeItem('hashim_tv_api_key');
+            break;
           }
-
-          if (generatedImgDataUrl) {
-            return { imageUrl: generatedImgDataUrl, text: cleanFormatting(replyText) };
-          }
-        } catch (e) {
-          // الانتقال للنموذج الاحتياطي فوراً
-        }
+        } catch (e) {}
       }
-      return null;
+      return "";
     }
 
     async function sendPrompt() {
@@ -739,7 +698,7 @@
         userDiv.appendChild(imgEl);
       }
 
-      const displayPrompt = text || "حلل هذه الصورة بالتفصيل واكتب لها وصفاً إبداعياً وسكربتاً مناسباً.";
+      const displayPrompt = text || "حلل هذه الصورة بالتفصيل واكتب وصفاً لتحسينها وتطويرها.";
       const textSpan = document.createElement('div');
       textSpan.innerText = displayPrompt;
       userDiv.appendChild(textSpan);
@@ -756,34 +715,60 @@
       const loadingDiv = document.createElement('div');
       loadingDiv.className = 'chat-msg bot';
 
-      const isImgTask = detectImageGenerationRequest(displayPrompt, hadImage);
-      loadingDiv.innerText = isImgTask ? '🎨 جاري معالجة وتصميم الصورة بالذكاء الاصطناعي...' : '⚡ جاري إعداد الإجابة الشاملة والمفصلة...';
+      const isImgTask = detectImageRequest(displayPrompt);
+      loadingDiv.innerText = isImgTask ? '🎨 جاري تصميم وتوليد الصورة لك الآن...' : '⚡ جاري إعداد الإجابة الكاملة...';
       chatBox.appendChild(loadingDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 
       if (isImgTask) {
-        const imgResult = await generateOrEditImage(apiKey, displayPrompt, currentBase64, currentMime);
-        if (imgResult && imgResult.imageUrl) {
-          loadingDiv.innerHTML = '';
-          const resImg = document.createElement('img');
-          resImg.src = imgResult.imageUrl;
-          loadingDiv.appendChild(resImg);
+        const promptParts = [{
+          text: hadImage
+            ? `Analyze the attached image in detail (subject, pose, clothing, features) and combine it with the user's request: "${displayPrompt}". Output ONLY a rich, photorealistic English image generation prompt (40-70 words) to recreate and enhance this exact scene in ultra high quality 8k. Do not write any Arabic or explanations.`
+            : `Convert this Arabic image request into a rich, detailed, photorealistic English image generation prompt (40-70 words, 8k, cinematic lighting): "${displayPrompt}". Output ONLY the English prompt without any other text.`
+        }];
+        if (currentBase64) {
+          promptParts.push({ inlineData: { mimeType: currentMime, data: currentBase64 } });
+        }
 
-          if (imgResult.text) {
-            const captionDiv = document.createElement('div');
-            captionDiv.innerText = imgResult.text;
-            loadingDiv.appendChild(captionDiv);
-          }
+        const engPrompt = await callGemini(apiKey, [{ role: 'user', parts: promptParts }], "You are an expert AI image prompt engineer. Output only the English prompt.");
+
+        if (engPrompt) {
+          const seed = Math.floor(Math.random() * 100000);
+          const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(engPrompt)}?width=1024&height=1024&seed=${seed}&nologo=true`;
+
+          loadingDiv.innerHTML = '';
+          const genImg = document.createElement('img');
+          genImg.src = imageUrl;
+          genImg.alt = "الصورة المولدة";
+          loadingDiv.appendChild(genImg);
+
+          const descDiv = document.createElement('div');
+          descDiv.innerText = "تم تصميم الصورة بنجاح! يمكنك تحميلها مباشرة أو فتح محرر الصور لإجراء تعديلات يدوية دقيقة:";
+          loadingDiv.appendChild(descDiv);
 
           const actionRow = document.createElement('div');
           actionRow.className = 'action-row';
 
-          const dlBtn = document.createElement('button');
-          dlBtn.className = 'action-btn green';
-          dlBtn.innerText = '⬇️ تحميل الصورة بجودة عالية';
-          dlBtn.onclick = () => downloadGeneratedImage(imgResult.imageUrl);
+          const openImgBtn = document.createElement('a');
+          openImgBtn.className = 'action-btn green';
+          openImgBtn.href = imageUrl;
+          openImgBtn.target = '_blank';
+          openImgBtn.innerText = '⬇️ فتح وتحميل الصورة عالية الدقة';
 
-          actionRow.appendChild(dlBtn);
+          const editorLink = document.createElement('a');
+          editorLink.className = 'tool-link-btn';
+          editorLink.href = 'https://pixlr.com/ar/express/';
+          editorLink.target = '_blank';
+          editorLink.innerText = '🖌️ تعديل وتحسين الصور (Pixlr)';
+
+          const copyPromptBtn = document.createElement('button');
+          copyPromptBtn.className = 'action-btn';
+          copyPromptBtn.innerText = '📋 نسخ الوصف الإنجليزي';
+          copyPromptBtn.onclick = () => copyText(copyPromptBtn, engPrompt);
+
+          actionRow.appendChild(openImgBtn);
+          actionRow.appendChild(editorLink);
+          actionRow.appendChild(copyPromptBtn);
           loadingDiv.appendChild(actionRow);
 
           sendBtn.disabled = false;
@@ -807,58 +792,12 @@
         conversationHistory = conversationHistory.slice(-6);
       }
 
-      const systemInstructionText = "أنت المساعد الذكي الخبير والموسوعي في (منصة هاشم TV). تجيب على جميع الأسئلة في كل مجالات المعرفة (التعليم، الجامعات، الروابط الدراسية، التجارة، السفر، البرمجة، التسويق، الاستشارات، وصناعة المحتوى) بإجابات وافية، شاملة، مكتملة للنهاية، منظمة في نقاط واضحة، ومقنعة تغطي كافة الجوانب دون أي اختصار مخل أو بتر في الجمل. وعندما يطلب منك المستخدم تصميم فيديو أو إعلان أو مشاهد أو يرفق صورة لتحليلها، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً بدون أي كلمات عربية في نفس السطر. التزم بالدخول في صلب الإجابة مباشرة باللغة العربية الواضحة وبدون استخدام رموز النجوم أو الهاشتاق.";
+      const systemInstructionText = "أنت المساعد الذكي الخبير والموسوعي في (منصة هاشم TV). تجيب على جميع الأسئلة في كل مجالات المعرفة (التعليم، الجامعات، الروابط الدراسية، التجارة، السفر، البرمجة، التسويق، الاستشارات، وصناعة المحتوى) بإجابات وافية، شاملة، مكتملة للنهاية، منظمة في نقاط واضحة، ومقنعة تغطي كافة الجوانب دون أي اختصار أو بتر في الجمل. لا تقل أبداً أنك لا تستطيع رسم الصور. وعندما يطلب منك المستخدم تصميم فيديو أو إعلان أو مشاهد، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً. التزم بالدخول في صلب الإجابة مباشرة باللغة العربية الواضحة وبدون استخدام رموز النجوم أو الهاشتاق.";
 
-      const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-3.5-flash-lite'];
-      let output = "";
-      let lastError = "";
-
-      for (let model of models) {
-        try {
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-          const payload = {
-            systemInstruction: {
-              parts: [{ text: systemInstructionText }]
-            },
-            contents: conversationHistory,
-            generationConfig: {
-              maxOutputTokens: 8192,
-              temperature: 0.7
-            }
-          };
-
-          if (model.includes('2.5')) {
-            payload.generationConfig.thinkingConfig = { thinkingBudget: 0 };
-          }
-
-          const res = await fetchWithTimeout(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-goog-api-key': apiKey
-            },
-            body: JSON.stringify(payload)
-          }, 45000);
-
-          const data = await res.json();
-
-          if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-            output = cleanFormatting(data.candidates[0].content.parts[0].text);
-            conversationHistory.push({ role: 'model', parts: [{ text: output }] });
-            break;
-          } else if (data.error) {
-            lastError = data.error.message || "خطأ مؤقت";
-            if (lastError.includes("API key")) {
-              localStorage.removeItem('hashim_tv_api_key');
-              break;
-            }
-          }
-        } catch (e) {
-          lastError = e.message;
-        }
-      }
+      const output = await callGemini(apiKey, conversationHistory, systemInstructionText);
 
       if (output) {
+        conversationHistory.push({ role: 'model', parts: [{ text: output }] });
         loadingDiv.innerText = output;
 
         const actionRow = document.createElement('div');
