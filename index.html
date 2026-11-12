@@ -220,16 +220,21 @@
       padding-top: 8px;
       border-top: 1px solid var(--border);
     }
-    .copy-btn, .tool-link-btn {
+    .copy-btn, .prompt-copy-btn, .tool-link-btn {
       background-color: #0f172a;
       color: var(--accent);
       border: 1px solid var(--border);
-      padding: 5px 10px;
+      padding: 6px 10px;
       border-radius: 6px;
       font-size: 0.78rem;
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
+      font-weight: 600;
+    }
+    .prompt-copy-btn {
+      color: #10b981;
+      border-color: #10b981;
     }
     .tool-link-btn {
       color: #38bdf8;
@@ -336,7 +341,7 @@
     <section id="assistantTab" class="tab-content active">
       <div class="chat-container">
         <div class="chat-box" id="chatBox">
-          <div class="chat-msg bot">مرحباً بك في منصة هاشم TV! اكتب فكرتك أو أرفق صورة (منتج، صورة شخصية، أو مشهد) وسأصمم لك السكربت الكامل والمشاهد البصرية وأوامر التوليد فوراً.</div>
+          <div class="chat-msg bot">مرحباً بك في منصة هاشم TV! اكتب فكرتك أو أرفق صورة (منتج، صورة شخصية، أو مشهد) وسأصمم لك السكربت الكامل والمشاهد البصرية وأوامر التوليد الإنجليزية جاهزة للتنفيذ فوراً.</div>
         </div>
 
         <div class="preview-bar" id="previewBar">
@@ -384,7 +389,7 @@
         <h3 class="card-title">مهام الانطلاق والتشغيل</h3>
         <div class="task-item"><input type="checkbox" id="m1" checked><label for="m1">ربط محرك الذكاء الاصطناعي بالمنصة</label></div>
         <div class="task-item"><input type="checkbox" id="m2" checked><label for="m2">تفعيل إرسال وتحليل الصور للمنتجات والأشخاص</label></div>
-        <div class="task-item"><input type="checkbox" id="m3" checked><label for="m3">تفعيل النصوص الكاملة وأدوات تنفيذ الفيديو</label></div>
+        <div class="task-item"><input type="checkbox" id="m3" checked><label for="m3">تفعيل استخراج أوامر الفيديو الإنجليزية بضغطة زر</label></div>
       </div>
     </section>
   </main>
@@ -490,6 +495,14 @@
         .replace(/---\s*/g, '\n');
     }
 
+    function extractEnglishPrompts(text) {
+      const matches = text.match(/[A-Za-z][A-Za-z0-9\s,.'"-]{25,}/g);
+      if (matches && matches.length > 0) {
+        return matches.map(m => m.trim()).join('\n\n');
+      }
+      return text;
+    }
+
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -579,7 +592,7 @@
         conversationHistory = conversationHistory.slice(-6);
       }
 
-      const systemInstructionText = "أنت المخرج الإبداعي وكاتب السيناريو الذكي في استوديو (منصة هاشم TV) لصناعة المحتوى بالذكاء الاصطناعي. مهمتك هي تلبية جميع طلبات صناعة الفيديو والمشاهد والسكربتات والإعلانات وتحليل الصور فوراً وبكل احترافية دون أي اعتذار أو مقدمات طويلة. ادخل في التنفيذ مباشرة. إذا أرفق المستخدم صورة، صف ما في الصورة بدقة ووظفه في كتابة إعلان تسويقي أو سكربت فيديو. وعندما يطلب إنشاء فيديو أو مشاهد، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، نص التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) جاهزاً للنسخ في أدوات الفيديو. أجب باللغة العربية بأسلوب عملي مباشر خالٍ تماماً من رموز النجوم أو الهاشتاق.";
+      const systemInstructionText = "أنت المخرج الإبداعي وكاتب السيناريو الذكي في استوديو (منصة هاشم TV) لصناعة المحتوى بالذكاء الاصطناعي. مهمتك هي تلبية جميع طلبات صناعة الفيديو والمشاهد والسكربتات والإعلانات وتحليل الصور فوراً وبكل احترافية دون أي اعتذار أو مقدمات طويلة. ادخل في التنفيذ مباشرة. إذا أرفق المستخدم صورة، صف ما في الصورة بدقة ووظفه في كتابة إعلان تسويقي أو سكربت فيديو. وعندما يطلب إنشاء فيديو أو مشاهد، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، نص التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً بدون أي كلمات عربية داخل نفس السطر ليكون جاهزاً للنسخ في أدوات الفيديو. أجب باللغة العربية بأسلوب عملي مباشر خالٍ تماماً من رموز النجوم أو الهاشتاق.";
 
       const models = ['gemini-3.8-flash', 'gemini-3.5-flash-lite'];
       let output = "";
@@ -627,9 +640,14 @@
         const actionRow = document.createElement('div');
         actionRow.className = 'action-row';
 
+        const promptCopyBtn = document.createElement('button');
+        promptCopyBtn.className = 'prompt-copy-btn';
+        promptCopyBtn.innerText = '🎯 نسخ أمر الفيديو الإنجليزي فقط';
+        promptCopyBtn.onclick = () => copyText(promptCopyBtn, extractEnglishPrompts(output));
+
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-btn';
-        copyBtn.innerText = '📋 نسخ النص والمشاهد';
+        copyBtn.innerText = '📋 نسخ النص الكامل';
         copyBtn.onclick = () => copyText(copyBtn, output);
 
         const videoToolLink = document.createElement('a');
@@ -638,15 +656,16 @@
         videoToolLink.target = '_blank';
         videoToolLink.innerText = '🎬 تنفيذ الفيديو (Hailuo AI)';
 
-        const capcutLink = document.createElement('a');
-        capcutLink.className = 'tool-link-btn';
-        capcutLink.href = 'https://www.capcut.com';
-        capcutLink.target = '_blank';
-        capcutLink.innerText = '✂️ مونتاج (CapCut)';
+        const klingLink = document.createElement('a');
+        klingLink.className = 'tool-link-btn';
+        klingLink.href = 'https://klingai.com';
+        klingLink.target = '_blank';
+        klingLink.innerText = '🎥 بديل مجاني (Kling AI)';
 
+        actionRow.appendChild(promptCopyBtn);
         actionRow.appendChild(copyBtn);
         actionRow.appendChild(videoToolLink);
-        actionRow.appendChild(capcutLink);
+        actionRow.appendChild(klingLink);
         loadingDiv.appendChild(actionRow);
       } else {
         loadingDiv.innerText = "تعذر التوليد: " + lastError;
