@@ -172,8 +172,8 @@
     .chat-msg {
       padding: 11px 14px;
       border-radius: 12px;
-      max-width: 92%;
-      line-height: 1.7;
+      max-width: 93%;
+      line-height: 1.75;
       font-size: 0.94rem;
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -401,7 +401,7 @@
       <div class="chat-container">
         <div class="chat-box" id="chatBox">
           <div class="chat-msg bot">أهلاً بك في منصة هاشم TV الاحترافية! اختر الوضع المناسب أو اكتب طلبك مباشرة:
-• اسأل في أي مجال (دراسة، تجارة، سفر، برمجة، استشارات) لتحصل على إجابة كاملة ومقنعة.
+• اسأل في أي مجال (دراسة، جامعات، تجارة، سفر، برمجة، استشارات) لتحصل على إجابة كاملة ومفصلة للنهاية.
 • أرفق أي صورة واطلب تعديلها أو إضافة عناصر عليها أو توليد صورة جديدة بالذكاء الاصطناعي.
 • اطلب تصميم فيديو أو إعلان وسأقسمه لك إلى مشاهد مع أوامر التنفيذ الجاهزة.</div>
         </div>
@@ -643,6 +643,11 @@
       });
     }
 
+    function continueAnswer() {
+      document.getElementById('userInput').value = "أكمل الشرح والتفاصيل من حيث توقفت تماماً بدون تكرار ما سبق.";
+      sendPrompt();
+    }
+
     function downloadGeneratedImage(dataUrl) {
       const link = document.createElement('a');
       link.href = dataUrl;
@@ -652,7 +657,7 @@
       document.body.removeChild(link);
     }
 
-    async function fetchWithTimeout(url, options, timeout = 22000) {
+    async function fetchWithTimeout(url, options, timeout = 45000) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), timeout);
       try {
@@ -687,7 +692,7 @@
                 responseModalities: ["IMAGE", "TEXT"]
               }
             })
-          }, 25000);
+          }, 45000);
 
           const data = await res.json();
           const candidateParts = data.candidates?.[0]?.content?.parts || [];
@@ -752,7 +757,7 @@
       loadingDiv.className = 'chat-msg bot';
 
       const isImgTask = detectImageGenerationRequest(displayPrompt, hadImage);
-      loadingDiv.innerText = isImgTask ? '🎨 جاري معالجة وتصميم الصورة بالذكاء الاصطناعي...' : '⚡ جاري إعداد الإجابة الكاملة...';
+      loadingDiv.innerText = isImgTask ? '🎨 جاري معالجة وتصميم الصورة بالذكاء الاصطناعي...' : '⚡ جاري إعداد الإجابة الشاملة والمفصلة...';
       chatBox.appendChild(loadingDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -802,32 +807,38 @@
         conversationHistory = conversationHistory.slice(-6);
       }
 
-      const systemInstructionText = "أنت المساعد الذكي الخبير والموسوعي في (منصة هاشم TV). تجيب على جميع الأسئلة في كل مجالات المعرفة (التعليم، الجامعات، التجارة، السفر، البرمجة، التسويق، الاستشارات، وصناعة المحتوى) بإجابات وافية، دقيقة، منظمة، ومقنعة تغطي كافة الجوانب بوضوح دون اختصار مخل. وعندما يطلب منك المستخدم تصميم فيديو أو إعلان أو مشاهد أو يرفق صورة لتحليلها، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً بدون أي كلمات عربية في نفس السطر. التزم بالدخول في صلب الإجابة مباشرة باللغة العربية الواضحة وبدون استخدام رموز النجوم أو الهاشتاق.";
+      const systemInstructionText = "أنت المساعد الذكي الخبير والموسوعي في (منصة هاشم TV). تجيب على جميع الأسئلة في كل مجالات المعرفة (التعليم، الجامعات، الروابط الدراسية، التجارة، السفر، البرمجة، التسويق، الاستشارات، وصناعة المحتوى) بإجابات وافية، شاملة، مكتملة للنهاية، منظمة في نقاط واضحة، ومقنعة تغطي كافة الجوانب دون أي اختصار مخل أو بتر في الجمل. وعندما يطلب منك المستخدم تصميم فيديو أو إعلان أو مشاهد أو يرفق صورة لتحليلها، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً بدون أي كلمات عربية في نفس السطر. التزم بالدخول في صلب الإجابة مباشرة باللغة العربية الواضحة وبدون استخدام رموز النجوم أو الهاشتاق.";
 
-      const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-3.5-flash-lite', 'gemini-3.8-flash'];
+      const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-3.5-flash-lite'];
       let output = "";
       let lastError = "";
 
       for (let model of models) {
         try {
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+          const payload = {
+            systemInstruction: {
+              parts: [{ text: systemInstructionText }]
+            },
+            contents: conversationHistory,
+            generationConfig: {
+              maxOutputTokens: 8192,
+              temperature: 0.7
+            }
+          };
+
+          if (model.includes('2.5')) {
+            payload.generationConfig.thinkingConfig = { thinkingBudget: 0 };
+          }
+
           const res = await fetchWithTimeout(url, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'x-goog-api-key': apiKey
             },
-            body: JSON.stringify({
-              systemInstruction: {
-                parts: [{ text: systemInstructionText }]
-              },
-              contents: conversationHistory,
-              generationConfig: {
-                maxOutputTokens: 8192,
-                temperature: 0.7
-              }
-            })
-          }, 18000);
+            body: JSON.stringify(payload)
+          }, 45000);
 
           const data = await res.json();
 
@@ -883,6 +894,12 @@
         copyBtn.innerText = isVideo ? '📋 نسخ السكربت الكامل' : '📋 نسخ الإجابة';
         copyBtn.onclick = () => copyText(copyBtn, output);
         actionRow.appendChild(copyBtn);
+
+        const contBtn = document.createElement('button');
+        contBtn.className = 'action-btn green';
+        contBtn.innerText = '➕ أكمل الشرح';
+        contBtn.onclick = () => continueAnswer();
+        actionRow.appendChild(contBtn);
 
         loadingDiv.appendChild(actionRow);
       } else {
