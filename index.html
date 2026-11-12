@@ -393,7 +393,7 @@
       <div class="card">
         <h3 class="card-title">حالة الأنظمة في المنصة</h3>
         <div class="task-item"><input type="checkbox" id="m1" checked disabled><label for="m1">محرك المعرفة الشامل والردود المفصلة الكاملة (مفعّل)</label></div>
-        <div class="task-item"><input type="checkbox" id="m2" checked disabled><label for="m2">نظام التبديل التلقائي لتجاوز ضغط الخوادم (مفعّل)</label></div>
+        <div class="task-item"><input type="checkbox" id="m2" checked disabled><label for="m2">نظام الاستجابة الفورية بدون تأخير (مفعّل)</label></div>
         <div class="task-item"><input type="checkbox" id="m3" checked disabled><label for="m3">استخراج أوامر الفيديو الإنجليزية وأدوات التنفيذ المجانية (مفعّل)</label></div>
       </div>
     </section>
@@ -542,9 +542,7 @@
       });
     }
 
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-    async function fetchWithTimeout(url, options, timeout = 40000) {
+    async function fetchWithTimeout(url, options, timeout = 18000) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), timeout);
       try {
@@ -594,7 +592,7 @@
 
       const loadingDiv = document.createElement('div');
       loadingDiv.className = 'chat-msg bot';
-      loadingDiv.innerText = 'جاري إعداد الإجابة الكاملة...';
+      loadingDiv.innerText = 'جاري الكتابة...';
       chatBox.appendChild(loadingDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -609,29 +607,18 @@
       }
 
       conversationHistory.push({ role: 'user', parts: userParts });
-      if (conversationHistory.length > 8) {
-        conversationHistory = conversationHistory.slice(-8);
+      if (conversationHistory.length > 6) {
+        conversationHistory = conversationHistory.slice(-6);
       }
 
       const systemInstructionText = "أنت المساعد الذكي الشامل والمخرج الإبداعي في (منصة هاشم TV). لديك معرفة موسوعية غير محدودة في جميع المجالات (الدراسة، الجامعات، التجارة، السفر، التقنية، الصحة، التسويق، وصناعة المحتوى). عندما يسألك المستخدم أي سؤال معرفي أو استفسار عام، أجب عليه بإجابة وافية، مقنعة، منظمة، ومفصلة تغطي كافة الجوانب دون اختصار مخل. وعندما يطلب منك تصميم فيديو أو مشاهد أو إعلان أو يرفق صورة، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً بدون أي كلمات عربية في نفس السطر. التزم دائماً بالدخول في صلب الإجابة مباشرة باللغة العربية الفصحى المبسطة وبدون استخدام رموز النجوم أو الهاشتاق.";
 
-      const attempts = [
-        { model: 'gemini-3.5-flash-lite', delay: 0 },
-        { model: 'gemini-3.8-flash', delay: 1000 },
-        { model: 'gemini-3.5-flash-lite', delay: 2500 },
-        { model: 'gemini-3.8-flash', delay: 3000 }
-      ];
+      const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-3.5-flash-lite', 'gemini-3.8-flash'];
 
       let output = "";
       let lastError = "";
 
-      for (let i = 0; i < attempts.length; i++) {
-        const { model, delay } = attempts[i];
-        if (delay > 0) {
-          loadingDiv.innerText = 'الخادم مزدحم قليلاً، جاري إعادة المحاولة تلقائياً...';
-          await sleep(delay);
-        }
-
+      for (let model of models) {
         try {
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
           const res = await fetchWithTimeout(url, {
@@ -650,7 +637,7 @@
                 temperature: 0.7
               }
             })
-          }, 40000);
+          }, 18000);
 
           const data = await res.json();
 
@@ -666,7 +653,7 @@
             }
           }
         } catch (e) {
-          lastError = (e.name === 'AbortError') ? "انتهت مهلة الاتصال بالخادم" : e.message;
+          lastError = (e.name === 'AbortError') ? "انتهت مهلة الاتصال" : e.message;
         }
       }
 
@@ -709,7 +696,7 @@
 
         loadingDiv.appendChild(actionRow);
       } else {
-        loadingDiv.innerText = "عذراً، الخوادم تشهد ضغطاً كبيراً في هذه اللحظة. يرجى الضغط على زر (إرسال) مرة أخرى بعد ثوانٍ.";
+        loadingDiv.innerText = "عذراً، يرجى المحاولة مرة أخرى الآن.";
       }
 
       sendBtn.disabled = false;
