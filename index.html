@@ -204,6 +204,14 @@
       border-bottom-left-radius: 2px;
       border: 1px solid var(--border);
     }
+    .chat-msg img {
+      max-width: 100%;
+      max-height: 190px;
+      border-radius: 8px;
+      display: block;
+      margin-bottom: 6px;
+      object-fit: cover;
+    }
     .copy-btn {
       display: inline-block;
       margin-top: 8px;
@@ -215,31 +223,78 @@
       font-size: 0.78rem;
       cursor: pointer;
     }
+    .preview-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--card-bg);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 6px 10px;
+      flex-shrink: 0;
+    }
+    .preview-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+    .preview-info img {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+    .remove-img-btn {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
     .input-bar {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-shrink: 0;
       padding-bottom: 4px;
+      align-items: center;
     }
-    .input-bar input {
+    .img-upload-btn {
+      background-color: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .input-bar input[type="text"] {
       flex: 1;
       background-color: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 11px 14px;
+      padding: 11px 12px;
       border-radius: 8px;
       outline: none;
       font-size: 0.92rem;
+      min-width: 0;
     }
-    .input-bar button {
+    .input-bar button.send-btn {
       background-color: var(--accent);
       color: #fff;
       border: none;
-      padding: 0 18px;
+      padding: 11px 15px;
       border-radius: 8px;
       font-weight: 700;
       cursor: pointer;
       font-size: 0.92rem;
+      flex-shrink: 0;
     }
     .input-bar button:disabled {
       opacity: 0.5;
@@ -270,11 +325,22 @@
     <section id="assistantTab" class="tab-content active">
       <div class="chat-container">
         <div class="chat-box" id="chatBox">
-          <div class="chat-msg bot">مرحباً بك في منصة هاشم TV! أنا مساعدك الذكي المباشر، اسألني عن أي مشروع، سكربت، أو خطة تسويقية تحتاجها.</div>
+          <div class="chat-msg bot">مرحباً بك في منصة هاشم TV! اكتب فكرتك أو أرفق صورة (منتج، صورة شخصية، أو مشهد) وسأصمم لك السكربت والإعلان والمشاهد البصرية فوراً.</div>
         </div>
+
+        <div class="preview-bar" id="previewBar">
+          <div class="preview-info">
+            <img id="previewThumb" src="" alt="معاينة">
+            <span>تم إرفاق صورة جاهزة للتحليل</span>
+          </div>
+          <button class="remove-img-btn" onclick="clearImage()">✖ إلغاء</button>
+        </div>
+
         <div class="input-bar">
-          <input type="text" id="userInput" placeholder="اكتب سؤالك أو طلبك هنا..." onkeydown="if(event.key === 'Enter') sendPrompt()">
-          <button id="sendBtn" onclick="sendPrompt()">إرسال</button>
+          <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImageSelect(event)">
+          <button class="img-upload-btn" onclick="document.getElementById('imageInput').click()" title="إرفاق صورة">📷</button>
+          <input type="text" id="userInput" placeholder="اكتب طلبك أو صف الصورة..." onkeydown="if(event.key === 'Enter') sendPrompt()">
+          <button class="send-btn" id="sendBtn" onclick="sendPrompt()">إرسال</button>
         </div>
       </div>
     </section>
@@ -282,18 +348,18 @@
     <section id="projectsTab" class="tab-content">
       <div class="card">
         <h3 class="card-title">1. صناعة الفيديوهات بدون ظهور (Faceless Reels)</h3>
-        <p>توليد أفكار وسكربتات قوية مع وصف المشاهد البصرية المناسبة لمنصات التواصل.</p>
-        <button class="quick-btn" onclick="runTemplate('اكتب لي سكربت فيديو ريلز قصير بدون ظهور (35 ثانية) عن فوائد الذكاء الاصطناعي في زيادة الدخل، مقسماً إلى: مقدمة خاطفة، المحتوى، وخاتمة تفاعلية.')">⚡ توليد سكربت ريلز جاهز الآن</button>
+        <p>توليد أفكار وسكربتات قوية مع تقسيم المشاهد البصرية وأوامر التوليد الجاهزة.</p>
+        <button class="quick-btn" onclick="runTemplate('صمّم لي فيديو ريلز قصير بدون ظهور (35 ثانية) عن فوائد الذكاء الاصطناعي في زيادة الدخل، مقسماً إلى مشاهد بالثواني مع وصف اللقطات البصرية والتعليق الصوتي.')">⚡ تصميم فيديو ريلز ومشاهد الآن</button>
       </div>
       <div class="card">
         <h3 class="card-title">2. كتابة المحتوى التسويقي والإعلانات</h3>
-        <p>صياغة نصوص إعلانية احترافية للمتاجر والمشاريع لجذب العملاء.</p>
+        <p>صياغة نصوص إعلانية احترافية للمتاجر والمشاريع لجذب العملاء (يدعم إرفاق صورة المنتج).</p>
         <button class="quick-btn" onclick="runTemplate('اكتب لي نص إعلان تسويقي جذاب لمنشور فيسبوك وإنستغرام يعرض خدمات صناعة المحتوى بالذكاء الاصطناعي بأسلوب مقنع ومباشر.')">⚡ توليد إعلان تسويقي الآن</button>
       </div>
       <div class="card">
         <h3 class="card-title">3. التوثيق الثقافي والقصصي</h3>
-        <p>إعداد نصوص وثائقية مشوقة للتعليق الصوتي والمونتاج.</p>
-        <button class="quick-btn" onclick="runTemplate('اكتب لي نص تعليق صوتي وثائقي قصير وجذاب عن جمال الطبيعة والتاريخ الثقافي في زالنجي وجبل مرة ودارفور بأسلوب سردي مشوق.')">⚡ توليد نص وثائقي الآن</button>
+        <p>إعداد نصوص وثائقية ومشاهد مصورة مشوقة للتعليق الصوتي والمونتاج.</p>
+        <button class="quick-btn" onclick="runTemplate('صمّم لي مشروع فيديو وثائقي قصير عن جمال الطبيعة والتاريخ الثقافي في زالنجي وجبل مرة ودارفور، شاملاً التعليق الصوتي ووصف المشاهد البصرية لكل لقطة.')">⚡ تصميم وثائقي ومشاهد الآن</button>
       </div>
     </section>
 
@@ -306,13 +372,17 @@
       <div class="card">
         <h3 class="card-title">مهام الانطلاق والتشغيل</h3>
         <div class="task-item"><input type="checkbox" id="m1" checked><label for="m1">ربط محرك الذكاء الاصطناعي بالمنصة</label></div>
-        <div class="task-item"><input type="checkbox" id="m2" checked><label for="m2">تجهيز أول سكربت فيديو بدون ظهور</label></div>
+        <div class="task-item"><input type="checkbox" id="m2" checked><label for="m2">تفعيل إرسال وتحليل الصور للمنتجات والأشخاص</label></div>
         <div class="task-item"><input type="checkbox" id="m3" checked><label for="m3">تفعيل الرابط الذاتي للعملاء</label></div>
       </div>
     </section>
   </main>
 
   <script>
+    let selectedImageBase64 = null;
+    let selectedImageMime = "image/jpeg";
+    let selectedImageDataUrl = null;
+
     (function initMagicKey() {
       const params = new URLSearchParams(window.location.search);
       const urlKey = params.get('k');
@@ -355,6 +425,51 @@
       });
     }
 
+    function handleImageSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 900;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height && width > maxDim) {
+            height *= maxDim / width;
+            width = maxDim;
+          } else if (height > maxDim) {
+            width *= maxDim / height;
+            height = maxDim;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          selectedImageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          selectedImageBase64 = selectedImageDataUrl.split(',')[1];
+          selectedImageMime = 'image/jpeg';
+
+          document.getElementById('previewThumb').src = selectedImageDataUrl;
+          document.getElementById('previewBar').style.display = 'flex';
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearImage() {
+      selectedImageBase64 = null;
+      selectedImageDataUrl = null;
+      document.getElementById('imageInput').value = '';
+      document.getElementById('previewBar').style.display = 'none';
+    }
+
     function cleanFormatting(text) {
       return text
         .replace(/\*\*/g, '')
@@ -384,7 +499,7 @@
       });
     }
 
-    async function fetchWithTimeout(url, options, timeout = 12000) {
+    async function fetchWithTimeout(url, options, timeout = 16000) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), timeout);
       try {
@@ -403,28 +518,53 @@
 
       const input = document.getElementById('userInput');
       const text = input.value.trim();
-      if (!text) return;
+      if (!text && !selectedImageBase64) return;
 
       const chatBox = document.getElementById('chatBox');
       const sendBtn = document.getElementById('sendBtn');
 
       const userDiv = document.createElement('div');
       userDiv.className = 'chat-msg user';
-      userDiv.innerText = text;
+
+      if (selectedImageDataUrl) {
+        const imgEl = document.createElement('img');
+        imgEl.src = selectedImageDataUrl;
+        userDiv.appendChild(imgEl);
+      }
+
+      const displayPrompt = text || "حلل هذه الصورة واكتب لها وصفاً إبداعياً وسكربتاً مناسباً.";
+      const textSpan = document.createElement('div');
+      textSpan.innerText = displayPrompt;
+      userDiv.appendChild(textSpan);
       chatBox.appendChild(userDiv);
 
+      const currentBase64 = selectedImageBase64;
+      const currentMime = selectedImageMime;
+
       input.value = '';
+      clearImage();
       sendBtn.disabled = true;
       chatBox.scrollTop = chatBox.scrollHeight;
 
       const loadingDiv = document.createElement('div');
       loadingDiv.className = 'chat-msg bot';
-      loadingDiv.innerText = 'جاري المعالجة والتوليد...';
+      loadingDiv.innerText = 'جاري تحليل المحتوى وإعداد السكربت...';
       chatBox.appendChild(loadingDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 
-      const systemPrompt = "أنت المساعد الذكي الرسمي لمنصة هاشم TV. أجب دائماً باللغة العربية حصراً بأسلوب عملي واحترافي ومباشر ومفيد للمستخدم والعملاء بدون استخدام رموز ماركداون مثل النجوم أو الهاشتاق. الطلب: " + text;
-      const models = ['gemini-3.5-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+      const systemPrompt = "أنت المخرج الإبداعي وكاتب السيناريو الذكي في استوديو (منصة هاشم TV) لصناعة المحتوى بالذكاء الاصطناعي. مهمتك هي تلبية جميع طلبات صناعة الفيديو والمشاهد والسكربتات والإعلانات وتحليل الصور فوراً وبكل احترافية دون أي اعتذار أو رفض. إذا أرفق المستخدم صورة (صورة شخصية، منتج، أو مشهد)، صف ما في الصورة بدقة ووظفه في كتابة إعلان تسويقي جذاب أو سكربت فيديو أو وصف احترافي حسب طلبه. وعندما يطلب إنشاء فيديو أو مشاهد، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد الوصف البصري والتعليق الصوتي باللغة العربية وأمر التوليد بالإنجليزية (Prompt). أجب باللغة العربية بأسلوب عملي مباشر خالٍ تماماً من رموز النجوم أو الهاشتاق. طلب العميل: " + displayPrompt;
+
+      const requestParts = [{ text: systemPrompt }];
+      if (currentBase64) {
+        requestParts.push({
+          inlineData: {
+            mimeType: currentMime,
+            data: currentBase64
+          }
+        });
+      }
+
+      const models = ['gemini-2.5-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash-lite'];
       let output = "";
       let lastError = "";
 
@@ -438,9 +578,9 @@
               'x-goog-api-key': apiKey
             },
             body: JSON.stringify({
-              contents: [{ parts: [{ text: systemPrompt }] }]
+              contents: [{ parts: requestParts }]
             })
-          }, 12000);
+          }, 16000);
 
           const data = await res.json();
 
@@ -460,7 +600,7 @@
         loadingDiv.innerText = output;
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-btn';
-        copyBtn.innerText = '📋 نسخ النص';
+        copyBtn.innerText = '📋 نسخ النص والمشاهد';
         copyBtn.onclick = () => copyText(copyBtn, output);
         loadingDiv.appendChild(document.createElement('br'));
         loadingDiv.appendChild(copyBtn);
