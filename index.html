@@ -185,7 +185,7 @@
     .chat-msg {
       padding: 10px 12px;
       border-radius: 10px;
-      max-width: 88%;
+      max-width: 90%;
       line-height: 1.65;
       font-size: 0.93rem;
       white-space: pre-wrap;
@@ -212,16 +212,27 @@
       margin-bottom: 6px;
       object-fit: cover;
     }
-    .copy-btn {
-      display: inline-block;
-      margin-top: 8px;
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .copy-btn, .tool-link-btn {
       background-color: #0f172a;
       color: var(--accent);
       border: 1px solid var(--border);
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 6px;
       font-size: 0.78rem;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .tool-link-btn {
+      color: #38bdf8;
     }
     .preview-bar {
       display: none;
@@ -325,7 +336,7 @@
     <section id="assistantTab" class="tab-content active">
       <div class="chat-container">
         <div class="chat-box" id="chatBox">
-          <div class="chat-msg bot">مرحباً بك في منصة هاشم TV! اكتب فكرتك أو أرفق صورة (منتج، صورة شخصية، أو مشهد) وسأصمم لك السكربت والإعلان والمشاهد البصرية فوراً.</div>
+          <div class="chat-msg bot">مرحباً بك في منصة هاشم TV! اكتب فكرتك أو أرفق صورة (منتج، صورة شخصية، أو مشهد) وسأصمم لك السكربت الكامل والمشاهد البصرية وأوامر التوليد فوراً.</div>
         </div>
 
         <div class="preview-bar" id="previewBar">
@@ -349,7 +360,7 @@
       <div class="card">
         <h3 class="card-title">1. صناعة الفيديوهات بدون ظهور (Faceless Reels)</h3>
         <p>توليد أفكار وسكربتات قوية مع تقسيم المشاهد البصرية وأوامر التوليد الجاهزة.</p>
-        <button class="quick-btn" onclick="runTemplate('صمّم لي فيديو ريلز قصير بدون ظهور (35 ثانية) عن فوائد الذكاء الاصطناعي في زيادة الدخل، مقسماً إلى مشاهد بالثواني مع وصف اللقطات البصرية والتعليق الصوتي.')">⚡ تصميم فيديو ريلز ومشاهد الآن</button>
+        <button class="quick-btn" onclick="runTemplate('صمّم لي فيديو ريلز قصير بدون ظهور (35 ثانية) عن فوائد الذكاء الاصطناعي في زيادة الدخل، مقسماً إلى مشاهد بالثواني مع وصف اللقطات البصرية والتعليق الصوتي وأوامر التوليد.')">⚡ تصميم فيديو ريلز ومشاهد الآن</button>
       </div>
       <div class="card">
         <h3 class="card-title">2. كتابة المحتوى التسويقي والإعلانات</h3>
@@ -373,7 +384,7 @@
         <h3 class="card-title">مهام الانطلاق والتشغيل</h3>
         <div class="task-item"><input type="checkbox" id="m1" checked><label for="m1">ربط محرك الذكاء الاصطناعي بالمنصة</label></div>
         <div class="task-item"><input type="checkbox" id="m2" checked><label for="m2">تفعيل إرسال وتحليل الصور للمنتجات والأشخاص</label></div>
-        <div class="task-item"><input type="checkbox" id="m3" checked><label for="m3">تفعيل الرابط الذاتي للعملاء</label></div>
+        <div class="task-item"><input type="checkbox" id="m3" checked><label for="m3">تفعيل النصوص الكاملة وأدوات تنفيذ الفيديو</label></div>
       </div>
     </section>
   </main>
@@ -382,6 +393,7 @@
     let selectedImageBase64 = null;
     let selectedImageMime = "image/jpeg";
     let selectedImageDataUrl = null;
+    let conversationHistory = [];
 
     (function initMagicKey() {
       const params = new URLSearchParams(window.location.search);
@@ -548,21 +560,26 @@
 
       const loadingDiv = document.createElement('div');
       loadingDiv.className = 'chat-msg bot';
-      loadingDiv.innerText = 'جاري تحليل المحتوى وإعداد السكربت والمشاهد...';
+      loadingDiv.innerText = 'جاري إعداد السكربت والمشاهد بالكامل...';
       chatBox.appendChild(loadingDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 
-      const systemPrompt = "أنت المخرج الإبداعي وكاتب السيناريو الذكي في استوديو (منصة هاشم TV) لصناعة المحتوى بالذكاء الاصطناعي. مهمتك هي تلبية جميع طلبات صناعة الفيديو والمشاهد والسكربتات والإعلانات وتحليل الصور فوراً وبكل احترافية دون أي اعتذار أو رفض. إذا أرفق المستخدم صورة (صورة شخصية، منتج، أو مشهد)، صف ما في الصورة بدقة ووظفه في كتابة إعلان تسويقي جذاب أو سكربت فيديو أو وصف احترافي حسب طلبه. وعندما يطلب إنشاء فيديو أو مشاهد، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد الوصف البصري والتعليق الصوتي باللغة العربية وأمر التوليد بالإنجليزية (Prompt). أجب باللغة العربية بأسلوب عملي مباشر خالٍ تماماً من رموز النجوم أو الهاشتاق. طلب العميل: " + displayPrompt;
-
-      const requestParts = [{ text: systemPrompt }];
+      const userParts = [{ text: displayPrompt }];
       if (currentBase64) {
-        requestParts.push({
+        userParts.push({
           inlineData: {
             mimeType: currentMime,
             data: currentBase64
           }
         });
       }
+
+      conversationHistory.push({ role: 'user', parts: userParts });
+      if (conversationHistory.length > 6) {
+        conversationHistory = conversationHistory.slice(-6);
+      }
+
+      const systemInstructionText = "أنت المخرج الإبداعي وكاتب السيناريو الذكي في استوديو (منصة هاشم TV) لصناعة المحتوى بالذكاء الاصطناعي. مهمتك هي تلبية جميع طلبات صناعة الفيديو والمشاهد والسكربتات والإعلانات وتحليل الصور فوراً وبكل احترافية دون أي اعتذار أو مقدمات طويلة. ادخل في التنفيذ مباشرة. إذا أرفق المستخدم صورة، صف ما في الصورة بدقة ووظفه في كتابة إعلان تسويقي أو سكربت فيديو. وعندما يطلب إنشاء فيديو أو مشاهد، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، نص التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) جاهزاً للنسخ في أدوات الفيديو. أجب باللغة العربية بأسلوب عملي مباشر خالٍ تماماً من رموز النجوم أو الهاشتاق.";
 
       const models = ['gemini-3.8-flash', 'gemini-3.5-flash-lite'];
       let output = "";
@@ -578,7 +595,14 @@
               'x-goog-api-key': apiKey
             },
             body: JSON.stringify({
-              contents: [{ parts: requestParts }]
+              systemInstruction: {
+                parts: [{ text: systemInstructionText }]
+              },
+              contents: conversationHistory,
+              generationConfig: {
+                maxOutputTokens: 2048,
+                temperature: 0.7
+              }
             })
           }, 35000);
 
@@ -586,6 +610,7 @@
 
           if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
             output = cleanFormatting(data.candidates[0].content.parts[0].text);
+            conversationHistory.push({ role: 'model', parts: [{ text: output }] });
             break;
           } else if (data.error) {
             lastError = data.error.message || "خطأ غير معروف";
@@ -598,12 +623,31 @@
 
       if (output) {
         loadingDiv.innerText = output;
+
+        const actionRow = document.createElement('div');
+        actionRow.className = 'action-row';
+
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-btn';
         copyBtn.innerText = '📋 نسخ النص والمشاهد';
         copyBtn.onclick = () => copyText(copyBtn, output);
-        loadingDiv.appendChild(document.createElement('br'));
-        loadingDiv.appendChild(copyBtn);
+
+        const videoToolLink = document.createElement('a');
+        videoToolLink.className = 'tool-link-btn';
+        videoToolLink.href = 'https://hailuoai.video';
+        videoToolLink.target = '_blank';
+        videoToolLink.innerText = '🎬 تنفيذ الفيديو (Hailuo AI)';
+
+        const capcutLink = document.createElement('a');
+        capcutLink.className = 'tool-link-btn';
+        capcutLink.href = 'https://www.capcut.com';
+        capcutLink.target = '_blank';
+        capcutLink.innerText = '✂️ مونتاج (CapCut)';
+
+        actionRow.appendChild(copyBtn);
+        actionRow.appendChild(videoToolLink);
+        actionRow.appendChild(capcutLink);
+        loadingDiv.appendChild(actionRow);
       } else {
         loadingDiv.innerText = "تعذر التوليد: " + lastError;
       }
