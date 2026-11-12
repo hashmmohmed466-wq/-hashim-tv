@@ -389,7 +389,7 @@
         <h3 class="card-title">مهام الانطلاق والتشغيل</h3>
         <div class="task-item"><input type="checkbox" id="m1" checked><label for="m1">ربط محرك الذكاء الاصطناعي بالمنصة</label></div>
         <div class="task-item"><input type="checkbox" id="m2" checked><label for="m2">تفعيل إرسال وتحليل الصور للمنتجات والأشخاص</label></div>
-        <div class="task-item"><input type="checkbox" id="m3" checked><label for="m3">تفعيل استخراج أوامر الفيديو الإنجليزية بضغطة زر</label></div>
+        <div class="task-item"><input type="checkbox" id="m3" checked><label for="m3">تفعيل استخراج أوامر الفيديو الإنجليزية وأدوات التنفيذ المجانية</label></div>
       </div>
     </section>
   </main>
@@ -650,11 +650,11 @@
         copyBtn.innerText = '📋 نسخ النص الكامل';
         copyBtn.onclick = () => copyText(copyBtn, output);
 
-        const videoToolLink = document.createElement('a');
-        videoToolLink.className = 'tool-link-btn';
-        videoToolLink.href = 'https://hailuoai.video';
-        videoToolLink.target = '_blank';
-        videoToolLink.innerText = '🎬 تنفيذ الفيديو (Hailuo AI)';
+        const pixverseLink = document.createElement('a');
+        pixverseLink.className = 'tool-link-btn';
+        pixverseLink.href = 'https://app.pixverse.ai';
+        pixverseLink.target = '_blank';
+        pixverseLink.innerText = '🎬 تنفيذ الفيديو مجاناً (PixVerse)';
 
         const klingLink = document.createElement('a');
         klingLink.className = 'tool-link-btn';
@@ -664,7 +664,7 @@
 
         actionRow.appendChild(promptCopyBtn);
         actionRow.appendChild(copyBtn);
-        actionRow.appendChild(videoToolLink);
+        actionRow.appendChild(pixverseLink);
         actionRow.appendChild(klingLink);
         loadingDiv.appendChild(actionRow);
       } else {
