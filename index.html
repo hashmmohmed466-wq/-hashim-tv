@@ -1,169 +1,395 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة هاشم TV | لوحة التحكم والتوثيق التقني</title>
-    <!-- استدعاء Tailwind CSS للتصميم العصري -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>منصة هاشم TV | استوديو الذكاء الاصطناعي</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #f97316;
+      --accent-hover: #ea580c;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --success: #10b981;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      overflow: hidden;
+    }
+    header {
+      background-color: var(--card-bg);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      background-color: #ef4444;
+      color: #fff;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+    }
+    .title {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      background-color: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--success);
+    }
+    .nav-tabs {
+      display: flex;
+      background-color: #0b1120;
+      padding: 6px 10px;
+      gap: 6px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 0.85rem;
+    }
+    .nav-btn.active {
+      background-color: var(--accent);
+      color: #fff;
+    }
+    main {
+      flex: 1;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow-y: auto;
+    }
+    .tab-content {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+    }
+    .tab-content.active {
+      display: flex;
+    }
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 1rem;
+      margin-bottom: 6px;
+      color: var(--accent);
+    }
+    .card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .quick-btn {
+      background-color: #334155;
+      color: #fff;
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+    }
+    .quick-btn:active {
+      background-color: var(--accent);
+    }
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      height: 100%;
+      min-height: 0;
+      gap: 8px;
+    }
+    .chat-box {
+      flex: 1;
+      overflow-y: auto;
+      background-color: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+    }
+    .chat-msg {
+      padding: 10px 12px;
+      border-radius: 10px;
+      max-width: 88%;
+      line-height: 1.6;
+      font-size: 0.93rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .chat-msg.user {
+      background-color: var(--accent);
+      color: #fff;
+      align-self: flex-start;
+      border-bottom-right-radius: 2px;
+    }
+    .chat-msg.bot {
+      background-color: var(--card-bg);
+      color: var(--text);
+      align-self: flex-end;
+      border-bottom-left-radius: 2px;
+      border: 1px solid var(--border);
+    }
+    .copy-btn {
+      display: inline-block;
+      margin-top: 8px;
+      background-color: #0f172a;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+    .input-bar {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+      padding-bottom: 4px;
+    }
+    .input-bar input {
+      flex: 1;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 11px 14px;
+      border-radius: 8px;
+      outline: none;
+      font-size: 0.92rem;
+    }
+    .input-bar button {
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+    .input-bar button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-blue-500 selection:text-white">
+<body>
 
-    <!-- إشعار النسخ العائم -->
-    <div id="toast" class="fixed bottom-5 left-5 bg-emerald-600 text-white px-4 py-2 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center space-x-2 space-x-reverse text-sm">
-        <i class="fa-solid fa-circle-check"></i>
-        <span>تم نسخ الأمر بنجاح إلى الحافظة!</span>
+  <header>
+    <div class="brand">
+      <span class="badge">TV</span>
+      <span class="title">منصة هاشم TV | استوديو الذكاء الاصطناعي</span>
     </div>
+    <span class="status-dot" title="متصل"></span>
+  </header>
 
-    <!-- الهيدر الرئيسي -->
-    <header class="bg-slate-800/80 backdrop-blur-md border-b border-slate-700/80 py-4 px-6 sticky top-0 z-40 shadow-md">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <div class="bg-gradient-to-tr from-blue-600 to-indigo-600 text-white p-2.5 rounded-xl shadow-lg">
-                    <i class="fa-solid fa-tv text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-wide">منصة هاشم TV</h1>
-                    <span class="text-xs text-blue-400 font-medium">HMA Company Trading Ltd</span>
-                </div>
-            </div>
-            <div>
-                <a href="https://wa.me/249998040864" target="_blank" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition flex items-center space-x-2 space-x-reverse shadow-lg shadow-green-900/30">
-                    <i class="fa-brands fa-whatsapp text-lg"></i>
-                    <span>تواصل واتساب</span>
-                </a>
-            </div>
+  <nav class="nav-tabs">
+    <button class="nav-btn active" id="btn-assistantTab" onclick="switchTab('assistantTab')">🤖 مساعد هاشم الذكي</button>
+    <button class="nav-btn" id="btn-projectsTab" onclick="switchTab('projectsTab')">📋 المشاريع العملية</button>
+    <button class="nav-btn" id="btn-tasksTab" onclick="switchTab('tasksTab')">🎯 المهام والإطلاق</button>
+  </nav>
+
+  <main>
+    <section id="assistantTab" class="tab-content active">
+      <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+          <div class="chat-msg bot">مرحباً بك في منصة هاشم TV! أنا مساعدك الذكي المباشر، اسألني عن أي مشروع، سكربت، أو خطة تسويقية تحتاجها.</div>
         </div>
-    </header>
-
-    <!-- المحتوى الرئيسي -->
-    <main class="max-w-5xl mx-auto px-6 py-8 flex-grow w-full">
-        
-        <!-- بطاقة الترحيب -->
-        <div class="bg-gradient-to-r from-blue-950 via-slate-800 to-slate-900 border border-blue-800/40 rounded-2xl p-6 mb-8 shadow-2xl relative overflow-hidden">
-            <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
-            <h2 class="text-2xl font-bold mb-2 flex items-center">
-                <span>مرحباً بك في وثائق النظام والخدمات الرقمية</span>
-            </h2>
-            <p class="text-slate-300 text-sm leading-relaxed">
-                هذه الصفحة تعرض الهيكل البرمجي وأوامر التشغيل المحلية الخاصة بمنصة هاشم TV للحلول الإعلانية والتسويق الرقمي.
-            </p>
+        <div class="input-bar">
+          <input type="text" id="userInput" placeholder="اكتب سؤالك أو طلبك هنا..." onkeydown="if(event.key === 'Enter') sendPrompt()">
+          <button id="sendBtn" onclick="sendPrompt()">إرسال</button>
         </div>
+      </div>
+    </section>
 
-        <!-- هيكل المشروع وأوامر التشغيل -->
-        <div class="grid md:grid-cols-2 gap-6">
-            
-            <!-- هيكل المشروع Project Structure -->
-            <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
-                <h3 class="text-lg font-semibold mb-4 text-blue-400 flex items-center">
-                    <i class="fa-solid fa-sitemap ml-2"></i> هيكل المشروع (Project Structure)
-                </h3>
-                <ul class="space-y-3 text-sm text-slate-300">
-                    <li class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 flex items-center justify-between">
-                        <code class="text-blue-300 font-mono">/index.html</code>
-                        <span class="text-xs text-slate-400 bg-slate-800 px-2.5 py-1 rounded-md">الصفحة الرئيسية</span>
-                    </li>
-                    <li class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 flex items-center justify-between">
-                        <code class="text-blue-300 font-mono">/dashboard</code>
-                        <span class="text-xs text-slate-400 bg-slate-800 px-2.5 py-1 rounded-md">لوحة التحكم التفاعلية</span>
-                    </li>
-                    <li class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 flex items-center justify-between">
-                        <code class="text-blue-300 font-mono">/store</code>
-                        <span class="text-xs text-slate-400 bg-slate-800 px-2.5 py-1 rounded-md">أصول المتجر الرقمي</span>
-                    </li>
-                    <li class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 flex items-center justify-between">
-                        <code class="text-blue-300 font-mono">/server.js</code>
-                        <span class="text-xs text-slate-400 bg-slate-800 px-2.5 py-1 rounded-md">خادم Express API</span>
-                    </li>
-                </ul>
-            </div>
+    <section id="projectsTab" class="tab-content">
+      <div class="card">
+        <h3 class="card-title">1. صناعة الفيديوهات بدون ظهور (Faceless Reels)</h3>
+        <p>توليد أفكار وسكربتات قوية مع وصف المشاهد البصرية المناسبة لمنصات التواصل.</p>
+        <button class="quick-btn" onclick="runTemplate('اكتب لي سكربت فيديو ريلز قصير بدون ظهور (35 ثانية) عن فوائد الذكاء الاصطناعي في زيادة الدخل، مقسماً إلى: مقدمة خاطفة، المحتوى، وخاتمة تفاعلية.')">⚡ توليد سكربت ريلز جاهز الآن</button>
+      </div>
+      <div class="card">
+        <h3 class="card-title">2. كتابة المحتوى التسويقي والإعلانات</h3>
+        <p>صياغة نصوص إعلانية احترافية للمتاجر والمشاريع لجذب العملاء.</p>
+        <button class="quick-btn" onclick="runTemplate('اكتب لي نص إعلان تسويقي جذاب لمنشور فيسبوك وإنستغرام يعرض خدمات صناعة المحتوى بالذكاء الاصطناعي بأسلوب مقنع ومباشر.')">⚡ توليد إعلان تسويقي الآن</button>
+      </div>
+      <div class="card">
+        <h3 class="card-title">3. التوثيق الثقافي والقصصي</h3>
+        <p>إعداد نصوص وثائقية مشوقة للتعليق الصوتي والمونتاج.</p>
+        <button class="quick-btn" onclick="runTemplate('اكتب لي نص تعليق صوتي وثائقي قصير وجذاب عن جمال الطبيعة والتاريخ الثقافي في دارفور وجبل مرة بأسلوب سردي مشوق.')">⚡ توليد نص وثائقي الآن</button>
+      </div>
+    </section>
 
-            <!-- تشغيل النظام مع زر النسخ -->
-            <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex flex-col justify-between">
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 text-blue-400 flex items-center">
-                        <i class="fa-solid fa-terminal ml-2"></i> أوامر التشغيل المحلي (Setup)
-                    </h3>
-                    
-                    <div class="space-y-4 text-sm">
-                        <!-- Backend Command Box -->
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="text-xs text-slate-400">تشغيل الخلفية (Backend):</span>
-                                <button onclick="copyCode(this, 'npm install\nnode server.js')" class="text-xs text-blue-400 hover:text-blue-300 transition flex items-center space-x-1 space-x-reverse bg-slate-900 px-2 py-1 rounded border border-slate-700">
-                                    <i class="fa-regular fa-copy"></i>
-                                    <span>نسخ</span>
-                                </button>
-                            </div>
-                            <div class="bg-slate-900 p-3 rounded-xl font-mono text-xs text-emerald-400 border border-slate-700/80">
-                                npm install<br>
-                                node server.js
-                            </div>
-                        </div>
+    <section id="tasksTab" class="tab-content">
+      <div class="card">
+        <h3 class="card-title">مهام الانطلاق والتشغيل</h3>
+        <div class="task-item"><input type="checkbox" id="m1" checked><label for="m1">ربط محرك الذكاء الاصطناعي بالمنصة</label></div>
+        <div class="task-item"><input type="checkbox" id="m2"><label for="m2">تجهيز أول سكربت فيديو بدون ظهور</label></div>
+        <div class="task-item"><input type="checkbox" id="m3"><label for="m3">نشر المنصة عبر رابط ويب للعملاء</label></div>
+      </div>
+    </section>
+  </main>
 
-                        <!-- Frontend Command Box -->
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="text-xs text-slate-400">تشغيل الواجهة (Frontend):</span>
-                                <button onclick="copyCode(this, 'cd dashboard\nnpm install\nnpm run dev')" class="text-xs text-blue-400 hover:text-blue-300 transition flex items-center space-x-1 space-x-reverse bg-slate-900 px-2 py-1 rounded border border-slate-700">
-                                    <i class="fa-regular fa-copy"></i>
-                                    <span>نسخ</span>
-                                </button>
-                            </div>
-                            <div class="bg-slate-900 p-3 rounded-xl font-mono text-xs text-emerald-400 border border-slate-700/80">
-                                cd dashboard<br>
-                                npm install && npm run dev
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <script>
+    const API_KEY = "AQ.Ab8RN6KKn2qNabAklCKxxPvOd-zNvbaLHON_u-E8txJXSZPlng";
 
-        </div>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      document.getElementById('btn-' + tabId).classList.add('active');
+    }
 
-        <!-- الروابط وحالة السيرفر -->
-        <div class="mt-8 bg-slate-800/90 border border-slate-700/80 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between shadow-xl gap-4">
-            <div class="space-y-1 text-sm text-slate-300 text-center md:text-right">
-                <div>حالة السيرفر المحلي: <a href="http://localhost:3000" target="_blank" class="text-blue-400 hover:underline font-mono">http://localhost:3000</a></div>
-                <div>رابط لوحة Vite: <a href="http://localhost:5173" target="_blank" class="text-blue-400 hover:underline font-mono">http://localhost:5173</a></div>
-            </div>
-            <div>
-                <a href="https://wa.me/249998040864" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-xl font-medium text-sm transition shadow-lg shadow-blue-900/30 flex items-center space-x-2 space-x-reverse">
-                    <i class="fa-solid fa-qrcode text-lg"></i>
-                    <span>طلب خدمات هاشم TV عبر الواتساب</span>
-                </a>
-            </div>
-        </div>
+    function runTemplate(promptText) {
+      switchTab('assistantTab');
+      document.getElementById('userInput').value = promptText;
+      sendPrompt();
+    }
 
-    </main>
+    function copyText(btn, textToCopy) {
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const oldText = btn.innerText;
+        btn.innerText = '✅ تم النسخ!';
+        setTimeout(() => btn.innerText = oldText, 2000);
+      });
+    }
 
-    <!-- الفوتر -->
-    <footer class="bg-slate-800/80 border-t border-slate-700/80 py-4 text-center text-xs text-slate-400">
-        جميع الحقوق محفوظة © 2026 - منصة هاشم TV | شركة إتش إم إي للتجارة الإلكترونية المحدودة
-    </footer>
+    async function fetchWithTimeout(url, options, timeout = 12000) {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeout);
+      try {
+        const response = await fetch(url, { ...options, signal: controller.signal });
+        clearTimeout(id);
+        return response;
+      } catch (err) {
+        clearTimeout(id);
+        throw err;
+      }
+    }
 
-    <!-- سكربت نسخ الأوامر -->
-    <script>
-        function copyCode(button, textToCopy) {
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                // إظهار إشعار النجاح
-                const toast = document.getElementById('toast');
-                toast.classList.remove('translate-y-20', 'opacity-0');
-                
-                // تغيير شكل الزر مؤقتاً
-                const originalHTML = button.innerHTML;
-                button.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> <span class="text-emerald-400">تم النسخ</span>';
-                
-                setTimeout(() => {
-                    toast.classList.add('translate-y-20', 'opacity-0');
-                    button.innerHTML = originalHTML;
-                }, 2000);
-            }).catch(err => {
-                console.error('فشل النسخ إلى الحافظة', err);
-            });
+    async function sendPrompt() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById('chatBox');
+      const sendBtn = document.getElementById('sendBtn');
+
+      const userDiv = document.createElement('div');
+      userDiv.className = 'chat-msg user';
+      userDiv.innerText = text;
+      chatBox.appendChild(userDiv);
+
+      input.value = '';
+      sendBtn.disabled = true;
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      const loadingDiv = document.createElement('div');
+      loadingDiv.className = 'chat-msg bot';
+      loadingDiv.innerText = 'جاري المعالجة والتوليد...';
+      chatBox.appendChild(loadingDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      const systemPrompt = "أنت المساعد الذكي الرسمي لمنصة هاشم TV. أجب دائماً باللغة العربية حصراً بأسلوب عملي واحترافي ومباشر ومفيد للمستخدم والعملاء. الطلب: " + text;
+
+      const models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+      let output = "";
+      let lastError = "";
+
+      for (let model of models) {
+        try {
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${API_KEY}`;
+          const res = await fetchWithTimeout(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: systemPrompt }] }]
+            })
+          }, 12000);
+
+          const data = await res.json();
+
+          if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+            output = data.candidates[0].content.parts[0].text;
+            break;
+          } else if (data.error) {
+            lastError = data.error.message || "خطأ غير معروف";
+          }
+        } catch (e) {
+          lastError = (e.name === 'AbortError') ? "انتهت مهلة الاتصال بالخادم" : e.message;
         }
-    </script>
+      }
 
+      if (output) {
+        loadingDiv.innerText = output;
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'copy-btn';
+        copyBtn.innerText = '📋 نسخ النص';
+        copyBtn.onclick = () => copyText(copyBtn, output);
+        loadingDiv.appendChild(document.createElement('br'));
+        loadingDiv.appendChild(copyBtn);
+      } else {
+        loadingDiv.innerText = "تعذر التوليد حالياً (" + lastError + "). تأكد من فتح الصفحة عبر رابط ويب (http/https) أو أعد المحاولة.";
+      }
+
+      sendBtn.disabled = false;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
 </body>
 </html>
