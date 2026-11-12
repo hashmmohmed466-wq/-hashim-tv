@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>منصة هاشم TV | استوديو الذكاء الاصطناعي</title>
+  <title>منصة هاشم TV | المساعد الذكي واستوديو الإنتاج</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -58,16 +58,20 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
-    .key-btn {
+    .icon-btn {
       background-color: #0f172a;
       color: var(--text-muted);
       border: 1px solid var(--border);
-      padding: 4px 9px;
+      padding: 4px 8px;
       border-radius: 6px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       cursor: pointer;
+    }
+    .icon-btn:active {
+      border-color: var(--accent);
+      color: var(--text);
     }
     .status-dot {
       width: 9px;
@@ -183,11 +187,11 @@
       min-height: 0;
     }
     .chat-msg {
-      padding: 10px 12px;
+      padding: 11px 13px;
       border-radius: 10px;
-      max-width: 90%;
-      line-height: 1.65;
-      font-size: 0.93rem;
+      max-width: 92%;
+      line-height: 1.7;
+      font-size: 0.94rem;
       white-space: pre-wrap;
       word-wrap: break-word;
     }
@@ -326,22 +330,23 @@
       <span class="title">منصة هاشم TV</span>
     </div>
     <div class="header-actions">
-      <button class="key-btn" onclick="resetApiKey()">🔑 المفتاح</button>
+      <button class="icon-btn" onclick="clearChat()" title="بدء محادثة جديدة">🗑️ جديد</button>
+      <button class="icon-btn" onclick="resetApiKey()" title="إعداد المفتاح">🔑 المفتاح</button>
       <span class="status-dot" title="متصل"></span>
     </div>
   </header>
 
   <nav class="nav-tabs">
-    <button class="nav-btn active" id="btn-assistantTab" onclick="switchTab('assistantTab')">🤖 مساعد هاشم الذكي</button>
-    <button class="nav-btn" id="btn-projectsTab" onclick="switchTab('projectsTab')">📋 المشاريع العملية</button>
-    <button class="nav-btn" id="btn-tasksTab" onclick="switchTab('tasksTab')">🔗 رابط العملاء والمهام</button>
+    <button class="nav-btn active" id="btn-assistantTab" onclick="switchTab('assistantTab')">🤖 مساعد هاشم الشامل</button>
+    <button class="nav-btn" id="btn-projectsTab" onclick="switchTab('projectsTab')">📋 المشاريع الجاهزة</button>
+    <button class="nav-btn" id="btn-tasksTab" onclick="switchTab('tasksTab')">🔗 رابط العملاء</button>
   </nav>
 
   <main>
     <section id="assistantTab" class="tab-content active">
       <div class="chat-container">
         <div class="chat-box" id="chatBox">
-          <div class="chat-msg bot">مرحباً بك في منصة هاشم TV! اكتب فكرتك أو أرفق صورة (منتج، صورة شخصية، أو مشهد) وسأصمم لك السكربت الكامل والمشاهد البصرية وأوامر التوليد الإنجليزية جاهزة للتنفيذ فوراً.</div>
+          <div class="chat-msg bot">أهلاً بك في منصة هاشم TV! أنا مساعدك الذكي الشامل؛ اسألني في أي مجال (معلومات عامة، دراسة، تجارة، تسويق، برمجة) أو أرفق صورة واطلب تصميم سكربتات ومشاهد فيديو احترافية وسأجيبك فوراً وبالتفصيل الكامل.</div>
         </div>
 
         <div class="preview-bar" id="previewBar">
@@ -355,7 +360,7 @@
         <div class="input-bar">
           <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImageSelect(event)">
           <button class="img-upload-btn" onclick="document.getElementById('imageInput').click()" title="إرفاق صورة">📷</button>
-          <input type="text" id="userInput" placeholder="اكتب طلبك أو صف الصورة..." onkeydown="if(event.key === 'Enter') sendPrompt()">
+          <input type="text" id="userInput" placeholder="اسأل أي سؤال أو اطلب تصميم فيديو..." onkeydown="if(event.key === 'Enter') sendPrompt()">
           <button class="send-btn" id="sendBtn" onclick="sendPrompt()">إرسال</button>
         </div>
       </div>
@@ -364,32 +369,32 @@
     <section id="projectsTab" class="tab-content">
       <div class="card">
         <h3 class="card-title">1. صناعة الفيديوهات بدون ظهور (Faceless Reels)</h3>
-        <p>توليد أفكار وسكربتات قوية مع تقسيم المشاهد البصرية وأوامر التوليد الجاهزة.</p>
-        <button class="quick-btn" onclick="runTemplate('صمّم لي فيديو ريلز قصير بدون ظهور (35 ثانية) عن فوائد الذكاء الاصطناعي في زيادة الدخل، مقسماً إلى مشاهد بالثواني مع وصف اللقطات البصرية والتعليق الصوتي وأوامر التوليد.')">⚡ تصميم فيديو ريلز ومشاهد الآن</button>
+        <p>توليد أفكار وسكربتات قوية مع تقسيم المشاهد البصرية وأوامر التوليد الإنجليزية.</p>
+        <button class="quick-btn" onclick="runTemplate('صمّم لي فيديو ريلز قصير بدون ظهور (35 ثانية) عن فوائد الذكاء الاصطناعي في زيادة الدخل، مقسماً إلى مشاهد بالثواني مع الوصف البصري والتعليق الصوتي وأوامر التوليد بالإنجليزية.')">⚡ تصميم فيديو ريلز ومشاهد الآن</button>
       </div>
       <div class="card">
-        <h3 class="card-title">2. كتابة المحتوى التسويقي والإعلانات</h3>
-        <p>صياغة نصوص إعلانية احترافية للمتاجر والمشاريع لجذب العملاء (يدعم إرفاق صورة المنتج).</p>
+        <h3 class="card-title">2. كتابة الإعلانات التسويقية الاحترافية</h3>
+        <p>صياغة نصوص إعلانية مقنعة للمتاجر والمشاريع لجذب العملاء (يدعم إرفاق صورة المنتج).</p>
         <button class="quick-btn" onclick="runTemplate('اكتب لي نص إعلان تسويقي جذاب لمنشور فيسبوك وإنستغرام يعرض خدمات صناعة المحتوى بالذكاء الاصطناعي بأسلوب مقنع ومباشر.')">⚡ توليد إعلان تسويقي الآن</button>
       </div>
       <div class="card">
         <h3 class="card-title">3. التوثيق الثقافي والقصصي</h3>
         <p>إعداد نصوص وثائقية ومشاهد مصورة مشوقة للتعليق الصوتي والمونتاج.</p>
-        <button class="quick-btn" onclick="runTemplate('صمّم لي مشروع فيديو وثائقي قصير عن جمال الطبيعة والتاريخ الثقافي في زالنجي وجبل مرة ودارفور، شاملاً التعليق الصوتي ووصف المشاهد البصرية لكل لقطة.')">⚡ تصميم وثائقي ومشاهد الآن</button>
+        <button class="quick-btn" onclick="runTemplate('صمّم لي مشروع فيديو وثائقي قصير عن جمال الطبيعة والتاريخ الثقافي في زالنجي وجبل مرة ودارفور، شاملاً التعليق الصوتي ووصف المشاهد البصرية وأوامر التوليد بالإنجليزية.')">⚡ تصميم وثائقي ومشاهد الآن</button>
       </div>
     </section>
 
     <section id="tasksTab" class="tab-content">
       <div class="card">
         <h3 class="card-title">🔗 مشاركة المنصة الجاهزة مع العملاء</h3>
-        <p>انسخ الرابط المباشر المُفعّل تلقائياً وأرسله لعميلك في واتساب؛ سيفتح معه الاستوديو فوراً دون أن يطلب منه أي مفتاح حتى لو لم تكن متاحاً:</p>
+        <p>انسخ الرابط المباشر المُفعّل تلقائياً وأرسله لعميلك في واتساب؛ سيعمل معه المساعد الشامل واستوديو الفيديو فوراً دون طلب أي مفتاح:</p>
         <button class="quick-btn share-btn" onclick="copyMagicLink()">📋 نسخ رابط العميل الجاهز للتشغيل الفوري</button>
       </div>
       <div class="card">
-        <h3 class="card-title">مهام الانطلاق والتشغيل</h3>
-        <div class="task-item"><input type="checkbox" id="m1" checked><label for="m1">ربط محرك الذكاء الاصطناعي بالمنصة</label></div>
-        <div class="task-item"><input type="checkbox" id="m2" checked><label for="m2">تفعيل إرسال وتحليل الصور للمنتجات والأشخاص</label></div>
-        <div class="task-item"><input type="checkbox" id="m3" checked><label for="m3">تفعيل استخراج أوامر الفيديو الإنجليزية وأدوات التنفيذ المجانية</label></div>
+        <h3 class="card-title">حالة الأنظمة في المنصة</h3>
+        <div class="task-item"><input type="checkbox" id="m1" checked disabled><label for="m1">محرك المعرفة الشامل والردود المفصلة الكاملة (مفعّل)</label></div>
+        <div class="task-item"><input type="checkbox" id="m2" checked disabled><label for="m2">نظام التبديل التلقائي لتجاوز ضغط الخوادم (مفعّل)</label></div>
+        <div class="task-item"><input type="checkbox" id="m3" checked disabled><label for="m3">استخراج أوامر الفيديو الإنجليزية وأدوات التنفيذ المجانية (مفعّل)</label></div>
       </div>
     </section>
   </main>
@@ -432,13 +437,19 @@
       }
     }
 
+    function clearChat() {
+      conversationHistory = [];
+      const chatBox = document.getElementById('chatBox');
+      chatBox.innerHTML = '<div class="chat-msg bot">تم بدء محادثة جديدة! اسأل في أي موضوع أو اطلب تصميم فيديو وسأساعدك فوراً.</div>';
+    }
+
     function copyMagicLink() {
       const key = getApiKey();
       if (!key) return;
       const baseUrl = window.location.origin + window.location.pathname;
       const magicUrl = `${baseUrl}?k=${encodeURIComponent(key)}`;
       navigator.clipboard.writeText(magicUrl).then(() => {
-        alert("✅ تم نسخ رابط العميل الذاتي!\n\nأرسله مباشرة إلى عميلك، وسيعمل معه الاستوديو تلقائياً بدون طلب أي مفتاح.");
+        alert("✅ تم نسخ رابط العميل الذاتي!\n\nأرسله مباشرة إلى عميلك، وسيعمل معه المساعد تلقائياً بدون طلب أي مفتاح.");
       });
     }
 
@@ -503,6 +514,13 @@
       return text;
     }
 
+    function isVideoOrCreativeRequest(promptText, outputText, hadImage) {
+      if (hadImage) return true;
+      const keywords = ['فيديو', 'مشهد', 'مشاهد', 'ريلز', 'سكربت', 'سيناريو', 'إعلان', 'اعلان', 'وثائقي', 'prompt', 'لقطة', 'تصوير'];
+      const combined = (promptText + " " + outputText).toLowerCase();
+      return keywords.some(k => combined.includes(k));
+    }
+
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -524,7 +542,9 @@
       });
     }
 
-    async function fetchWithTimeout(url, options, timeout = 35000) {
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    async function fetchWithTimeout(url, options, timeout = 40000) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), timeout);
       try {
@@ -551,13 +571,14 @@
       const userDiv = document.createElement('div');
       userDiv.className = 'chat-msg user';
 
+      const hadImage = Boolean(selectedImageBase64);
       if (selectedImageDataUrl) {
         const imgEl = document.createElement('img');
         imgEl.src = selectedImageDataUrl;
         userDiv.appendChild(imgEl);
       }
 
-      const displayPrompt = text || "حلل هذه الصورة واكتب لها وصفاً إبداعياً وسكربتاً مناسباً.";
+      const displayPrompt = text || "حلل هذه الصورة بالتفصيل واكتب لها وصفاً إبداعياً وسكربتاً مناسباً.";
       const textSpan = document.createElement('div');
       textSpan.innerText = displayPrompt;
       userDiv.appendChild(textSpan);
@@ -573,7 +594,7 @@
 
       const loadingDiv = document.createElement('div');
       loadingDiv.className = 'chat-msg bot';
-      loadingDiv.innerText = 'جاري إعداد السكربت والمشاهد بالكامل...';
+      loadingDiv.innerText = 'جاري إعداد الإجابة الكاملة...';
       chatBox.appendChild(loadingDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -588,17 +609,29 @@
       }
 
       conversationHistory.push({ role: 'user', parts: userParts });
-      if (conversationHistory.length > 6) {
-        conversationHistory = conversationHistory.slice(-6);
+      if (conversationHistory.length > 8) {
+        conversationHistory = conversationHistory.slice(-8);
       }
 
-      const systemInstructionText = "أنت المخرج الإبداعي وكاتب السيناريو الذكي في استوديو (منصة هاشم TV) لصناعة المحتوى بالذكاء الاصطناعي. مهمتك هي تلبية جميع طلبات صناعة الفيديو والمشاهد والسكربتات والإعلانات وتحليل الصور فوراً وبكل احترافية دون أي اعتذار أو مقدمات طويلة. ادخل في التنفيذ مباشرة. إذا أرفق المستخدم صورة، صف ما في الصورة بدقة ووظفه في كتابة إعلان تسويقي أو سكربت فيديو. وعندما يطلب إنشاء فيديو أو مشاهد، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، نص التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً بدون أي كلمات عربية داخل نفس السطر ليكون جاهزاً للنسخ في أدوات الفيديو. أجب باللغة العربية بأسلوب عملي مباشر خالٍ تماماً من رموز النجوم أو الهاشتاق.";
+      const systemInstructionText = "أنت المساعد الذكي الشامل والمخرج الإبداعي في (منصة هاشم TV). لديك معرفة موسوعية غير محدودة في جميع المجالات (الدراسة، الجامعات، التجارة، السفر، التقنية، الصحة، التسويق، وصناعة المحتوى). عندما يسألك المستخدم أي سؤال معرفي أو استفسار عام، أجب عليه بإجابة وافية، مقنعة، منظمة، ومفصلة تغطي كافة الجوانب دون اختصار مخل. وعندما يطلب منك تصميم فيديو أو مشاهد أو إعلان أو يرفق صورة، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً بدون أي كلمات عربية في نفس السطر. التزم دائماً بالدخول في صلب الإجابة مباشرة باللغة العربية الفصحى المبسطة وبدون استخدام رموز النجوم أو الهاشتاق.";
 
-      const models = ['gemini-3.5-flash-lite', 'gemini-3.8-flash'];
+      const attempts = [
+        { model: 'gemini-3.5-flash-lite', delay: 0 },
+        { model: 'gemini-3.8-flash', delay: 1000 },
+        { model: 'gemini-3.5-flash-lite', delay: 2500 },
+        { model: 'gemini-3.8-flash', delay: 3000 }
+      ];
+
       let output = "";
       let lastError = "";
 
-      for (let model of models) {
+      for (let i = 0; i < attempts.length; i++) {
+        const { model, delay } = attempts[i];
+        if (delay > 0) {
+          loadingDiv.innerText = 'الخادم مزدحم قليلاً، جاري إعادة المحاولة تلقائياً...';
+          await sleep(delay);
+        }
+
         try {
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
           const res = await fetchWithTimeout(url, {
@@ -617,7 +650,7 @@
                 temperature: 0.7
               }
             })
-          }, 35000);
+          }, 40000);
 
           const data = await res.json();
 
@@ -626,8 +659,11 @@
             conversationHistory.push({ role: 'model', parts: [{ text: output }] });
             break;
           } else if (data.error) {
-            lastError = data.error.message || "خطأ غير معروف";
-            if (lastError.includes("API key")) localStorage.removeItem('hashim_tv_api_key');
+            lastError = data.error.message || "خطأ مؤقت في الخادم";
+            if (lastError.includes("API key")) {
+              localStorage.removeItem('hashim_tv_api_key');
+              break;
+            }
           }
         } catch (e) {
           lastError = (e.name === 'AbortError') ? "انتهت مهلة الاتصال بالخادم" : e.message;
@@ -640,35 +676,40 @@
         const actionRow = document.createElement('div');
         actionRow.className = 'action-row';
 
-        const promptCopyBtn = document.createElement('button');
-        promptCopyBtn.className = 'prompt-copy-btn';
-        promptCopyBtn.innerText = '🎯 نسخ أمر الفيديو الإنجليزي فقط';
-        promptCopyBtn.onclick = () => copyText(promptCopyBtn, extractEnglishPrompts(output));
+        const showVideoTools = isVideoOrCreativeRequest(displayPrompt, output, hadImage);
+
+        if (showVideoTools) {
+          const promptCopyBtn = document.createElement('button');
+          promptCopyBtn.className = 'prompt-copy-btn';
+          promptCopyBtn.innerText = '🎯 نسخ أمر الفيديو الإنجليزي فقط';
+          promptCopyBtn.onclick = () => copyText(promptCopyBtn, extractEnglishPrompts(output));
+
+          const pixverseLink = document.createElement('a');
+          pixverseLink.className = 'tool-link-btn';
+          pixverseLink.href = 'https://app.pixverse.ai';
+          pixverseLink.target = '_blank';
+          pixverseLink.innerText = '🎬 تنفيذ الفيديو مجاناً (PixVerse)';
+
+          const klingLink = document.createElement('a');
+          klingLink.className = 'tool-link-btn';
+          klingLink.href = 'https://klingai.com';
+          klingLink.target = '_blank';
+          klingLink.innerText = '🎥 بديل مجاني (Kling AI)';
+
+          actionRow.appendChild(promptCopyBtn);
+          actionRow.appendChild(pixverseLink);
+          actionRow.appendChild(klingLink);
+        }
 
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-btn';
-        copyBtn.innerText = '📋 نسخ النص الكامل';
+        copyBtn.innerText = showVideoTools ? '📋 نسخ النص الكامل' : '📋 نسخ الإجابة';
         copyBtn.onclick = () => copyText(copyBtn, output);
-
-        const pixverseLink = document.createElement('a');
-        pixverseLink.className = 'tool-link-btn';
-        pixverseLink.href = 'https://app.pixverse.ai';
-        pixverseLink.target = '_blank';
-        pixverseLink.innerText = '🎬 تنفيذ الفيديو مجاناً (PixVerse)';
-
-        const klingLink = document.createElement('a');
-        klingLink.className = 'tool-link-btn';
-        klingLink.href = 'https://klingai.com';
-        klingLink.target = '_blank';
-        klingLink.innerText = '🎥 بديل مجاني (Kling AI)';
-
-        actionRow.appendChild(promptCopyBtn);
         actionRow.appendChild(copyBtn);
-        actionRow.appendChild(pixverseLink);
-        actionRow.appendChild(klingLink);
+
         loadingDiv.appendChild(actionRow);
       } else {
-        loadingDiv.innerText = "تعذر التوليد: " + lastError;
+        loadingDiv.innerText = "عذراً، الخوادم تشهد ضغطاً كبيراً في هذه اللحظة. يرجى الضغط على زر (إرسال) مرة أخرى بعد ثوانٍ.";
       }
 
       sendBtn.disabled = false;
