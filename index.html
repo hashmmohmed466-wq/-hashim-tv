@@ -434,7 +434,7 @@
         const img = new Image();
         img.onload = function() {
           const canvas = document.createElement('canvas');
-          const maxDim = 900;
+          const maxDim = 800;
           let width = img.width;
           let height = img.height;
 
@@ -451,7 +451,7 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
 
-          selectedImageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          selectedImageDataUrl = canvas.toDataURL('image/jpeg', 0.75);
           selectedImageBase64 = selectedImageDataUrl.split(',')[1];
           selectedImageMime = 'image/jpeg';
 
@@ -499,7 +499,7 @@
       });
     }
 
-    async function fetchWithTimeout(url, options, timeout = 16000) {
+    async function fetchWithTimeout(url, options, timeout = 35000) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), timeout);
       try {
@@ -548,7 +548,7 @@
 
       const loadingDiv = document.createElement('div');
       loadingDiv.className = 'chat-msg bot';
-      loadingDiv.innerText = 'جاري تحليل المحتوى وإعداد السكربت...';
+      loadingDiv.innerText = 'جاري تحليل المحتوى وإعداد السكربت والمشاهد...';
       chatBox.appendChild(loadingDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -564,7 +564,7 @@
         });
       }
 
-      const models = ['gemini-2.5-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash-lite'];
+      const models = ['gemini-3.5-flash-lite', 'gemini-2.5-flash'];
       let output = "";
       let lastError = "";
 
@@ -580,7 +580,7 @@
             body: JSON.stringify({
               contents: [{ parts: requestParts }]
             })
-          }, 16000);
+          }, 35000);
 
           const data = await res.json();
 
