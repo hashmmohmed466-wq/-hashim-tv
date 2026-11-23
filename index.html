@@ -74,7 +74,7 @@
     <div id="app-loader" style="position:fixed;inset:0;background:#060a14;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity 0.35s ease;">
         <div class="loader-logo" style="width:62px;height:62px;border-radius:18px;background:linear-gradient(135deg,#22D3EE,#06B6D4);display:flex;align-items:center;justify-content:center;color:#060a14;font-weight:900;font-size:24px;">TV</div>
         <div style="color:#F8FAFC;font-weight:900;font-size:20px;letter-spacing:-0.5px;">هاشم <span style="color:#22D3EE">TV</span> <span style="font-size:11px;background:rgba(245,158,11,0.2);color:#FBBF24;border:1px solid rgba(245,158,11,0.4);padding:2px 6px;border-radius:6px;vertical-align:middle;">PRO</span></div>
-        <div style="color:#64748B;font-size:12px;font-weight:600;">جاري تجهيز المنصة...</div>
+        <div style="color:#64748B;font-size:12px;font-weight:600;">جاري مزامنة الأرشيف السحابي...</div>
     </div>
 
     <!-- شريط الأخبار العاجلة -->
@@ -85,7 +85,7 @@
         </span>
         <div class="overflow-hidden w-full relative">
             <div class="animate-marquee text-slate-300 font-semibold">
-                مرحباً بكم في منصة هاشم TV PRO • ترقبوا حلقة البودكاست الخاصة: "العقد الاجتماعي والممارسات السياسية في السودان" مع الأستاذ والمفكر بهاء الدين آدم • استكشفوا سلسلة التحول الرقمي والركائز الخمسة • باقات إعلانية وحلول رقمية متكاملة.
+                مرحباً بكم في منصة هاشم TV PRO • أرشيف معرفي وإعلامي متكامل • ترقبوا حلقة البودكاست الخاصة: "العقد الاجتماعي والممارسات السياسية في السودان" مع الأستاذ والمفكر بهاء الدين آدم • باقات إعلانية وحلول رقمية متكاملة.
             </div>
         </div>
     </div>
@@ -124,14 +124,14 @@
     <!-- المحتوى الرئيسي -->
     <main class="max-w-6xl mx-auto px-4 pt-5">
 
-        <!-- 1. قسم الرئيسية والمنشورات -->
+        <!-- 1. قسم الرئيسية والمنشورات السحابية -->
         <section id="tab-feed" class="tab-content space-y-5">
             <div class="glass-card rounded-2xl p-4 shadow-xl">
                 <div class="flex gap-3">
-                    <img src="founder.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover border border-cyan-400 shrink-0">
+                    <img src="founder.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400 shrink-0">
                     <div style="background-color:#06B6D4; color:#060a14; display:none;" class="w-10 h-10 rounded-full font-black items-center justify-center shrink-0 text-lg">هـ</div>
                     <div class="w-full space-y-3">
-                        <textarea id="post-text" rows="2" placeholder="شارك فكرة، مقالاً قصيراً، أو إعلاناً جديداً مع جمهور هاشم TV..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none"></textarea>
+                        <textarea id="post-text" rows="3" placeholder="اكتب منشوراً أو مقالاً ليُحفظ في الأرشيف السحابي باليوم والتاريخ..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none"></textarea>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             <div class="relative">
                                 <i class="fa-regular fa-image absolute left-3 top-3 text-slate-400"></i>
@@ -144,12 +144,11 @@
                             </select>
                         </div>
                         <div class="flex items-center justify-between pt-1">
-                            <div class="flex items-center gap-3 text-[11px] text-slate-400">
-                                <span style="color:#22D3EE" class="font-bold"><i class="fa-solid fa-bolt"></i> نشر فوري</span>
-                                <span>• يدعم الصور والروابط</span>
+                            <div class="flex items-center gap-2 text-[11px] text-slate-400">
+                                <span id="cloud-status" style="color:#22D3EE" class="font-bold"><i class="fa-solid fa-cloud-check"></i> متصل بالأرشيف السحابي</span>
                             </div>
-                            <button onclick="addNewPost()" style="background-color:#06B6D4; color:#060a14" class="font-extrabold text-xs px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition">
-                                <span>نشر الآن</span>
+                            <button id="publish-btn" onclick="addNewPost()" style="background-color:#06B6D4; color:#060a14" class="font-extrabold text-xs px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition">
+                                <span>نشر وحفظ بالمرجع</span>
                                 <i class="fa-solid fa-paper-plane"></i>
                             </button>
                         </div>
@@ -158,11 +157,16 @@
             </div>
 
             <!-- فلاتر المنشورات -->
-            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-                <button onclick="filterPosts('الكل', this)" style="background-color:#06B6D4; color:#060a14" class="filter-btn active font-bold text-xs px-4 py-2 rounded-full shrink-0">الكل</button>
-                <button onclick="filterPosts('مقال فكري', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">📝 مقالات فكرية</button>
-                <button onclick="filterPosts('صور وميديا', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">🖼️ صور وميديا</button>
-                <button onclick="filterPosts('إعلان وتقنية', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">📢 إعلان وتقنية</button>
+            <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                    <button onclick="filterPosts('الكل', this)" style="background-color:#06B6D4; color:#060a14" class="filter-btn active font-bold text-xs px-4 py-2 rounded-full shrink-0">الكل</button>
+                    <button onclick="filterPosts('مقال فكري', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">📝 مقالات فكرية</button>
+                    <button onclick="filterPosts('صور وميديا', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">🖼️ صور وميديا</button>
+                    <button onclick="filterPosts('إعلان وتقنية', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">📢 إعلان وتقنية</button>
+                </div>
+                <button onclick="loadCloudPosts(true)" title="تحديث المنشورات" style="background-color:#131C31; color:#22D3EE" class="p-2 rounded-xl border border-white/10 text-xs shrink-0">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
             </div>
 
             <div id="posts-container" class="space-y-4"></div>
@@ -286,7 +290,7 @@
     <div id="sticky-audio-player" style="background-color:rgba(6,10,20,0.96); border-top:1px solid rgba(6,182,212,0.35)" class="hidden fixed bottom-16 md:bottom-0 left-0 right-0 z-50 backdrop-blur-xl px-4 py-2.5 shadow-2xl">
         <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
-                <img id="player-cover" class="w-11 h-11 rounded-xl object-cover border border-white/10 shrink-0">
+                <img id="player-cover" class="w-11 h-11 rounded-xl object-cover object-top border border-white/10 shrink-0">
                 <div class="min-w-0">
                     <h4 id="player-title" class="text-xs sm:text-sm font-extrabold text-white truncate">عنوان الحلقة</h4>
                     <p id="player-guest" style="color:#22D3EE" class="text-[11px] truncate">اسم الضيف</p>
@@ -389,41 +393,135 @@
         setTimeout(hideLoader, 2500);
 
         const H = "https://";
+        // رابط قاعدة البيانات السحابية (Google Apps Script)
+        const CLOUD_API = H + "script.google.com/macros/s/AKfycbyVQA43AVEvJDHR5brV07OwQmqSjZTkif6jffLoWCwuPgjf8qNW1Ns8CpYttFvZFT_Vbg/exec";
+        // الرمز السري للمؤسس لحماية النشر الدائم (يمكنك تغييره لأي رقم تريده)
+        const ADMIN_PIN = "2026";
+
         const TK_BASE = H + "vt.tiktok.com/";
         const TK_THUMB = H + "images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80";
 
         // =========================================================================
-        // 1. قاعدة بيانات المحتوى
+        // 1. قاعدة بيانات المحتوى والمنشورات السحابية
         // =========================================================================
 
-        let postsData = [
+        const defaultPosts = [
             {
                 id: 1,
                 author: "هاشم محمد آدم",
                 avatar: "founder.jpg",
                 role: "مؤسس منصة هاشم TV",
-                time: "منذ ساعتين",
+                time: "2026/11/23",
                 category: "مقال فكري",
-                text: "مرحباً بكم في النسخة المطورة من منصة هاشم TV! تمت إضافة مكتبة متكاملة تضم 22 حلقة وفيديو قصير في قسم الفيديو لسهولة المشاهدة والوصول السريع.",
+                text: "مرحباً بكم في النسخة المطورة من منصة هاشم TV! أصبحت المنصة الآن متصلة بالأرشيف السحابي الدائم، حيث تُحفظ جميع المنشورات والمقالات باليوم والتاريخ لتكون مرجعاً معرفياً متجدداً لكل الزوار.",
                 image: "",
                 likes: 54,
-                comments: ["بالتوفيق يا أستاذ هاشم، منصة رائعة!", "تنظيم ممتاز للحلقات."],
-                aiSummary: "إعلان إضافة مكتبة تضم 22 حلقة وفيديو قصير داخل قسم الفيديو في منصة هاشم TV."
-            },
-            {
-                id: 2,
-                author: "هاشم محمد آدم",
-                avatar: "founder.jpg",
-                role: "مؤسس منصة هاشم TV",
-                time: "أمس",
-                category: "صور وميديا",
-                text: "لقطات من التحضيرات المستمرة لإنتاج السلسلة الوثائقية والقصصية حول المدن والمعالم الجغرافية والتاريخية بأحدث تقنيات الذكاء الاصطناعي.",
-                image: H + "images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80",
-                likes: 73,
-                comments: ["في انتظار الحلقات القادمة بشغف!"],
-                aiSummary: "استعراض كواليس إنتاج السلسلة الوثائقية للمدن والمعالم باستخدام تقنيات الذكاء الاصطناعي."
+                comments: ["بالتوفيق يا أستاذ هاشم، منصة رائعة!", "مرجع معرفي متميز."],
+                aiSummary: "إعلان ربط منصة هاشم TV بالأرشيف السحابي الدائم لحفظ المنشورات باليوم والتاريخ."
             }
         ];
+
+        let postsData = [...defaultPosts];
+        let currentFilter = 'الكل';
+
+        // جلب المنشورات المحفوظة من Google Sheets
+        async function loadCloudPosts(manual = false) {
+            const statusEl = document.getElementById('cloud-status');
+            if (manual && statusEl) {
+                statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تحديث الأرشيف...';
+            }
+            try {
+                const res = await fetch(CLOUD_API);
+                const cloudItems = await res.json();
+                if (Array.isArray(cloudItems)) {
+                    const mapped = cloudItems.map(item => ({
+                        id: item.id || Date.now() + Math.random(),
+                        author: "هاشم محمد آدم",
+                        avatar: "founder.jpg",
+                        role: "مؤسس منصة هاشم TV",
+                        time: item.date || "مرجع محفوظ",
+                        category: item.category || "مقال فكري",
+                        text: item.text,
+                        image: item.image || "",
+                        likes: 12,
+                        comments: [],
+                        aiSummary: (item.text || "").slice(0, 100) + "..."
+                    }));
+                    postsData = [...mapped, ...defaultPosts];
+                    renderPosts(currentFilter);
+                }
+                if (statusEl) {
+                    statusEl.innerHTML = '<i class="fa-solid fa-cloud-check"></i> متصل بالأرشيف السحابي (' + postsData.length + ' منشور)';
+                }
+            } catch (err) {
+                if (statusEl) {
+                    statusEl.innerHTML = '<i class="fa-solid fa-cloud"></i> وضع العرض المحلي';
+                }
+            }
+        }
+
+        // نشر وحفظ منشور جديد في Google Sheets باليوم والتاريخ
+        async function addNewPost() {
+            const text = document.getElementById('post-text').value.trim();
+            const image = document.getElementById('post-image').value.trim();
+            const category = document.getElementById('post-category').value;
+            if (!text) return;
+
+            // التحقق من رمز المؤسس لحماية قاعدة البيانات
+            let savedPin = sessionStorage.getItem('hashim_tv_pin');
+            if (savedPin !== ADMIN_PIN) {
+                const entered = prompt("أدخل رمز المؤسس (PIN) لحفظ المنشور في الأرشيف الدائم:");
+                if (entered !== ADMIN_PIN) {
+                    alert("رمز المؤسس غير صحيح. النشر في الأرشيف الدائم مخصص لإدارة المنصة.");
+                    return;
+                }
+                sessionStorage.setItem('hashim_tv_pin', entered);
+            }
+
+            const btn = document.getElementById('publish-btn');
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span>جاري الحفظ في السحابة...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
+
+            try {
+                await fetch(CLOUD_API, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ category, text, image })
+                });
+
+                const nowStr = new Date().toLocaleDateString('ar-EG', {
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit'
+                });
+
+                postsData.unshift({
+                    id: Date.now(),
+                    author: "هاشم محمد آدم",
+                    avatar: "founder.jpg",
+                    role: "مؤسس منصة هاشم TV",
+                    time: nowStr,
+                    category,
+                    text,
+                    image,
+                    likes: 1,
+                    comments: [],
+                    aiSummary: text.slice(0, 100) + "..."
+                });
+
+                document.getElementById('post-text').value = '';
+                document.getElementById('post-image').value = '';
+                renderPosts(currentFilter);
+
+                setTimeout(() => loadCloudPosts(false), 2000);
+            } catch (e) {
+                alert("تعذر الاتصال بالسحابة، يرجى التحقق من الإنترنت والمحاولة مرة أخرى.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        }
 
         const tiktokCodes = [
             "ZSsLYbqAg", "ZSsLYB8GW", "ZSsLY5Aex", "ZSsLYpeWn", "ZSsLYpMqs",
@@ -497,7 +595,7 @@
         ];
 
         // =========================================================================
-        // 2. منطق التشغيل والتفاعل
+        // 2. منطق العرض والتفاعل
         // =========================================================================
 
         document.getElementById('main-video-frame').src = H + "www.youtube.com/embed/dQw4w9WgXcQ";
@@ -524,25 +622,26 @@
         }
 
         function renderPosts(filter = 'الكل') {
+            currentFilter = filter;
             const container = document.getElementById('posts-container');
             const filtered = filter === 'الكل' ? postsData : postsData.filter(p => p.category === filter);
             container.innerHTML = filtered.map(post => `
                 <article class="glass-card rounded-2xl p-4 sm:p-5 space-y-3 border border-white/10">
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between gap-2">
                         <div class="flex items-center gap-3">
-                            <img src="${post.avatar || 'founder.jpg'}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover border border-cyan-400">
+                            <img src="${post.avatar || 'founder.jpg'}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400">
                             <div style="background:linear-gradient(135deg,#06B6D4,#2563EB); color:#060a14; display:none;" class="w-10 h-10 rounded-full font-black items-center justify-center">${post.author[0]}</div>
                             <div>
                                 <div class="flex items-center gap-1.5">
                                     <h3 class="text-sm font-extrabold text-white">${post.author}</h3>
                                     <i style="color:#22D3EE" class="fa-solid fa-circle-check text-xs"></i>
                                 </div>
-                                <p class="text-[11px] text-slate-400">${post.role} • ${post.time}</p>
+                                <p class="text-[11px] text-slate-400"><i class="fa-regular fa-calendar-days"></i> ${post.time}</p>
                             </div>
                         </div>
-                        <span style="background-color:#060a14; color:#FBBF24" class="text-[11px] font-bold border border-white/10 px-3 py-1 rounded-full">${post.category}</span>
+                        <span style="background-color:#060a14; color:#FBBF24" class="text-[11px] font-bold border border-white/10 px-3 py-1 rounded-full shrink-0">${post.category}</span>
                     </div>
-                    <p class="text-sm text-slate-200 leading-relaxed">${post.text}</p>
+                    <p class="text-sm text-slate-200 leading-relaxed whitespace-pre-line">${post.text}</p>
                     ${post.image ? `<img src="${post.image}" class="w-full max-h-96 object-cover rounded-xl border border-white/10">` : ''}
                     
                     <div id="ai-box-${post.id}" style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3)" class="hidden rounded-xl p-3 text-xs text-cyan-200">
@@ -561,7 +660,7 @@
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> <span>ملخص AI</span>
                             </button>
                         </div>
-                        <button onclick="shareWhatsApp('${post.text}')" class="hover:text-green-400"><i class="fa-brands fa-whatsapp text-base"></i></button>
+                        <button onclick="shareWhatsApp('${encodeURIComponent(post.text)}')" class="hover:text-green-400"><i class="fa-brands fa-whatsapp text-base"></i></button>
                     </div>
 
                     <div id="comments-${post.id}" class="hidden pt-2 space-y-2 border-t border-white/5">
@@ -577,30 +676,6 @@
             `).join('');
         }
 
-        function addNewPost() {
-            const text = document.getElementById('post-text').value.trim();
-            const image = document.getElementById('post-image').value.trim();
-            const category = document.getElementById('post-category').value;
-            if (!text) return;
-
-            postsData.unshift({
-                id: Date.now(),
-                author: "هاشم محمد آدم",
-                avatar: "founder.jpg",
-                role: "مؤسس منصة هاشم TV",
-                time: "الآن",
-                category,
-                text,
-                image,
-                likes: 1,
-                comments: [],
-                aiSummary: text.slice(0, 90) + "..."
-            });
-            document.getElementById('post-text').value = '';
-            document.getElementById('post-image').value = '';
-            renderPosts();
-        }
-
         function filterPosts(cat, btn) {
             document.querySelectorAll('.filter-btn').forEach(b => {
                 b.style.backgroundColor = '#131C31';
@@ -613,7 +688,7 @@
 
         function likePost(id) {
             const p = postsData.find(x => x.id === id);
-            if (p) { p.likes++; renderPosts(); }
+            if (p) { p.likes++; renderPosts(currentFilter); }
         }
         function toggleComments(id) { document.getElementById('comments-' + id).classList.toggle('hidden'); }
         function toggleAiSummary(id) { document.getElementById('ai-box-' + id).classList.toggle('hidden'); }
@@ -622,11 +697,11 @@
             if (!input.value.trim()) return;
             const p = postsData.find(x => x.id === id);
             p.comments.push(input.value.trim());
-            renderPosts();
+            renderPosts(currentFilter);
             document.getElementById('comments-' + id).classList.remove('hidden');
         }
-        function shareWhatsApp(text) {
-            window.open(H + `wa.me/?text=${encodeURIComponent(text + ' - عبر منصة هاشم TV')}`, '_blank');
+        function shareWhatsApp(encodedText) {
+            window.open(H + `wa.me/?text=${encodedText}%20-%20${encodeURIComponent('عبر منصة هاشم TV')}`, '_blank');
         }
         function contactOrder(item) {
             window.open(H + `wa.me/?text=${encodeURIComponent('مرحباً، أرغب في الاستفسار عن: ' + item)}`, '_blank');
@@ -867,9 +942,10 @@
             document.getElementById('post-text').focus();
         }
 
-        // تشغيل أولي
+        // تشغيل أولي وجلب المنشورات السحابية
         switchTab('feed');
         renderPosts();
+        loadCloudPosts(false);
         renderVideos();
         renderPodcasts();
         renderPeople();
