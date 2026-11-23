@@ -20,21 +20,13 @@
         })();
     </script>
     <style>
-        :root {
-            --navy-950: #060a14;
-            --navy-900: #0B1120;
-            --navy-800: #131C31;
-            --cyan-400: #22D3EE;
-            --cyan-500: #06B6D4;
-            --gold-400: #FBBF24;
-            --gold-500: #F59E0B;
-        }
         body {
             background-color: #0B1120;
             color: #F8FAFC;
             font-family: 'Cairo', system-ui, -apple-system, sans-serif;
             overflow-x: hidden;
             padding-bottom: 135px;
+            margin: 0;
         }
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: #0B1120; }
@@ -52,6 +44,14 @@
         }
         .animate-marquee:hover { animation-play-state: paused; }
         
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(34, 211, 238, 0.4); }
+            50% { transform: scale(1.06); box-shadow: 0 0 35px rgba(34, 211, 238, 0.75); }
+        }
+        .loader-logo {
+            animation: pulseGlow 1.5s infinite ease-in-out;
+        }
+
         .glass-card {
             background: rgba(19, 28, 49, 0.88);
             backdrop-filter: blur(12px);
@@ -70,6 +70,13 @@
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-slate-950">
 
+    <!-- شاشة التحميل الترحيبية -->
+    <div id="app-loader" style="position:fixed;inset:0;background:#060a14;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity 0.35s ease;">
+        <div class="loader-logo" style="width:62px;height:62px;border-radius:18px;background:linear-gradient(135deg,#22D3EE,#06B6D4);display:flex;align-items:center;justify-content:center;color:#060a14;font-weight:900;font-size:24px;">TV</div>
+        <div style="color:#F8FAFC;font-weight:900;font-size:20px;letter-spacing:-0.5px;">هاشم <span style="color:#22D3EE">TV</span> <span style="font-size:11px;background:rgba(245,158,11,0.2);color:#FBBF24;border:1px solid rgba(245,158,11,0.4);padding:2px 6px;border-radius:6px;vertical-align:middle;">PRO</span></div>
+        <div style="color:#64748B;font-size:12px;font-weight:600;">جاري تجهيز المنصة...</div>
+    </div>
+
     <!-- شريط الأخبار العاجلة -->
     <div style="background-color:#060a14" class="border-b border-white/10 text-xs py-2 px-3 flex items-center gap-3 sticky top-0 z-50">
         <span style="background-color:#F59E0B; color:#060a14" class="font-extrabold px-2.5 py-0.5 rounded-full shrink-0 flex items-center gap-1.5">
@@ -78,7 +85,7 @@
         </span>
         <div class="overflow-hidden w-full relative">
             <div class="animate-marquee text-slate-300 font-semibold">
-                مرحباً بكم في منصة هاشم TV PRO • ترقبوا حلقة البودكاست الخاصة: "العقد الاجتماعي والممارسات السياسية في السودان" مع د. بهاء الدين آدم • استكشفوا سلسلة التحول الرقمي والركائز الخمسة • باقات إعلانية وحلول رقمية متكاملة للشركات والمتاجر.
+                مرحباً بكم في منصة هاشم TV PRO • تم تحديث مكتبة الفيديو لدعم حلقات TikTok و YouTube • ترقبوا حلقة البودكاست الخاصة: "العقد الاجتماعي والممارسات السياسية في السودان" مع د. بهاء الدين آدم • باقات إعلانية وحلول رقمية متكاملة.
             </div>
         </div>
     </div>
@@ -160,31 +167,49 @@
             <div id="posts-container" class="space-y-4"></div>
         </section>
 
-        <!-- 2. قسم الفيديو والحلقات -->
+        <!-- 2. قسم الفيديو والحلقات (يدعم YouTube + TikTok + MP4) -->
         <section id="tab-videos" class="tab-content hidden space-y-5">
             <div id="cinema-backdrop" class="cinema-dim hidden" onclick="toggleCinemaMode()"></div>
             <div id="video-player-wrapper" class="relative z-40 glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                <div class="aspect-video bg-black relative">
-                    <iframe id="main-video-frame" class="w-full h-full" title="مشغل هاشم TV" frameborder="0" allowfullscreen></iframe>
+                <div id="player-stage" class="aspect-video bg-black relative flex items-center justify-center">
+                    <iframe id="main-video-frame" class="w-full h-full" title="مشغل هاشم TV" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
                 </div>
                 <div style="background-color:#0B1120" class="p-4 flex flex-wrap items-center justify-between gap-3">
                     <div>
                         <span id="current-video-cat" style="color:#22D3EE; background:rgba(6,182,212,0.1)" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full">سلسلة التحول الرقمي</span>
                         <h2 id="current-video-title" class="text-base sm:text-lg font-extrabold text-white mt-1">الحلقة الأولى: الركائز الخمسة للتحول الرقمي الحديث</h2>
                     </div>
-                    <button onclick="toggleCinemaMode()" style="background-color:#131C31; color:#FBBF24; border:1px solid rgba(245,158,11,0.3)" class="text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-2 transition">
-                        <i class="fa-solid fa-film"></i>
-                        <span id="cinema-btn-text">وضع السينما</span>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <a id="external-video-link" href="#" target="_blank" style="background-color:#131C31; color:#22D3EE; border:1px solid rgba(34,211,238,0.3)" class="hidden text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1.5">
+                            <i class="fa-brands fa-tiktok"></i>
+                            <span>فتح في TikTok</span>
+                        </a>
+                        <button onclick="toggleCinemaMode()" style="background-color:#131C31; color:#FBBF24; border:1px solid rgba(245,158,11,0.3)" class="text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-2 transition">
+                            <i class="fa-solid fa-film"></i>
+                            <span id="cinema-btn-text">وضع السينما</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="flex items-center justify-between">
+            <div class="flex flex-wrap items-center justify-between gap-3">
                 <h3 class="text-base font-extrabold text-white flex items-center gap-2">
                     <i style="color:#22D3EE" class="fa-solid fa-list-ul"></i>
-                    <span>قائمة الحلقات والمسلسلات</span>
+                    <span>مكتبة الحلقات والفيديوهات القصيرة (<span id="videos-count">0</span>)</span>
                 </h3>
+                <button onclick="openVideoModal()" style="background-color:#06B6D4; color:#060a14" class="font-extrabold text-xs px-4 py-2 rounded-xl flex items-center gap-2 shadow-lg">
+                    <i class="fa-solid fa-video"></i>
+                    <span>إضافة فيديو (YouTube / TikTok)</span>
+                </button>
             </div>
+
+            <!-- فلاتر الفيديو -->
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                <button onclick="filterVideos('الكل', this)" style="background-color:#06B6D4; color:#060a14" class="v-filter-btn active font-bold text-xs px-4 py-1.5 rounded-full shrink-0">جميع الحلقات</button>
+                <button onclick="filterVideos('حلقات TikTok', this)" style="background-color:#131C31" class="v-filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-1.5 rounded-full shrink-0">حلقات TikTok</button>
+                <button onclick="filterVideos('سلسلة التحول الرقمي', this)" style="background-color:#131C31" class="v-filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-1.5 rounded-full shrink-0">التحول الرقمي</button>
+            </div>
+
             <div id="videos-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </section>
 
@@ -302,6 +327,25 @@
         </button>
     </nav>
 
+    <!-- نافذة إضافة فيديو جديد -->
+    <div id="video-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-md rounded-2xl p-5 space-y-3 border border-white/10">
+            <div class="flex items-center justify-between">
+                <h3 class="text-base font-black text-white">إضافة فيديو أو حلقة TikTok</h3>
+                <button onclick="closeVideoModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <input id="vid-title" type="text" placeholder="عنوان الحلقة أو الفيديو" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <select id="vid-type" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+                <option value="tiktok">فيديو TikTok (معرّف رقمي أو رابط)</option>
+                <option value="youtube">فيديو YouTube (رابط أو ID)</option>
+                <option value="mp4">ملف فيديو مباشر (MP4)</option>
+            </select>
+            <input id="vid-source" type="text" placeholder="الصق الرابط أو الرقم التعريفي للفيديو هنا..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <input id="vid-cat" type="text" placeholder="التصنيف (مثلاً: حلقات TikTok)" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <button onclick="saveNewVideo()" style="background-color:#06B6D4; color:#060a14" class="w-full font-extrabold text-xs py-3 rounded-xl">إضافة للمكتبة الآن</button>
+        </div>
+    </div>
+
     <!-- نافذة إضافة شخصية جديدة -->
     <div id="person-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="glass-card w-full max-w-md rounded-2xl p-5 space-y-4 border border-white/10">
@@ -334,10 +378,22 @@
     </div>
 
     <script>
+        function hideLoader() {
+            const loader = document.getElementById('app-loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 350);
+            }
+        }
+        window.addEventListener('load', () => setTimeout(hideLoader, 300));
+        setTimeout(hideLoader, 2500);
+
         const H = "https://";
+        const TK_BASE = H + "vt.tiktok.com/";
+        const TK_THUMB = H + "images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80";
 
         // =========================================================================
-        // 1. قاعدة بيانات المحتوى (عدّل هنا لإضافة حلقات ومنشورات دائمة لجميع الزوار)
+        // 1. قاعدة بيانات المحتوى
         // =========================================================================
 
         let postsData = [
@@ -347,11 +403,11 @@
                 role: "مؤسس منصة هاشم TV",
                 time: "منذ ساعتين",
                 category: "مقال فكري",
-                text: "مرحباً بكم في النسخة المطورة من منصة هاشم TV! هدفنا أن نجمع بين عمق المحتوى المرئي والصوتي، وسهولة التفاعل الرقمي، لنقدم تجربة إعلامية ومعرفية تليق بجمهورنا.",
+                text: "مرحباً بكم في النسخة المطورة من منصة هاشم TV! تمت إضافة مكتبة متكاملة تضم 22 حلقة وفيديو قصير في قسم الفيديو لسهولة المشاهدة والوصول السريع.",
                 image: "",
-                likes: 48,
-                comments: ["بالتوفيق يا أستاذ هاشم، منصة رائعة!", "تصميم احترافي ومحتوى هادف."],
-                aiSummary: "إعلان إطلاق النسخة المطورة من منصة هاشم TV التي تدمج المحتوى المرئي، البودكاست، والتفاعل المجتمعي."
+                likes: 54,
+                comments: ["بالتوفيق يا أستاذ هاشم، منصة رائعة!", "تنظيم ممتاز للحلقات."],
+                aiSummary: "إعلان إضافة مكتبة تضم 22 حلقة وفيديو قصير داخل قسم الفيديو في منصة هاشم TV."
             },
             {
                 id: 2,
@@ -367,31 +423,37 @@
             }
         ];
 
+        // قائمة الحلقات (تضم حلقاتك الـ 22 من TikTok + الحلقات التعليمية)
+        // لتشغيل أي حلقة TikTok داخل المشغل مباشرة: ضع الرقم الطويل للفيديو في خانة embedId
+        const tiktokCodes = [
+            "ZSsLYbqAg", "ZSsLYB8GW", "ZSsLY5Aex", "ZSsLYpeWn", "ZSsLYpMqs",
+            "ZSsLY5JqD", "ZSsLYXqPy", "ZSsLYC2by", "ZSsLYsSTS", "ZSsLYsapk",
+            "ZSsLYQ4w5", "ZSsLYBUhP", "ZSsLYDpeg", "ZSsLYfxhQ", "ZSsLYayUo",
+            "ZSsLYukuE", "ZSsLY5h5Q", "ZSsLYDNFe", "ZSsLY5UTt", "ZSsLYgBEU",
+            "ZSsLYH47q", "ZSsLYfaf5"
+        ];
+
         let videosData = [
             {
-                id: 1,
+                id: 100,
                 title: "الحلقة الأولى: الركائز الخمسة للتحول الرقمي الحديث",
                 category: "سلسلة التحول الرقمي",
                 duration: "14:20",
-                youtubeId: "dQw4w9WgXcQ",
+                type: "youtube",
+                source: "dQw4w9WgXcQ",
+                externalUrl: "",
                 thumb: H + "images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80"
             },
-            {
-                id: 2,
-                title: "جولة بصرية في زالنجي ووسط دارفور بتقنيات الذكاء الاصطناعي",
-                category: "وثائقيات المدن",
-                duration: "03:45",
-                youtubeId: "LXb3EKWsInQ",
-                thumb: H + "images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80"
-            },
-            {
-                id: 3,
-                title: "يوميات ريكول: مواقف طريفة في عصر التكنولوجيا",
-                category: "سلسلة ريكول الكوميدية",
-                duration: "02:15",
-                youtubeId: "ysz5S6PUM-U",
-                thumb: H + "images.unsplash.com/photo-1535016120720-40c646be5580?w=600&q=80"
-            }
+            ...tiktokCodes.map((code, idx) => ({
+                id: idx + 1,
+                title: `حلقة هاشم TV القصيرة #${idx + 1}`,
+                category: "حلقات TikTok",
+                duration: "قصير",
+                type: "tiktok",
+                source: "", // ضع رقم الفيديو المكون من 19 رقماً هنا للتضمين الداخلي
+                externalUrl: TK_BASE + code + "/",
+                thumb: TK_THUMB
+            }))
         ];
 
         let podcastsData = [
@@ -568,30 +630,123 @@
             window.open(H + `wa.me/?text=${encodeURIComponent('مرحباً، أرغب في الاستفسار عن: ' + item)}`, '_blank');
         }
 
-        // الفيديو
-        function renderVideos() {
-            document.getElementById('videos-list').innerHTML = videosData.map(v => `
-                <div onclick="playVideo('${v.youtubeId}', '${v.title}', '${v.category}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group border border-white/10 transition">
+        // =========================================================================
+        // قسم الفيديو (YouTube + TikTok + MP4)
+        // =========================================================================
+        function renderVideos(filter = 'الكل') {
+            const list = filter === 'الكل' ? videosData : videosData.filter(v => v.category === filter);
+            document.getElementById('videos-count').innerText = list.length;
+            document.getElementById('videos-list').innerHTML = list.map(v => `
+                <div onclick="playVideoItem(${v.id})" class="glass-card rounded-2xl overflow-hidden cursor-pointer group border border-white/10 transition">
                     <div class="relative aspect-video">
                         <img src="${v.thumb}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                         <span class="absolute bottom-2 left-2 bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded">${v.duration}</span>
+                        <span style="background:rgba(6,10,20,0.85); color:${v.type === 'tiktok' ? '#22D3EE' : '#FBBF24'}" class="absolute top-2 right-2 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-white/10">
+                            ${v.type === 'tiktok' ? '<i class="fa-brands fa-tiktok"></i> TikTok' : '<i class="fa-brands fa-youtube"></i> فيديو'}
+                        </span>
                         <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
                             <span style="background-color:#06B6D4; color:#060a14" class="w-11 h-11 rounded-full flex items-center justify-center"><i class="fa-solid fa-play"></i></span>
                         </div>
                     </div>
-                    <div class="p-3.5">
-                        <span style="color:#22D3EE" class="text-[10px] font-bold">${v.category}</span>
-                        <h4 class="text-xs sm:text-sm font-extrabold text-white mt-1 line-clamp-2">${v.title}</h4>
+                    <div class="p-3.5 flex items-center justify-between gap-2">
+                        <div>
+                            <span style="color:#22D3EE" class="text-[10px] font-bold">${v.category}</span>
+                            <h4 class="text-xs sm:text-sm font-extrabold text-white mt-0.5 line-clamp-1">${v.title}</h4>
+                        </div>
+                        ${v.externalUrl ? `<a href="${v.externalUrl}" target="_blank" onclick="event.stopPropagation()" style="background:#060a14; color:#22D3EE" class="shrink-0 text-[11px] font-bold px-2.5 py-1.5 rounded-lg border border-white/10">تشغيل</a>` : ''}
                     </div>
                 </div>
             `).join('');
         }
 
-        function playVideo(ytId, title, cat) {
-            document.getElementById('main-video-frame').src = H + `www.youtube.com/embed/${ytId}?autoplay=1`;
-            document.getElementById('current-video-title').innerText = title;
-            document.getElementById('current-video-cat').innerText = cat;
+        function filterVideos(cat, btn) {
+            document.querySelectorAll('.v-filter-btn').forEach(b => {
+                b.style.backgroundColor = '#131C31';
+                b.style.color = '#CBD5E1';
+            });
+            btn.style.backgroundColor = '#06B6D4';
+            btn.style.color = '#060a14';
+            renderVideos(cat);
+        }
+
+        function playVideoItem(id) {
+            const v = videosData.find(x => x.id === id);
+            if (!v) return;
+            const stage = document.getElementById('player-stage');
+            const extLink = document.getElementById('external-video-link');
+            document.getElementById('current-video-title').innerText = v.title;
+            document.getElementById('current-video-cat').innerText = v.category;
+
+            if (v.externalUrl) {
+                extLink.href = v.externalUrl;
+                extLink.classList.remove('hidden');
+            } else {
+                extLink.classList.add('hidden');
+            }
+
+            if (v.type === 'youtube') {
+                stage.innerHTML = `<iframe id="main-video-frame" class="w-full h-full" src="${H}www.youtube.com/embed/${v.source}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+            } else if (v.type === 'tiktok' && v.source) {
+                stage.innerHTML = `<iframe class="w-full h-full" src="${H}www.tiktok.com/embed/v2/${v.source}" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+            } else if (v.type === 'mp4') {
+                stage.innerHTML = `<video class="w-full h-full" src="${v.source}" controls autoplay playsinline></video>`;
+            } else if (v.externalUrl) {
+                stage.innerHTML = `
+                    <div class="text-center p-6 space-y-3">
+                        <div style="background:rgba(34,211,238,0.15); color:#22D3EE" class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-extrabold text-white">${v.title}</h3>
+                        <p class="text-xs text-slate-400 max-w-md mx-auto">هذا الرابط مختصر من TikTok؛ اضغط أدناه للمشاهدة الفورية أو أضف الرقم التعريفي للفيديو (19 رقماً) لتشغيله داخل الإطار.</p>
+                        <a href="${v.externalUrl}" target="_blank" style="background-color:#06B6D4; color:#060a14" class="inline-flex items-center gap-2 font-extrabold text-xs px-5 py-2.5 rounded-xl">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <span>تشغيل الحلقة الآن</span>
+                        </a>
+                    </div>
+                `;
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openVideoModal() { document.getElementById('video-modal').classList.remove('hidden'); }
+        function closeVideoModal() { document.getElementById('video-modal').classList.add('hidden'); }
+        function saveNewVideo() {
+            const title = document.getElementById('vid-title').value.trim();
+            const type = document.getElementById('vid-type').value;
+            let raw = document.getElementById('vid-source').value.trim();
+            const category = document.getElementById('vid-cat').value.trim() || (type === 'tiktok' ? 'حلقات TikTok' : 'سلسلة التحول الرقمي');
+            if (!title || !raw) return;
+
+            let source = raw;
+            let externalUrl = "";
+
+            if (type === 'youtube') {
+                const m = raw.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+                if (m) source = m[1];
+            } else if (type === 'tiktok') {
+                const numMatch = raw.match(/\/video\/(\d+)/) || raw.match(/^(\d{15,22})$/);
+                if (numMatch) {
+                    source = numMatch[1];
+                    externalUrl = raw.startsWith('http') ? raw : `${H}www.tiktok.com/@hashimtv/video/${source}`;
+                } else {
+                    source = "";
+                    externalUrl = raw.startsWith('http') ? raw : H + raw;
+                }
+            }
+
+            videosData.unshift({
+                id: Date.now(),
+                title,
+                category,
+                duration: type === 'tiktok' ? 'قصير' : 'جديد',
+                type,
+                source,
+                externalUrl,
+                thumb: TK_THUMB
+            });
+            renderVideos();
+            closeVideoModal();
+            playVideoItem(videosData[0].id);
         }
 
         function toggleCinemaMode() {
@@ -601,7 +756,9 @@
             btnText.innerText = dim.classList.contains('hidden') ? 'وضع السينما' : 'إغلاق السينما';
         }
 
+        // =========================================================================
         // البودكاست
+        // =========================================================================
         function renderPodcasts() {
             document.getElementById('podcasts-list').innerHTML = podcastsData.map(pod => `
                 <div class="glass-card rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10 transition">
