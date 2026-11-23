@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>هاشم TV PRO | المنصة الإعلامية والرقمية المتكاملة</title>
+    <title>هاشم TV PRO | المنصة الإعلامية والبث المباشر</title>
     <script>
         (function() {
             const p = "https://";
@@ -48,9 +48,7 @@
             0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(34, 211, 238, 0.4); }
             50% { transform: scale(1.06); box-shadow: 0 0 35px rgba(34, 211, 238, 0.75); }
         }
-        .loader-logo {
-            animation: pulseGlow 1.5s infinite ease-in-out;
-        }
+        .loader-logo { animation: pulseGlow 1.5s infinite ease-in-out; }
 
         .glass-card {
             background: rgba(19, 28, 49, 0.88);
@@ -74,25 +72,25 @@
     <div id="app-loader" style="position:fixed;inset:0;background:#060a14;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity 0.35s ease;">
         <div class="loader-logo" style="width:62px;height:62px;border-radius:18px;background:linear-gradient(135deg,#22D3EE,#06B6D4);display:flex;align-items:center;justify-content:center;color:#060a14;font-weight:900;font-size:24px;">TV</div>
         <div style="color:#F8FAFC;font-weight:900;font-size:20px;letter-spacing:-0.5px;">هاشم <span style="color:#22D3EE">TV</span> <span style="font-size:11px;background:rgba(245,158,11,0.2);color:#FBBF24;border:1px solid rgba(245,158,11,0.4);padding:2px 6px;border-radius:6px;vertical-align:middle;">PRO</span></div>
-        <div style="color:#64748B;font-size:12px;font-weight:600;">جاري مزامنة الأرشيف السحابي...</div>
+        <div style="color:#64748B;font-size:12px;font-weight:600;">جاري تجهيز استوديو البث والأرشيف...</div>
     </div>
 
-    <!-- شريط الأخبار العاجلة -->
-    <div style="background-color:#060a14" class="border-b border-white/10 text-xs py-2 px-3 flex items-center gap-3 sticky top-0 z-50">
-        <span style="background-color:#F59E0B; color:#060a14" class="font-extrabold px-2.5 py-0.5 rounded-full shrink-0 flex items-center gap-1.5">
+    <!-- شريط الأخبار العاجلة / البث المباشر -->
+    <div id="top-ticker-bar" style="background-color:#060a14" class="border-b border-white/10 text-xs py-2 px-3 flex items-center gap-3 sticky top-0 z-50 transition-colors">
+        <span id="ticker-badge" style="background-color:#F59E0B; color:#060a14" class="font-extrabold px-2.5 py-0.5 rounded-full shrink-0 flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
-            مباشر وحصري
+            <span id="ticker-badge-text">مباشر وحصري</span>
         </span>
         <div class="overflow-hidden w-full relative">
-            <div class="animate-marquee text-slate-300 font-semibold">
-                مرحباً بكم في منصة هاشم TV PRO • أرشيف معرفي وإعلامي متكامل • ترقبوا حلقة البودكاست الخاصة: "العقد الاجتماعي والممارسات السياسية في السودان" مع الأستاذ والمفكر بهاء الدين آدم • باقات إعلانية وحلول رقمية متكاملة.
+            <div id="ticker-marquee-text" class="animate-marquee text-slate-300 font-semibold">
+                مرحباً بكم في منصة هاشم TV PRO • أرشيف معرفي وبث مباشر متكامل • ترقبوا الحوارات الفكرية مع الأستاذ والمفكر بهاء الدين آدم • باقات إعلانية وحلول رقمية متكاملة.
             </div>
         </div>
     </div>
 
     <!-- الهيدر العلوي -->
     <header class="glass-card sticky top-8 z-40 border-b border-white/10 px-4 py-3">
-        <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
             <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchTab('feed')">
                 <div style="background:linear-gradient(135deg,#22D3EE,#06B6D4); color:#060a14" class="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg">
                     <i class="fa-solid fa-tv text-lg"></i>
@@ -107,22 +105,49 @@
 
             <!-- قائمة التنقل لسطح المكتب -->
             <nav style="background:#0B1120" class="hidden md:flex items-center gap-1 p-1 rounded-xl border border-white/5">
-                <button onclick="switchTab('feed')" class="nav-btn-desk active px-4 py-2 rounded-lg text-sm font-bold transition" data-tab="feed">الرئيسية</button>
-                <button onclick="switchTab('videos')" class="nav-btn-desk px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition" data-tab="videos">الفيديو والحلقات</button>
-                <button onclick="switchTab('podcasts')" class="nav-btn-desk px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition" data-tab="podcasts">البودكاست</button>
-                <button onclick="switchTab('people')" class="nav-btn-desk px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition" data-tab="people">الشخصيات</button>
-                <button onclick="switchTab('store')" class="nav-btn-desk px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition" data-tab="store">المتجر والإعلانات</button>
+                <button onclick="switchTab('feed')" class="nav-btn-desk active px-3.5 py-2 rounded-lg text-xs font-bold transition" data-tab="feed">الرئيسية</button>
+                <button onclick="switchTab('live')" class="nav-btn-desk px-3.5 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1.5" data-tab="live">
+                    <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> البث المباشر
+                </button>
+                <button onclick="switchTab('videos')" class="nav-btn-desk px-3.5 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" data-tab="videos">الفيديو والحلقات</button>
+                <button onclick="switchTab('podcasts')" class="nav-btn-desk px-3.5 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" data-tab="podcasts">البودكاست</button>
+                <button onclick="switchTab('people')" class="nav-btn-desk px-3.5 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" data-tab="people">الشخصيات</button>
+                <button onclick="switchTab('store')" class="nav-btn-desk px-3.5 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition" data-tab="store">المتجر</button>
             </nav>
 
-            <button onclick="openQuickModal()" style="background-color:#F59E0B; color:#060a14" class="font-extrabold text-xs sm:text-sm px-4 py-2 rounded-full flex items-center gap-1.5 shadow-lg transition transform active:scale-95">
-                <i class="fa-solid fa-circle-plus"></i>
-                <span>نشر جديد</span>
-            </button>
+            <div class="flex items-center gap-2">
+                <button onclick="switchTab('live')" style="background-color:#EF4444; color:#FFFFFF" class="font-extrabold text-xs px-3.5 py-2 rounded-full flex items-center gap-1.5 shadow-lg transition transform active:scale-95">
+                    <i class="fa-solid fa-tower-broadcast animate-pulse"></i>
+                    <span>بث مباشر</span>
+                </button>
+                <button onclick="openQuickModal()" style="background-color:#F59E0B; color:#060a14" class="hidden sm:flex font-extrabold text-xs px-3.5 py-2 rounded-full items-center gap-1.5 shadow-lg transition">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>نشر</span>
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- المحتوى الرئيسي -->
     <main class="max-w-6xl mx-auto px-4 pt-5">
+
+        <!-- لافتة البث المباشر التلقائية في أعلى الصفحة عند تفعيل البث -->
+        <div id="live-alert-banner" class="hidden mb-5 rounded-2xl p-4 border-2 border-red-500/70 shadow-2xl" style="background:linear-gradient(135deg, rgba(127,29,29,0.55), rgba(19,28,49,0.95));">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <span class="bg-red-600 text-white text-xs font-black px-3 py-1 rounded-full flex items-center gap-1.5 animate-pulse">
+                        <span class="w-2 h-2 rounded-full bg-white"></span> مباشر الآن
+                    </span>
+                    <div>
+                        <h3 id="banner-live-title" class="text-sm sm:text-base font-black text-white">لقاء مباشر على منصة هاشم TV</h3>
+                        <p id="banner-live-hosts" class="text-xs text-cyan-300 font-semibold mt-0.5"></p>
+                    </div>
+                </div>
+                <button onclick="switchTab('live')" class="bg-white text-slate-950 font-extrabold text-xs px-4 py-2 rounded-xl shadow-lg">
+                    دخول غرفة البث <i class="fa-solid fa-arrow-left mr-1"></i>
+                </button>
+            </div>
+        </div>
 
         <!-- 1. قسم الرئيسية والمنشورات السحابية -->
         <section id="tab-feed" class="tab-content space-y-5">
@@ -164,7 +189,7 @@
                     <button onclick="filterPosts('صور وميديا', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">🖼️ صور وميديا</button>
                     <button onclick="filterPosts('إعلان وتقنية', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">📢 إعلان وتقنية</button>
                 </div>
-                <button onclick="loadCloudPosts(true)" title="تحديث المنشورات" style="background-color:#131C31; color:#22D3EE" class="p-2 rounded-xl border border-white/10 text-xs shrink-0">
+                <button onclick="loadCloudData(true)" title="تحديث المنشورات" style="background-color:#131C31; color:#22D3EE" class="p-2 rounded-xl border border-white/10 text-xs shrink-0">
                     <i class="fa-solid fa-rotate"></i>
                 </button>
             </div>
@@ -172,7 +197,97 @@
             <div id="posts-container" class="space-y-4"></div>
         </section>
 
-        <!-- 2. قسم الفيديو والحلقات -->
+        <!-- 2. قسم استوديو البث المباشر واللقاءات الحوارية -->
+        <section id="tab-live" class="tab-content hidden space-y-5">
+            <div class="glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                <div id="live-screen-container" class="aspect-video bg-slate-950 relative flex items-center justify-center">
+                    <div id="live-offline-view" class="text-center p-6 space-y-3">
+                        <div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto text-2xl">
+                            <i class="fa-solid fa-tower-broadcast"></i>
+                        </div>
+                        <h2 class="text-lg font-black text-white">استوديو البث المباشر — هاشم TV</h2>
+                        <p class="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">لا يوجد بث مباشر نشط في هذه اللحظة. يمكنك بدء بث مباشر جديد وإضافة الضيوف والمضيفين من لوحة التحكم أدناه.</p>
+                    </div>
+                    <iframe id="live-iframe" class="hidden w-full h-full" frameborder="0" allow="autoplay; camera; microphone; encrypted-media; fullscreen" allowfullscreen></iframe>
+                </div>
+
+                <div style="background-color:#0B1120" class="p-4 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                            <span id="live-status-pill" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400">في وضع الاستعداد</span>
+                            <h3 id="live-display-title" class="text-base sm:text-lg font-extrabold text-white mt-1">الحوار المفتوح مع نخبة المفكرين والمبدعين</h3>
+                        </div>
+                        <button onclick="toggleLiveStudioPanel()" style="background-color:#F59E0B; color:#060a14" class="text-xs font-extrabold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-lg">
+                            <i class="fa-solid fa-sliders"></i>
+                            <span>إدارة البث والمضيفين</span>
+                        </button>
+                    </div>
+
+                    <div class="border-t border-white/10 pt-3">
+                        <h4 class="text-xs font-bold text-slate-400 mb-2.5"><i style="color:#22D3EE" class="fa-solid fa-users-viewfinder ml-1"></i> المضيفون والضيوف في هذه الجلسة:</h4>
+                        <div id="live-hosts-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- لوحة تحكم المؤسس لإطلاق البث وإضافة المضيفين -->
+            <div id="live-studio-controls" class="glass-card rounded-2xl p-5 border border-cyan-500/30 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-black text-white flex items-center gap-2">
+                        <i style="color:#22D3EE" class="fa-solid fa-video"></i>
+                        <span>لوحة إطلاق البث المباشر وإضافة المضيفين</span>
+                    </h3>
+                    <span class="text-[11px] text-amber-400 font-bold"><i class="fa-solid fa-lock"></i> محمي برمز المؤسس</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[11px] text-slate-400 font-bold">عنوان حلقة البث المباشر:</label>
+                        <input id="input-live-title" type="text" placeholder="مثلاً: حوار خاص حول العقد الاجتماعي والتحول الرقمي" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] text-slate-400 font-bold">رابط البث (YouTube Live أو VDO.Ninja أو غرفة مشتركة):</label>
+                        <input id="input-live-url" type="url" placeholder="الصق رابط البث المباشر هنا..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+                    </div>
+                </div>
+
+                <div style="background-color:#060a14" class="p-3.5 rounded-xl border border-white/10 space-y-3">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="text-xs font-extrabold text-cyan-400"><i class="fa-solid fa-user-plus"></i> إضافة مضيف أو ضيف للبث:</span>
+                        <div class="flex gap-1.5">
+                            <button type="button" onclick="quickAddHost('هاشم محمد آدم', 'مؤسس منصة هاشم TV', 'founder.jpg')" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-white px-2.5 py-1 rounded-lg font-bold">+ هاشم محمد</button>
+                            <button type="button" onclick="quickAddHost('بهاء الدين آدم', 'الأستاذ والمفكر', 'bahaa.jpg')" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-white px-2.5 py-1 rounded-lg font-bold">+ أ. بهاء الدين</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <input id="host-name-in" type="text" placeholder="اسم المضيف / الضيف" style="background-color:#0B1120" class="border border-white/10 rounded-lg p-2.5 text-xs text-white">
+                        <input id="host-role-in" type="text" placeholder="الصفة (مثلاً: ضيف الحلقة)" style="background-color:#0B1120" class="border border-white/10 rounded-lg p-2.5 text-xs text-white">
+                        <button type="button" onclick="addHostToQueue()" style="background-color:#131C31; color:#22D3EE" class="border border-cyan-500/30 font-bold text-xs py-2.5 rounded-lg">
+                            إضافة للقائمة
+                        </button>
+                    </div>
+                    <div id="draft-hosts-tags" class="flex flex-wrap gap-2"></div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                    <div class="flex flex-wrap gap-2">
+                        <button id="start-live-btn" onclick="publishLiveStream(true)" class="bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs px-5 py-3 rounded-xl flex items-center gap-2 shadow-lg">
+                            <i class="fa-solid fa-tower-broadcast"></i>
+                            <span>بدء البث المباشر الآن</span>
+                        </button>
+                        <button id="stop-live-btn" onclick="publishLiveStream(false)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs px-4 py-3 rounded-xl">
+                            إنهاء البث
+                        </button>
+                    </div>
+                    <button type="button" onclick="createGuestInviteRoom()" style="background-color:rgba(34,211,238,0.12); color:#22D3EE; border:1px solid rgba(34,211,238,0.3)" class="text-xs font-bold px-3.5 py-2.5 rounded-xl flex items-center gap-1.5">
+                        <i class="fa-solid fa-link"></i>
+                        <span>إنشاء رابط دعوة لضيف عن بُعد</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. قسم الفيديو والحلقات -->
         <section id="tab-videos" class="tab-content hidden space-y-5">
             <div id="cinema-backdrop" class="cinema-dim hidden" onclick="toggleCinemaMode()"></div>
             <div id="video-player-wrapper" class="relative z-40 glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
@@ -217,7 +332,7 @@
             <div id="videos-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </section>
 
-        <!-- 3. قسم البودكاست -->
+        <!-- 4. قسم البودكاست -->
         <section id="tab-podcasts" class="tab-content hidden space-y-5">
             <div class="glass-card rounded-2xl p-5 border border-cyan-500/20 flex flex-wrap items-center justify-between gap-4">
                 <div>
@@ -233,7 +348,7 @@
             <div id="podcasts-list" class="space-y-3"></div>
         </section>
 
-        <!-- 4. قسم الشخصيات والضيوف -->
+        <!-- 5. قسم الشخصيات والضيوف -->
         <section id="tab-people" class="tab-content hidden space-y-5">
             <div class="flex flex-wrap items-center justify-between gap-3">
                 <div>
@@ -248,7 +363,7 @@
             <div id="people-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </section>
 
-        <!-- 5. قسم المتجر والخدمات الإعلانية -->
+        <!-- 6. قسم المتجر والخدمات الإعلانية -->
         <section id="tab-store" class="tab-content hidden space-y-5">
             <div class="text-center max-w-2xl mx-auto space-y-2 py-2">
                 <span style="color:#22D3EE; background:rgba(6,182,212,0.1)" class="text-xs font-extrabold px-3 py-1 rounded-full">الحلول الرقمية والإعلانية</span>
@@ -313,6 +428,10 @@
             <i class="fa-regular fa-newspaper text-base"></i>
             <span class="text-[10px] font-bold">الرئيسية</span>
         </button>
+        <button onclick="switchTab('live')" class="nav-btn-mob flex flex-col items-center gap-1 text-slate-400" data-tab="live">
+            <i class="fa-solid fa-tower-broadcast text-base text-red-400"></i>
+            <span class="text-[10px] font-bold">مباشر</span>
+        </button>
         <button onclick="switchTab('videos')" class="nav-btn-mob flex flex-col items-center gap-1 text-slate-400" data-tab="videos">
             <i class="fa-regular fa-circle-play text-base"></i>
             <span class="text-[10px] font-bold">الفيديو</span>
@@ -324,10 +443,6 @@
         <button onclick="switchTab('people')" class="nav-btn-mob flex flex-col items-center gap-1 text-slate-400" data-tab="people">
             <i class="fa-solid fa-users text-base"></i>
             <span class="text-[10px] font-bold">الشخصيات</span>
-        </button>
-        <button onclick="switchTab('store')" class="nav-btn-mob flex flex-col items-center gap-1 text-slate-400" data-tab="store">
-            <i class="fa-solid fa-store text-base"></i>
-            <span class="text-[10px] font-bold">المتجر</span>
         </button>
     </nav>
 
@@ -393,18 +508,179 @@
         setTimeout(hideLoader, 2500);
 
         const H = "https://";
-        // رابط قاعدة البيانات السحابية (Google Apps Script)
-        const CLOUD_API = H + "script.google.com/macros/s/AKfycbyVQA43AVEvJDHR5brV07OwQmqSjZTkif6jffLoWCwuPgjf8qNW1Ns8CpYttFvZFT_Vbg/exec";
-        // الرمز السري للمؤسس لحماية النشر الدائم (يمكنك تغييره لأي رقم تريده)
+        const CLOUD_API = H + "script.google.com/macros/s/AKfycbzzmw4BJBT2wY421KB7VEvFzY2KfgLdUz4pC4Cp8OCgs5jMP8nbBvD6ZtoSau041NSceQ/exec";
         const ADMIN_PIN = "2026";
-
         const TK_BASE = H + "vt.tiktok.com/";
         const TK_THUMB = H + "images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80";
 
-        // =========================================================================
-        // 1. قاعدة بيانات المحتوى والمنشورات السحابية
-        // =========================================================================
+        function verifyAdminPin() {
+            let savedPin = sessionStorage.getItem('hashim_tv_pin');
+            if (savedPin === ADMIN_PIN) return true;
+            const entered = prompt("أدخل رمز المؤسس (PIN) لتنفيذ هذا الإجراء:");
+            if (entered === ADMIN_PIN) {
+                sessionStorage.setItem('hashim_tv_pin', entered);
+                return true;
+            }
+            alert("رمز المؤسس غير صحيح.");
+            return false;
+        }
 
+        // =========================================================================
+        // 1. إدارة البث المباشر والمضيفين (Live Studio)
+        // =========================================================================
+        let liveState = {
+            active: false,
+            title: "الحوار المفتوح مع نخبة المفكرين والمبدعين",
+            url: "",
+            hosts: [
+                { name: "هاشم محمد آدم", role: "مؤسس منصة هاشم TV (المضيف)", avatar: "founder.jpg" },
+                { name: "بهاء الدين آدم", role: "الأستاذ والمفكر (ضيف الشرف)", avatar: "bahaa.jpg" }
+            ]
+        };
+        let draftHosts = [...liveState.hosts];
+
+        function renderLiveHosts() {
+            const listEl = document.getElementById('live-hosts-list');
+            const hostsToShow = liveState.hosts.length ? liveState.hosts : draftHosts;
+            listEl.innerHTML = hostsToShow.map(h => `
+                <div style="background-color:#131C31" class="flex items-center gap-3 p-2.5 rounded-xl border border-white/10">
+                    <img src="${h.avatar || 'founder.jpg'}" onerror="this.src='founder.jpg'" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400 shrink-0">
+                    <div class="min-w-0">
+                        <h5 class="text-xs font-extrabold text-white truncate">${h.name}</h5>
+                        <p class="text-[11px] text-amber-400 truncate">${h.role}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            const tagsEl = document.getElementById('draft-hosts-tags');
+            tagsEl.innerHTML = draftHosts.map((h, i) => `
+                <span style="background-color:#131C31" class="text-xs text-white px-3 py-1 rounded-full border border-cyan-500/30 flex items-center gap-2">
+                    <span>${h.name} (${h.role})</span>
+                    <button type="button" onclick="removeDraftHost(${i})" class="text-red-400 hover:text-red-300 font-bold">&times;</button>
+                </span>
+            `).join('');
+        }
+
+        function quickAddHost(name, role, avatar) {
+            if (!draftHosts.some(x => x.name === name)) {
+                draftHosts.push({ name, role, avatar });
+                renderLiveHosts();
+            }
+        }
+
+        function addHostToQueue() {
+            const name = document.getElementById('host-name-in').value.trim();
+            const role = document.getElementById('host-role-in').value.trim() || "مضيف / ضيف";
+            if (!name) return;
+            draftHosts.push({ name, role, avatar: "founder.jpg" });
+            document.getElementById('host-name-in').value = '';
+            document.getElementById('host-role-in').value = '';
+            renderLiveHosts();
+        }
+
+        function removeDraftHost(idx) {
+            draftHosts.splice(idx, 1);
+            renderLiveHosts();
+        }
+
+        function convertToEmbedLiveUrl(rawUrl) {
+            if (!rawUrl) return "";
+            const ytMatch = rawUrl.match(/(?:v=|youtu\.be\/|live\/|embed\/)([a-zA-Z0-9_-]{11})/);
+            if (ytMatch) return `${H}www.youtube.com/embed/${ytMatch[1]}?autoplay=1`;
+            return rawUrl;
+        }
+
+        function applyLiveUI() {
+            const banner = document.getElementById('live-alert-banner');
+            const tickerBar = document.getElementById('top-ticker-bar');
+            const tickerBadge = document.getElementById('ticker-badge');
+            const tickerBadgeText = document.getElementById('ticker-badge-text');
+            const tickerMarquee = document.getElementById('ticker-marquee-text');
+            const offlineView = document.getElementById('live-offline-view');
+            const liveIframe = document.getElementById('live-iframe');
+            const pill = document.getElementById('live-status-pill');
+
+            document.getElementById('live-display-title').innerText = liveState.title;
+            renderLiveHosts();
+
+            if (liveState.active && liveState.url) {
+                banner.classList.remove('hidden');
+                document.getElementById('banner-live-title').innerText = liveState.title;
+                document.getElementById('banner-live-hosts').innerText = "بمشاركة: " + liveState.hosts.map(h => h.name).join(" • ");
+
+                tickerBar.style.backgroundColor = "#7F1D1D";
+                tickerBadge.style.backgroundColor = "#EF4444";
+                tickerBadge.style.color = "#FFFFFF";
+                tickerBadgeText.innerText = "بث مباشر الآن";
+                tickerMarquee.innerText = `🔴 بث مباشر الآن على هاشم TV: ${liveState.title} — بمشاركة: ${liveState.hosts.map(h => h.name).join(" و ")} — اضغط على تبويب البث المباشر للمشاهدة والتفاعل!`;
+
+                offlineView.classList.add('hidden');
+                liveIframe.classList.remove('hidden');
+                liveIframe.src = convertToEmbedLiveUrl(liveState.url);
+
+                pill.className = "text-[11px] font-black px-2.5 py-0.5 rounded-full bg-red-600 text-white animate-pulse";
+                pill.innerText = "🔴 يبث الآن مباشرة";
+            } else {
+                banner.classList.add('hidden');
+                tickerBar.style.backgroundColor = "#060a14";
+                tickerBadge.style.backgroundColor = "#F59E0B";
+                tickerBadge.style.color = "#060a14";
+                tickerBadgeText.innerText = "مباشر وحصري";
+
+                offlineView.classList.remove('hidden');
+                liveIframe.classList.add('hidden');
+                liveIframe.src = "";
+
+                pill.className = "text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400";
+                pill.innerText = "في وضع الاستعداد";
+            }
+        }
+
+        async function publishLiveStream(isActive) {
+            if (!verifyAdminPin()) return;
+            const title = document.getElementById('input-live-title').value.trim() || "بث مباشر من استوديو هاشم TV";
+            const url = document.getElementById('input-live-url').value.trim();
+
+            if (isActive && !url) {
+                alert("يرجى لصق رابط البث المباشر (YouTube Live أو VDO.Ninja) أولاً.");
+                return;
+            }
+
+            liveState = {
+                active: isActive,
+                title,
+                url: isActive ? url : "",
+                hosts: [...draftHosts]
+            };
+            applyLiveUI();
+
+            try {
+                await fetch(CLOUD_API, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ action: "SET_LIVE", live: liveState })
+                });
+                alert(isActive ? "تم إطلاق البث المباشر للجمهور بنجاح!" : "تم إنهاء البث المباشر.");
+            } catch (e) {}
+        }
+
+        function createGuestInviteRoom() {
+            const roomId = "HashimTV_" + Math.floor(1000 + Math.random() * 9000);
+            const guestLink = `${H}vdo.ninja/?room=${roomId}&push`;
+            const obsViewLink = `${H}vdo.ninja/?room=${roomId}&scene`;
+            document.getElementById('input-live-url').value = obsViewLink;
+            prompt("تم إنشاء غرفة لقاء مباشر فورية! انسخ هذا الرابط وأرسله للضيف ليدخل معك بالصوت والصورة، وتم وضع رابط العرض في خانة البث تلقائياً:", guestLink);
+        }
+
+        function toggleLiveStudioPanel() {
+            const el = document.getElementById('live-studio-controls');
+            el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // =========================================================================
+        // 2. المنشورات السحابية الدائمة
+        // =========================================================================
         const defaultPosts = [
             {
                 id: 1,
@@ -413,28 +689,29 @@
                 role: "مؤسس منصة هاشم TV",
                 time: "2026/11/23",
                 category: "مقال فكري",
-                text: "مرحباً بكم في النسخة المطورة من منصة هاشم TV! أصبحت المنصة الآن متصلة بالأرشيف السحابي الدائم، حيث تُحفظ جميع المنشورات والمقالات باليوم والتاريخ لتكون مرجعاً معرفياً متجدداً لكل الزوار.",
+                text: "مرحباً بكم في النسخة المطورة من منصة هاشم TV! أصبحت المنصة الآن متصلة بالأرشيف السحابي الدائم وتدعم البث المباشر واستضافة المفكرين والمبدعين.",
                 image: "",
                 likes: 54,
                 comments: ["بالتوفيق يا أستاذ هاشم، منصة رائعة!", "مرجع معرفي متميز."],
-                aiSummary: "إعلان ربط منصة هاشم TV بالأرشيف السحابي الدائم لحفظ المنشورات باليوم والتاريخ."
+                aiSummary: "إعلان إطلاق استوديو البث المباشر والأرشيف السحابي الدائم في منصة هاشم TV."
             }
         ];
 
         let postsData = [...defaultPosts];
         let currentFilter = 'الكل';
 
-        // جلب المنشورات المحفوظة من Google Sheets
-        async function loadCloudPosts(manual = false) {
+        async function loadCloudData(manual = false) {
             const statusEl = document.getElementById('cloud-status');
             if (manual && statusEl) {
                 statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تحديث الأرشيف...';
             }
             try {
                 const res = await fetch(CLOUD_API);
-                const cloudItems = await res.json();
-                if (Array.isArray(cloudItems)) {
-                    const mapped = cloudItems.map(item => ({
+                const payload = await res.json();
+                const items = Array.isArray(payload) ? payload : (payload.posts || []);
+
+                if (Array.isArray(items)) {
+                    const mapped = items.map(item => ({
                         id: item.id || Date.now() + Math.random(),
                         author: "هاشم محمد آدم",
                         avatar: "founder.jpg",
@@ -450,33 +727,29 @@
                     postsData = [...mapped, ...defaultPosts];
                     renderPosts(currentFilter);
                 }
+
+                if (payload.live) {
+                    liveState = payload.live;
+                    if (liveState.hosts && liveState.hosts.length) draftHosts = [...liveState.hosts];
+                    applyLiveUI();
+                }
+
                 if (statusEl) {
                     statusEl.innerHTML = '<i class="fa-solid fa-cloud-check"></i> متصل بالأرشيف السحابي (' + postsData.length + ' منشور)';
                 }
             } catch (err) {
                 if (statusEl) {
-                    statusEl.innerHTML = '<i class="fa-solid fa-cloud"></i> وضع العرض المحلي';
+                    statusEl.innerHTML = '<i class="fa-solid fa-cloud"></i> متصل بالأرشيف';
                 }
             }
         }
 
-        // نشر وحفظ منشور جديد في Google Sheets باليوم والتاريخ
         async function addNewPost() {
             const text = document.getElementById('post-text').value.trim();
             const image = document.getElementById('post-image').value.trim();
             const category = document.getElementById('post-category').value;
             if (!text) return;
-
-            // التحقق من رمز المؤسس لحماية قاعدة البيانات
-            let savedPin = sessionStorage.getItem('hashim_tv_pin');
-            if (savedPin !== ADMIN_PIN) {
-                const entered = prompt("أدخل رمز المؤسس (PIN) لحفظ المنشور في الأرشيف الدائم:");
-                if (entered !== ADMIN_PIN) {
-                    alert("رمز المؤسس غير صحيح. النشر في الأرشيف الدائم مخصص لإدارة المنصة.");
-                    return;
-                }
-                sessionStorage.setItem('hashim_tv_pin', entered);
-            }
+            if (!verifyAdminPin()) return;
 
             const btn = document.getElementById('publish-btn');
             const originalHTML = btn.innerHTML;
@@ -513,16 +786,18 @@
                 document.getElementById('post-text').value = '';
                 document.getElementById('post-image').value = '';
                 renderPosts(currentFilter);
-
-                setTimeout(() => loadCloudPosts(false), 2000);
+                setTimeout(() => loadCloudData(false), 2000);
             } catch (e) {
-                alert("تعذر الاتصال بالسحابة، يرجى التحقق من الإنترنت والمحاولة مرة أخرى.");
+                alert("تعذر الاتصال بالسحابة، يرجى التحقق من الإنترنت.");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalHTML;
             }
         }
 
+        // =========================================================================
+        // 3. مكتبة الفيديوهات والبودكاست والشخصيات
+        // =========================================================================
         const tiktokCodes = [
             "ZSsLYbqAg", "ZSsLYB8GW", "ZSsLY5Aex", "ZSsLYpeWn", "ZSsLYpMqs",
             "ZSsLY5JqD", "ZSsLYXqPy", "ZSsLYC2by", "ZSsLYsSTS", "ZSsLYsapk",
@@ -594,10 +869,6 @@
             }
         ];
 
-        // =========================================================================
-        // 2. منطق العرض والتفاعل
-        // =========================================================================
-
         document.getElementById('main-video-frame').src = H + "www.youtube.com/embed/dQw4w9WgXcQ";
         document.getElementById('player-cover').src = "founder.jpg";
 
@@ -608,347 +879,4 @@
             document.querySelectorAll('.nav-btn-desk').forEach(btn => {
                 if (btn.dataset.tab === tabId) {
                     btn.style.backgroundColor = '#06B6D4';
-                    btn.style.color = '#060a14';
-                } else {
-                    btn.style.backgroundColor = 'transparent';
-                    btn.style.color = '#94A3B8';
-                }
-            });
-
-            document.querySelectorAll('.nav-btn-mob').forEach(btn => {
-                btn.style.color = btn.dataset.tab === tabId ? '#22D3EE' : '#94A3B8';
-            });
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function renderPosts(filter = 'الكل') {
-            currentFilter = filter;
-            const container = document.getElementById('posts-container');
-            const filtered = filter === 'الكل' ? postsData : postsData.filter(p => p.category === filter);
-            container.innerHTML = filtered.map(post => `
-                <article class="glass-card rounded-2xl p-4 sm:p-5 space-y-3 border border-white/10">
-                    <div class="flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-3">
-                            <img src="${post.avatar || 'founder.jpg'}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400">
-                            <div style="background:linear-gradient(135deg,#06B6D4,#2563EB); color:#060a14; display:none;" class="w-10 h-10 rounded-full font-black items-center justify-center">${post.author[0]}</div>
-                            <div>
-                                <div class="flex items-center gap-1.5">
-                                    <h3 class="text-sm font-extrabold text-white">${post.author}</h3>
-                                    <i style="color:#22D3EE" class="fa-solid fa-circle-check text-xs"></i>
-                                </div>
-                                <p class="text-[11px] text-slate-400"><i class="fa-regular fa-calendar-days"></i> ${post.time}</p>
-                            </div>
-                        </div>
-                        <span style="background-color:#060a14; color:#FBBF24" class="text-[11px] font-bold border border-white/10 px-3 py-1 rounded-full shrink-0">${post.category}</span>
-                    </div>
-                    <p class="text-sm text-slate-200 leading-relaxed whitespace-pre-line">${post.text}</p>
-                    ${post.image ? `<img src="${post.image}" class="w-full max-h-96 object-cover rounded-xl border border-white/10">` : ''}
-                    
-                    <div id="ai-box-${post.id}" style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3)" class="hidden rounded-xl p-3 text-xs text-cyan-200">
-                        <strong style="color:#22D3EE"><i class="fa-solid fa-wand-magic-sparkles"></i> ملخص AI:</strong> ${post.aiSummary}
-                    </div>
-
-                    <div class="pt-2 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
-                        <div class="flex items-center gap-4">
-                            <button onclick="likePost(${post.id})" class="hover:text-white flex items-center gap-1.5 font-bold transition">
-                                <i style="color:#22D3EE" class="fa-regular fa-heart"></i> <span>${post.likes}</span>
-                            </button>
-                            <button onclick="toggleComments(${post.id})" class="hover:text-white flex items-center gap-1.5 font-bold transition">
-                                <i class="fa-regular fa-comment"></i> <span>${post.comments.length} تعليق</span>
-                            </button>
-                            <button onclick="toggleAiSummary(${post.id})" style="color:#FBBF24" class="flex items-center gap-1 font-bold">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> <span>ملخص AI</span>
-                            </button>
-                        </div>
-                        <button onclick="shareWhatsApp('${encodeURIComponent(post.text)}')" class="hover:text-green-400"><i class="fa-brands fa-whatsapp text-base"></i></button>
-                    </div>
-
-                    <div id="comments-${post.id}" class="hidden pt-2 space-y-2 border-t border-white/5">
-                        <div class="space-y-1.5">
-                            ${post.comments.map(c => `<div style="background-color:rgba(6,10,20,0.7)" class="rounded-lg px-3 py-2 text-xs text-slate-300">${c}</div>`).join('')}
-                        </div>
-                        <div class="flex gap-2">
-                            <input id="c-input-${post.id}" type="text" placeholder="اكتب تعليقك..." style="background-color:#060a14" class="w-full border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white">
-                            <button onclick="addComment(${post.id})" style="background-color:#06B6D4; color:#060a14" class="font-bold text-xs px-3 rounded-lg">إرسال</button>
-                        </div>
-                    </div>
-                </article>
-            `).join('');
-        }
-
-        function filterPosts(cat, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => {
-                b.style.backgroundColor = '#131C31';
-                b.style.color = '#CBD5E1';
-            });
-            btn.style.backgroundColor = '#06B6D4';
-            btn.style.color = '#060a14';
-            renderPosts(cat);
-        }
-
-        function likePost(id) {
-            const p = postsData.find(x => x.id === id);
-            if (p) { p.likes++; renderPosts(currentFilter); }
-        }
-        function toggleComments(id) { document.getElementById('comments-' + id).classList.toggle('hidden'); }
-        function toggleAiSummary(id) { document.getElementById('ai-box-' + id).classList.toggle('hidden'); }
-        function addComment(id) {
-            const input = document.getElementById('c-input-' + id);
-            if (!input.value.trim()) return;
-            const p = postsData.find(x => x.id === id);
-            p.comments.push(input.value.trim());
-            renderPosts(currentFilter);
-            document.getElementById('comments-' + id).classList.remove('hidden');
-        }
-        function shareWhatsApp(encodedText) {
-            window.open(H + `wa.me/?text=${encodedText}%20-%20${encodeURIComponent('عبر منصة هاشم TV')}`, '_blank');
-        }
-        function contactOrder(item) {
-            window.open(H + `wa.me/?text=${encodeURIComponent('مرحباً، أرغب في الاستفسار عن: ' + item)}`, '_blank');
-        }
-
-        // قسم الفيديو
-        function renderVideos(filter = 'الكل') {
-            const list = filter === 'الكل' ? videosData : videosData.filter(v => v.category === filter);
-            document.getElementById('videos-count').innerText = list.length;
-            document.getElementById('videos-list').innerHTML = list.map(v => `
-                <div onclick="playVideoItem(${v.id})" class="glass-card rounded-2xl overflow-hidden cursor-pointer group border border-white/10 transition">
-                    <div class="relative aspect-video">
-                        <img src="${v.thumb}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                        <span class="absolute bottom-2 left-2 bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded">${v.duration}</span>
-                        <span style="background:rgba(6,10,20,0.85); color:${v.type === 'tiktok' ? '#22D3EE' : '#FBBF24'}" class="absolute top-2 right-2 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-white/10">
-                            ${v.type === 'tiktok' ? '<i class="fa-brands fa-tiktok"></i> TikTok' : '<i class="fa-brands fa-youtube"></i> فيديو'}
-                        </span>
-                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                            <span style="background-color:#06B6D4; color:#060a14" class="w-11 h-11 rounded-full flex items-center justify-center"><i class="fa-solid fa-play"></i></span>
-                        </div>
-                    </div>
-                    <div class="p-3.5 flex items-center justify-between gap-2">
-                        <div>
-                            <span style="color:#22D3EE" class="text-[10px] font-bold">${v.category}</span>
-                            <h4 class="text-xs sm:text-sm font-extrabold text-white mt-0.5 line-clamp-1">${v.title}</h4>
-                        </div>
-                        ${v.externalUrl ? `<a href="${v.externalUrl}" target="_blank" onclick="event.stopPropagation()" style="background:#060a14; color:#22D3EE" class="shrink-0 text-[11px] font-bold px-2.5 py-1.5 rounded-lg border border-white/10">تشغيل</a>` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function filterVideos(cat, btn) {
-            document.querySelectorAll('.v-filter-btn').forEach(b => {
-                b.style.backgroundColor = '#131C31';
-                b.style.color = '#CBD5E1';
-            });
-            btn.style.backgroundColor = '#06B6D4';
-            btn.style.color = '#060a14';
-            renderVideos(cat);
-        }
-
-        function playVideoItem(id) {
-            const v = videosData.find(x => x.id === id);
-            if (!v) return;
-            const stage = document.getElementById('player-stage');
-            const extLink = document.getElementById('external-video-link');
-            document.getElementById('current-video-title').innerText = v.title;
-            document.getElementById('current-video-cat').innerText = v.category;
-
-            if (v.externalUrl) {
-                extLink.href = v.externalUrl;
-                extLink.classList.remove('hidden');
-            } else {
-                extLink.classList.add('hidden');
-            }
-
-            if (v.type === 'youtube') {
-                stage.innerHTML = `<iframe id="main-video-frame" class="w-full h-full" src="${H}www.youtube.com/embed/${v.source}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
-            } else if (v.type === 'tiktok' && v.source) {
-                stage.innerHTML = `<iframe class="w-full h-full" src="${H}www.tiktok.com/embed/v2/${v.source}" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
-            } else if (v.type === 'mp4') {
-                stage.innerHTML = `<video class="w-full h-full" src="${v.source}" controls autoplay playsinline></video>`;
-            } else if (v.externalUrl) {
-                stage.innerHTML = `
-                    <div class="text-center p-6 space-y-3">
-                        <div style="background:rgba(34,211,238,0.15); color:#22D3EE" class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto text-2xl">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </div>
-                        <h3 class="text-sm sm:text-base font-extrabold text-white">${v.title}</h3>
-                        <p class="text-xs text-slate-400 max-w-md mx-auto">اضغط أدناه لمشاهدة الحلقة مباشرة بجودتها الكاملة.</p>
-                        <a href="${v.externalUrl}" target="_blank" style="background-color:#06B6D4; color:#060a14" class="inline-flex items-center gap-2 font-extrabold text-xs px-5 py-2.5 rounded-xl">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            <span>تشغيل الحلقة الآن</span>
-                        </a>
-                    </div>
-                `;
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function openVideoModal() { document.getElementById('video-modal').classList.remove('hidden'); }
-        function closeVideoModal() { document.getElementById('video-modal').classList.add('hidden'); }
-        function saveNewVideo() {
-            const title = document.getElementById('vid-title').value.trim();
-            const type = document.getElementById('vid-type').value;
-            let raw = document.getElementById('vid-source').value.trim();
-            const category = document.getElementById('vid-cat').value.trim() || (type === 'tiktok' ? 'حلقات TikTok' : 'سلسلة التحول الرقمي');
-            if (!title || !raw) return;
-
-            let source = raw;
-            let externalUrl = "";
-
-            if (type === 'youtube') {
-                const m = raw.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
-                if (m) source = m[1];
-            } else if (type === 'tiktok') {
-                const numMatch = raw.match(/\/video\/(\d+)/) || raw.match(/^(\d{15,22})$/);
-                if (numMatch) {
-                    source = numMatch[1];
-                    externalUrl = raw.startsWith('http') ? raw : `${H}www.tiktok.com/@hashimtv/video/${source}`;
-                } else {
-                    source = "";
-                    externalUrl = raw.startsWith('http') ? raw : H + raw;
-                }
-            }
-
-            videosData.unshift({
-                id: Date.now(),
-                title,
-                category,
-                duration: type === 'tiktok' ? 'قصير' : 'جديد',
-                type,
-                source,
-                externalUrl,
-                thumb: TK_THUMB
-            });
-            renderVideos();
-            closeVideoModal();
-            playVideoItem(videosData[0].id);
-        }
-
-        function toggleCinemaMode() {
-            const dim = document.getElementById('cinema-backdrop');
-            const btnText = document.getElementById('cinema-btn-text');
-            dim.classList.toggle('hidden');
-            btnText.innerText = dim.classList.contains('hidden') ? 'وضع السينما' : 'إغلاق السينما';
-        }
-
-        // البودكاست
-        function renderPodcasts() {
-            document.getElementById('podcasts-list').innerHTML = podcastsData.map(pod => `
-                <div class="glass-card rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10 transition">
-                    <div class="flex items-center gap-3.5">
-                        <img src="${pod.cover}" onerror="this.src='${H}images.unsplash.com/photo-1478737270239-2f02b77fc618?w=300&q=80'" class="w-16 h-16 rounded-xl object-cover object-top shrink-0 border border-white/10">
-                        <div>
-                            <div style="color:#FBBF24" class="flex items-center gap-2 text-[11px] font-bold">
-                                <span>${pod.date}</span> • <span><i class="fa-regular fa-clock"></i> ${pod.duration}</span>
-                            </div>
-                            <h3 class="text-sm sm:text-base font-extrabold text-white mt-0.5">${pod.title}</h3>
-                            <p style="color:#22D3EE" class="text-xs font-semibold mt-0.5">الضيف: ${pod.guest}</p>
-                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">${pod.summary}</p>
-                        </div>
-                    </div>
-                    <button onclick="playPodcast(${pod.id})" style="background-color:#06B6D4; color:#060a14" class="w-full sm:w-auto shrink-0 font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-lg">
-                        <i class="fa-solid fa-play"></i>
-                        <span>استمع الآن</span>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        const audioEl = document.getElementById('html-audio');
-        let speeds = [1, 1.25, 1.5, 2];
-        let speedIdx = 0;
-
-        function playPodcast(id) {
-            const pod = podcastsData.find(p => p.id === id);
-            if (!pod) return;
-            document.getElementById('sticky-audio-player').classList.remove('hidden');
-            document.getElementById('player-title').innerText = pod.title;
-            document.getElementById('player-guest').innerText = pod.guest;
-            document.getElementById('player-cover').src = pod.cover;
-            audioEl.src = pod.audioUrl;
-            audioEl.play();
-            document.getElementById('play-pause-icon').className = 'fa-solid fa-pause';
-        }
-
-        function togglePlayPause() {
-            const icon = document.getElementById('play-pause-icon');
-            if (audioEl.paused) { audioEl.play(); icon.className = 'fa-solid fa-pause'; }
-            else { audioEl.pause(); icon.className = 'fa-solid fa-play'; }
-        }
-
-        function changeSpeed() {
-            speedIdx = (speedIdx + 1) % speeds.length;
-            audioEl.playbackRate = speeds[speedIdx];
-            document.getElementById('speed-btn').innerText = speeds[speedIdx] + 'x';
-        }
-
-        function closeAudioPlayer() {
-            audioEl.pause();
-            document.getElementById('sticky-audio-player').classList.add('hidden');
-        }
-
-        function openPodcastModal() { document.getElementById('podcast-modal').classList.remove('hidden'); }
-        function closePodcastModal() { document.getElementById('podcast-modal').classList.add('hidden'); }
-        function saveNewPodcast() {
-            const title = document.getElementById('pod-title').value.trim();
-            const guest = document.getElementById('pod-guest').value.trim() || 'هاشم محمد آدم';
-            const audioUrl = document.getElementById('pod-url').value.trim() || (H + 'www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
-            const duration = document.getElementById('pod-duration').value.trim() || '30:00';
-            const summary = document.getElementById('pod-summary').value.trim() || 'حلقة جديدة على بودكاست هاشم TV.';
-            if (!title) return;
-
-            podcastsData.unshift({
-                id: Date.now(),
-                title, guest, duration,
-                date: 'جديد اليوم',
-                audioUrl,
-                cover: 'founder.jpg',
-                summary
-            });
-            renderPodcasts();
-            closePodcastModal();
-        }
-
-        // الشخصيات
-        function renderPeople() {
-            document.getElementById('people-grid').innerHTML = peopleData.map(person => `
-                <div class="glass-card rounded-2xl p-5 text-center space-y-3 border border-white/10">
-                    <img src="${person.avatar}" onerror="this.src='${H}images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80'" style="border-color:#22D3EE" class="w-24 h-24 rounded-full object-cover object-top mx-auto border-2 p-0.5 shadow-lg">
-                    <div>
-                        <h3 class="text-base font-black text-white">${person.name}</h3>
-                        <p style="color:#FBBF24" class="text-xs font-bold mt-0.5">${person.role}</p>
-                    </div>
-                    <p class="text-xs text-slate-400 leading-relaxed">${person.bio}</p>
-                </div>
-            `).join('');
-        }
-
-        function openPersonModal() { document.getElementById('person-modal').classList.remove('hidden'); }
-        function closePersonModal() { document.getElementById('person-modal').classList.add('hidden'); }
-        function saveNewPerson() {
-            const name = document.getElementById('p-name').value.trim();
-            const role = document.getElementById('p-role').value.trim();
-            const avatar = document.getElementById('p-avatar').value.trim() || (H + 'images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80');
-            const bio = document.getElementById('p-bio').value.trim();
-            if (!name) return;
-
-            peopleData.unshift({ id: Date.now(), name, role, avatar, bio });
-            renderPeople();
-            closePersonModal();
-        }
-
-        function openQuickModal() {
-            switchTab('feed');
-            document.getElementById('post-text').focus();
-        }
-
-        // تشغيل أولي وجلب المنشورات السحابية
-        switchTab('feed');
-        renderPosts();
-        loadCloudPosts(false);
-        renderVideos();
-        renderPodcasts();
-        renderPeople();
-    </script>
-</body>
-</html>
+                    btn.style.color = '#060
