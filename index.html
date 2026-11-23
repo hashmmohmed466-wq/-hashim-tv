@@ -1,853 +1,1434 @@
+```html
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>منصة هاشم TV | استوديو الذكاء الاصطناعي المتكامل</title>
-  <style>
-    :root {
-      --bg: #090e1a;
-      --card-bg: #131c31;
-      --accent: #f97316;
-      --accent-glow: rgba(249, 115, 22, 0.25);
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #26334d;
-      --success: #10b981;
-      --info: #38bdf8;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      height: 100dvh;
-      overflow: hidden;
-    }
-    header {
-      background: linear-gradient(180deg, #162038 0%, #111827 100%);
-      padding: 11px 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .badge {
-      background: linear-gradient(135deg, #ef4444, #f97316);
-      color: #fff;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-    }
-    .title {
-      font-size: 0.98rem;
-      font-weight: 700;
-    }
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-    .icon-btn {
-      background-color: rgba(15, 23, 42, 0.8);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 5px 9px;
-      border-radius: 7px;
-      font-size: 0.76rem;
-      cursor: pointer;
-    }
-    .status-dot {
-      width: 9px;
-      height: 9px;
-      background-color: var(--success);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--success);
-    }
-    .nav-tabs {
-      display: flex;
-      background-color: #070b14;
-      padding: 6px 10px;
-      gap: 6px;
-      overflow-x: auto;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .nav-btn {
-      background: transparent;
-      color: var(--text-muted);
-      border: none;
-      padding: 7px 12px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      font-size: 0.84rem;
-    }
-    .nav-btn.active {
-      background-color: var(--accent);
-      color: #fff;
-      box-shadow: 0 2px 10px var(--accent-glow);
-    }
-    main {
-      flex: 1;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      overflow-y: auto;
-    }
-    .tab-content {
-      display: none;
-      flex-direction: column;
-      height: 100%;
-      min-height: 0;
-    }
-    .tab-content.active {
-      display: flex;
-    }
-    .mode-selector {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-      overflow-x: auto;
-      flex-shrink: 0;
-    }
-    .mode-pill {
-      background-color: var(--card-bg);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 6px 11px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .mode-pill.active {
-      background-color: rgba(249, 115, 22, 0.18);
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-    .chat-container {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      height: 100%;
-      min-height: 0;
-      gap: 8px;
-    }
-    .chat-box {
-      flex: 1;
-      overflow-y: auto;
-      background-color: #060911;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      min-height: 0;
-    }
-    .chat-msg {
-      padding: 11px 14px;
-      border-radius: 12px;
-      max-width: 93%;
-      line-height: 1.75;
-      font-size: 0.94rem;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-    .chat-msg.user {
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      color: #fff;
-      align-self: flex-start;
-      border-bottom-right-radius: 3px;
-    }
-    .chat-msg.bot {
-      background-color: var(--card-bg);
-      color: var(--text);
-      align-self: flex-end;
-      border-bottom-left-radius: 3px;
-      border: 1px solid var(--border);
-    }
-    .chat-msg img {
-      max-width: 100%;
-      max-height: 280px;
-      border-radius: 8px;
-      display: block;
-      margin-bottom: 8px;
-      object-fit: contain;
-      background: #000;
-    }
-    .action-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
-    }
-    .action-btn, .tool-link-btn {
-      background-color: #0b1120;
-      color: var(--accent);
-      border: 1px solid var(--border);
-      padding: 6px 10px;
-      border-radius: 7px;
-      font-size: 0.77rem;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-weight: 600;
-    }
-    .action-btn.green {
-      color: var(--success);
-      border-color: rgba(16, 185, 129, 0.4);
-    }
-    .tool-link-btn {
-      color: var(--info);
-    }
-    .chips-bar {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      flex-shrink: 0;
-      padding-bottom: 2px;
-    }
-    .chip {
-      background-color: #131c31;
-      color: #cbd5e1;
-      border: 1px solid var(--border);
-      padding: 5px 10px;
-      border-radius: 14px;
-      font-size: 0.76rem;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .preview-bar {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      background-color: var(--card-bg);
-      border: 1px solid var(--accent);
-      border-radius: 9px;
-      padding: 6px 10px;
-      flex-shrink: 0;
-    }
-    .preview-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--text);
-    }
-    .preview-info img {
-      width: 38px;
-      height: 38px;
-      border-radius: 6px;
-      object-fit: cover;
-    }
-    .remove-img-btn {
-      background: #ef4444;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 0.76rem;
-      cursor: pointer;
-    }
-    .input-bar {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-      padding-bottom: 3px;
-      align-items: center;
-    }
-    .img-upload-btn {
-      background-color: var(--card-bg);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 10px 12px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .input-bar input[type="text"] {
-      flex: 1;
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 11px 12px;
-      border-radius: 9px;
-      outline: none;
-      font-size: 0.92rem;
-      min-width: 0;
-    }
-    .input-bar button.send-btn {
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      color: #fff;
-      border: none;
-      padding: 11px 16px;
-      border-radius: 9px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 0.92rem;
-      flex-shrink: 0;
-    }
-    .input-bar button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-    .card-title {
-      font-size: 1rem;
-      margin-bottom: 6px;
-      color: var(--accent);
-    }
-    .card p {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-      margin-bottom: 10px;
-    }
-    .quick-btn {
-      background-color: #1e293b;
-      color: #fff;
-      border: 1px solid var(--border);
-      padding: 9px 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      width: 100%;
-      text-align: center;
-      margin-top: 6px;
-    }
-    .share-btn {
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      border: none;
-    }
-  </style>
-</head>
-<body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هاشم TV | المنصة الإعلامية والاجتماعية المتكاملة</title>
+    
+    <!-- استدعاء خط Cairo من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- استدعاء Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- استدعاء مكتبة الأيقونات Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-  <header>
-    <div class="brand">
-      <span class="badge">TV</span>
-      <span class="title">منصة هاشم TV</span>
-    </div>
-    <div class="header-actions">
-      <button class="icon-btn" onclick="clearChat()" title="بدء محادثة جديدة">🗑️ جديد</button>
-      <button class="icon-btn" onclick="resetApiKey()" title="إعداد المفتاح">🔑 المفتاح</button>
-      <span class="status-dot" title="متصل وجاهز"></span>
-    </div>
-  </header>
-
-  <nav class="nav-tabs">
-    <button class="nav-btn active" id="btn-assistantTab" onclick="switchTab('assistantTab')">🤖 الاستوديو الذكي</button>
-    <button class="nav-btn" id="btn-projectsTab" onclick="switchTab('projectsTab')">📋 القوالب الاحترافية</button>
-    <button class="nav-btn" id="btn-tasksTab" onclick="switchTab('tasksTab')">🔗 رابط العملاء</button>
-  </nav>
-
-  <main>
-    <section id="assistantTab" class="tab-content active">
-      <div class="mode-selector">
-        <button class="mode-pill active" id="mode-general" onclick="setMode('general')">🧠 مساعد شامل (كل المعلومات)</button>
-        <button class="mode-pill" id="mode-image" onclick="setMode('image')">🎨 توليد وتعديل الصور</button>
-        <button class="mode-pill" id="mode-video" onclick="setMode('video')">🎬 مخرج الفيديو والمشاهد</button>
-      </div>
-
-      <div class="chat-container">
-        <div class="chat-box" id="chatBox">
-          <div class="chat-msg bot">أهلاً بك في منصة هاشم TV الاحترافية! اختر الوضع المناسب أو اكتب طلبك مباشرة:
-• اسأل في أي مجال (دراسة، جامعات، تجارة، سفر، برمجة، استشارات) لتحصل على إجابة كاملة ومفصلة للنهاية.
-• اطلب رسم أو توليد أي صورة وسأنشئها لك فوراً داخل الشاشة.
-• أرفق أي صورة قديمة أو صورة منتج لتحليلها وإعادة صياغتها أو تعديلها.</div>
-        </div>
-
-        <div class="chips-bar" id="chipsBar">
-          <span class="chip" onclick="quickFill('ارسم صورة احترافية لـ ')">🎨 توليد صورة فورية</span>
-          <span class="chip" onclick="quickFill('حلل هذه الصورة وأعد تصميمها بجودة عالية مع ')">✨ ترميم وتعديل صورة</span>
-          <span class="chip" onclick="quickFill('صمّم لي فيديو ريلز احترافي عن ')">🎬 سكربت ومشاهد فيديو</span>
-          <span class="chip" onclick="quickFill('اشرح لي بالتفصيل الكامل ')">📚 استشارة ومعلومات</span>
-        </div>
-
-        <div class="preview-bar" id="previewBar">
-          <div class="preview-info">
-            <img id="previewThumb" src="" alt="معاينة">
-            <span>الصورة جاهزة للتحليل أو التعديل</span>
-          </div>
-          <button class="remove-img-btn" onclick="clearImage()">✖ إلغاء</button>
-        </div>
-
-        <div class="input-bar">
-          <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImageSelect(event)">
-          <button class="img-upload-btn" onclick="document.getElementById('imageInput').click()" title="إرفاق صورة">📷</button>
-          <input type="text" id="userInput" placeholder="اكتب سؤالك، أو صف الصورة التي تريد توليدها..." onkeydown="if(event.key === 'Enter') sendPrompt()">
-          <button class="send-btn" id="sendBtn" onclick="sendPrompt()">إرسال</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="projectsTab" class="tab-content">
-      <div class="card">
-        <h3 class="card-title">1. توليد الصور بالذكاء الاصطناعي</h3>
-        <p>اكتب وصف أي صورة (منتج، شعار، شخصية، أو مشهد طبيعي) وسيتم توليدها وعرضها للتحميل فوراً.</p>
-        <button class="quick-btn" onclick="quickFillAndGo('image', 'ارسم صورة سينمائية عالية الجودة لـ ')">🎨 ابدأ توليد صورة الآن</button>
-      </div>
-      <div class="card">
-        <h3 class="card-title">2. صناعة الفيديوهات والريلز (Faceless Reels)</h3>
-        <p>كتابة السكربت الكامل وتقسيم المشاهد بالثواني مع أوامر التوليد الإنجليزية جاهزة للتنفيذ.</p>
-        <button class="quick-btn" onclick="runTemplate('video', 'صمّم لي فيديو ريلز احترافي (30 ثانية) عن مستقبل التجارة الإلكترونية والذكاء الاصطناعي، مقسماً إلى مشاهد بالثواني مع الوصف البصري والتعليق الصوتي وأوامر التوليد بالإنجليزية.')">🎬 تصميم فيديو ريلز الآن</button>
-      </div>
-      <div class="card">
-        <h3 class="card-title">3. كتابة الإعلانات التسويقية المقنعة</h3>
-        <p>صياغة حملات إعلانية احترافية للمتاجر والشركات بأسلوب تسويقي يجذب العملاء.</p>
-        <button class="quick-btn" onclick="runTemplate('general', 'اكتب لي خطة تسويقية ونص إعلان احترافي مقنع لمتجر إلكتروني حديث يستهدف زيادة المبيعات.')">📢 توليد إعلان تسويقي الآن</button>
-      </div>
-    </section>
-
-    <section id="tasksTab" class="tab-content">
-      <div class="card">
-        <h3 class="card-title">🔗 رابط التشغيل المباشر للعملاء</h3>
-        <p>انسخ الرابط المُفعّل وأرسله لعميلك في واتساب؛ سيفتح معه الاستوديو بكامل مميزاته دون طلب أي مفتاح:</p>
-        <button class="quick-btn share-btn" onclick="copyMagicLink()">📋 نسخ رابط العميل الجاهز للتشغيل الفوري</button>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    let selectedImageBase64 = null;
-    let selectedImageMime = "image/jpeg";
-    let selectedImageDataUrl = null;
-    let conversationHistory = [];
-    let currentMode = 'general';
-
-    (function initMagicKey() {
-      const params = new URLSearchParams(window.location.search);
-      const urlKey = params.get('k');
-      if (urlKey && urlKey.trim().length > 20) {
-        localStorage.setItem('hashim_tv_api_key', urlKey.trim());
-        window.history.replaceState({}, document.title, window.location.pathname);
-      }
-    })();
-
-    function getApiKey() {
-      let key = localStorage.getItem('hashim_tv_api_key');
-      if (!key) {
-        key = prompt("أدخل مفتاح Gemini API Key الخاص بمنصة هاشم TV:");
-        if (key && key.trim().length > 20) {
-          localStorage.setItem('hashim_tv_api_key', key.trim());
-        } else {
-          alert("يرجى إدخال مفتاح API صحيح.");
-          return null;
-        }
-      }
-      return key.trim();
-    }
-
-    function resetApiKey() {
-      const current = localStorage.getItem('hashim_tv_api_key') || "";
-      const newKey = prompt("أدخل مفتاح Gemini API Key الجديد:", current);
-      if (newKey && newKey.trim().length > 20) {
-        localStorage.setItem('hashim_tv_api_key', newKey.trim());
-        alert("تم حفظ المفتاح بنجاح!");
-      }
-    }
-
-    function setMode(mode) {
-      currentMode = mode;
-      document.querySelectorAll('.mode-pill').forEach(p => p.classList.remove('active'));
-      document.getElementById('mode-' + mode).classList.add('active');
-
-      const input = document.getElementById('userInput');
-      if (mode === 'image') {
-        input.placeholder = "صف الصورة التي تريد توليدها أو التعديل المطلوب...";
-      } else if (mode === 'video') {
-        input.placeholder = "اكتب فكرة الفيديو لتقسيمه إلى مشاهد...";
-      } else {
-        input.placeholder = "اسأل في أي مجال أو اطلب أي مهمة...";
-      }
-    }
-
-    function quickFill(prefix) {
-      const input = document.getElementById('userInput');
-      input.value = prefix;
-      input.focus();
-      if (prefix.includes('صورة')) setMode('image');
-      else if (prefix.includes('فيديو')) setMode('video');
-      else setMode('general');
-    }
-
-    function quickFillAndGo(mode, prefix) {
-      switchTab('assistantTab');
-      setMode(mode);
-      quickFill(prefix);
-    }
-
-    function clearChat() {
-      conversationHistory = [];
-      const chatBox = document.getElementById('chatBox');
-      chatBox.innerHTML = '<div class="chat-msg bot">تم بدء جلسة جديدة! تفضل بطرح سؤالك، أو اطلب توليد صورة، أو تصميم فيديو.</div>';
-    }
-
-    function copyMagicLink() {
-      const key = getApiKey();
-      if (!key) return;
-      const baseUrl = window.location.origin + window.location.pathname;
-      const magicUrl = `${baseUrl}?k=${encodeURIComponent(key)}`;
-      navigator.clipboard.writeText(magicUrl).then(() => {
-        alert("✅ تم نسخ رابط العميل الاحترافي!");
-      });
-    }
-
-    function handleImageSelect(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          const maxDim = 900;
-          let width = img.width;
-          let height = img.height;
-
-          if (width > height && width > maxDim) {
-            height *= maxDim / width;
-            width = maxDim;
-          } else if (height > maxDim) {
-            width *= maxDim / height;
-            height = maxDim;
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-
-          selectedImageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
-          selectedImageBase64 = selectedImageDataUrl.split(',')[1];
-          selectedImageMime = 'image/jpeg';
-
-          document.getElementById('previewThumb').src = selectedImageDataUrl;
-          document.getElementById('previewBar').style.display = 'flex';
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function clearImage() {
-      selectedImageBase64 = null;
-      selectedImageDataUrl = null;
-      document.getElementById('imageInput').value = '';
-      document.getElementById('previewBar').style.display = 'none';
-    }
-
-    function cleanFormatting(text) {
-      return text
-        .replace(/\*\*/g, '')
-        .replace(/###\s*/g, '')
-        .replace(/##\s*/g, '')
-        .replace(/---\s*/g, '\n');
-    }
-
-    function extractEnglishPrompts(text) {
-      const matches = text.match(/[A-Za-z][A-Za-z0-9\s,.'"-]{25,}/g);
-      if (matches && matches.length > 0) {
-        return matches.map(m => m.trim()).join('\n\n');
-      }
-      return text;
-    }
-
-    function detectImageRequest(text) {
-      if (currentMode === 'image') return true;
-      const imgKeywords = ['ارسم', 'صمم صورة', 'صمّم صورة', 'ولد صورة', 'ولّد صورة', 'انشئ صورة', 'أنشئ صورة', 'عدل الصورة', 'عدّل الصورة', 'تعديل الصورة', 'حسن الصورة', 'حسّن الصورة', 'ترميم'];
-      const lower = text.toLowerCase();
-      return imgKeywords.some(k => lower.includes(k));
-    }
-
-    function detectVideoRequest(promptText, outputText) {
-      if (currentMode === 'video') return true;
-      const keywords = ['فيديو', 'مشهد', 'مشاهد', 'ريلز', 'سكربت', 'سيناريو', 'وثائقي', 'لقطة', 'تصوير'];
-      const combined = (promptText + " " + outputText).toLowerCase();
-      return keywords.some(k => combined.includes(k));
-    }
-
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      document.getElementById('btn-' + tabId).classList.add('active');
-    }
-
-    function runTemplate(mode, promptText) {
-      switchTab('assistantTab');
-      setMode(mode);
-      document.getElementById('userInput').value = promptText;
-      sendPrompt();
-    }
-
-    function copyText(btn, textToCopy) {
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        const oldText = btn.innerText;
-        btn.innerText = '✅ تم النسخ';
-        setTimeout(() => btn.innerText = oldText, 2000);
-      });
-    }
-
-    function continueAnswer() {
-      document.getElementById('userInput').value = "أكمل الإجابة والتفاصيل من حيث توقفت تماماً بدون تكرار.";
-      sendPrompt();
-    }
-
-    async function fetchWithTimeout(url, options, timeout = 45000) {
-      const controller = new AbortController();
-      const id = setTimeout(() => controller.abort(), timeout);
-      try {
-        const response = await fetch(url, { ...options, signal: controller.signal });
-        clearTimeout(id);
-        return response;
-      } catch (err) {
-        clearTimeout(id);
-        throw err;
-      }
-    }
-
-    async function callGemini(apiKey, contentsArray, sysInstruction) {
-      const models = ['gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-3.5-flash-lite'];
-      for (let model of models) {
-        try {
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-          const payload = {
-            systemInstruction: { parts: [{ text: sysInstruction }] },
-            contents: contentsArray,
-            generationConfig: {
-              maxOutputTokens: 8192,
-              temperature: 0.7
+    <!-- تخصيص إعدادات Tailwind والألوان -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            950: '#060A13',
+                            900: '#0B1120',
+                            800: '#131C31',
+                            700: '#1E293B',
+                        },
+                        cyan: {
+                            400: '#22D3EE',
+                            500: '#06B6D4',
+                            600: '#0891B2',
+                        },
+                        gold: {
+                            400: '#FBBF24',
+                            500: '#F59E0B',
+                            600: '#D97706',
+                        }
+                    },
+                    animation: {
+                        'marquee': 'marquee 30s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' },
+                        }
+                    }
+                }
             }
-          };
-          if (model.includes('2.5')) {
-            payload.generationConfig.thinkingConfig = { thinkingBudget: 0 };
-          }
-          const res = await fetchWithTimeout(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-goog-api-key': apiKey
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0B1120;
+            color: #F8FAFC;
+            overflow-x: hidden;
+            padding-bottom: 140px; /* مساحة للشريط السفلي ومشغل البودكاست */
+        }
+
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B1120;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06B6D4;
+        }
+
+        /* تأثير الزجاج المصنفر */
+        .glass-panel {
+            background: rgba(19, 28, 49, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* وضع السينما */
+        .cinema-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 40;
+            transition: opacity 0.3s ease;
+        }
+
+        /* شريط التقدم الصوتي */
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: #1E293B;
+            height: 6px;
+            border-radius: 999px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            margin-top: -5px;
+            background-color: #06B6D4;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+        }
+
+        /* إخفاء شريط التمرير للقوائم الأفقية */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-navy-950">
+
+    <!-- طبقة التعتيم لوضع السينما -->
+    <div id="cinemaBackdrop" class="cinema-overlay hidden" onclick="toggleCinemaMode()"></div>
+
+    <!-- نظام الإشعارات العائمة (بديل alert) -->
+    <div id="toastContainer" class="fixed top-20 left-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- 1. شريط الأخبار والتحديثات العاجلة المتحرك (Live Ticker) -->
+    <div class="bg-navy-950 border-b border-white/10 text-xs sm:text-sm py-2 px-4 flex items-center gap-3 relative z-30">
+        <span class="bg-gold-500 text-navy-950 font-extrabold px-2.5 py-0.5 rounded-full flex items-center gap-1.5 shrink-0 shadow-lg shadow-gold-500/20">
+            <span class="w-2 h-2 rounded-full bg-navy-950 animate-ping"></span>
+            مباشر وحصري
+        </span>
+        <div class="overflow-hidden whitespace-nowrap w-full relative">
+            <div class="inline-block animate-marquee text-slate-300 font-medium">
+                <span>• انطلاق الموسم الجديد من سلسلة "آفاق المعرفة" على منصة هاشم TV</span>
+                <span class="mx-6 text-cyan-400">★</span>
+                <span>• حلقة بودكاست جديدة مع نخبة من المفكرين وصناع المحتوى متاحة الآن للاستماع</span>
+                <span class="mx-6 text-gold-400">★</span>
+                <span>• خصم 25% على باقات الإعلانات والرعاية للشركات الناشئة لفترة محدودة</span>
+                <span class="mx-6 text-cyan-400">★</span>
+                <span>• ميزة جديدة: يمكنك الآن استعراض ملخص الذكاء الاصطناعي لأي مقال أو حلقة بضغطة زر</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. شريط التنقل العلوي الذكي (Desktop & Tablet Header) -->
+    <header class="sticky top-0 z-30 glass-panel border-b border-white/10 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
+            
+            <!-- الشعار -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('feed')">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-cyan-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-cyan-500/30 relative overflow-hidden group">
+                    <i data-lucide="tv" class="w-6 h-6 text-navy-950 stroke-[2.5] group-hover:scale-110 transition-transform"></i>
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform"></div>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-1">
+                        هاشم <span class="text-cyan-400">TV</span>
+                        <span class="text-[10px] bg-gold-500/20 text-gold-400 border border-gold-500/30 px-1.5 py-0.5 rounded-md font-bold">PRO</span>
+                    </h1>
+                    <p class="text-[11px] text-slate-400 hidden sm:block">المنصة الإعلامية والاجتماعية المتكاملة</p>
+                </div>
+            </div>
+
+            <!-- قائمة التنقل للكمبيوتر -->
+            <nav class="hidden md:flex items-center bg-navy-950/60 p-1.5 rounded-2xl border border-white/5">
+                <button onclick="switchTab('feed')" data-tab="feed" class="nav-btn active flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-cyan-500 text-navy-950 shadow-md shadow-cyan-500/20">
+                    <i data-lucide="newspaper" class="w-4 h-4"></i>
+                    <span>الرئيسية والمنشورات</span>
+                </button>
+                <button onclick="switchTab('videos')" data-tab="videos" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all">
+                    <i data-lucide="play-circle" class="w-4 h-4"></i>
+                    <span>الفيديوهات والحلقات</span>
+                </button>
+                <button onclick="switchTab('podcasts')" data-tab="podcasts" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all">
+                    <i data-lucide="headphones" class="w-4 h-4"></i>
+                    <span>البودكاست</span>
+                </button>
+                <button onclick="switchTab('guests')" data-tab="guests" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    <span>الشخصيات والضيوف</span>
+                </button>
+                <button onclick="switchTab('store')" data-tab="store" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    <span>المتجر والإعلانات</span>
+                </button>
+            </nav>
+
+            <!-- أزرار الإجراءات السريعة -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="openAddGuestModal()" class="hidden sm:flex items-center gap-2 bg-navy-800 hover:bg-navy-700 text-cyan-400 border border-cyan-500/30 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all">
+                    <i data-lucide="user-plus" class="w-4 h-4"></i>
+                    <span>إضافة شخصية</span>
+                </button>
+                <button onclick="switchTab('feed'); document.getElementById('postContentInput').focus();" class="flex items-center gap-1.5 bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-300 text-navy-950 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold shadow-lg shadow-gold-500/20 transition-all">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    <span>نشر جديد</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي للمنصة -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+
+        <!-- =========================================================
+             القسم 1: الرئيسية وأعمدة المنشورات (Feed & Social Hub)
+             ========================================================= -->
+        <section id="section-feed" class="tab-section space-y-6">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                
+                <!-- العمود الجانبي الأيمن: ملف المنصة وإحصائيات سريعة (يظهر على الشاشات الكبيرة) -->
+                <aside class="hidden lg:block lg:col-span-3 space-y-6 sticky top-24">
+                    <!-- بطاقة تعريف المنصة -->
+                    <div class="glass-panel rounded-3xl p-5 text-center relative overflow-hidden">
+                        <div class="h-20 bg-gradient-to-r from-cyan-600/30 via-navy-800 to-gold-500/30 -mx-5 -mt-5 mb-8"></div>
+                        <div class="w-20 h-20 rounded-2xl bg-navy-900 border-4 border-navy-800 mx-auto -mt-16 flex items-center justify-center shadow-xl">
+                            <i data-lucide="tv" class="w-10 h-10 text-cyan-400"></i>
+                        </div>
+                        <h2 class="text-lg font-extrabold text-white mt-3">منصة هاشم TV</h2>
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">وجهتك الأولى للمحتوى الفكري، الحلقات الوثائقية، البودكاست الحواري، والتواصل المجتمعي الهادف.</p>
+                        
+                        <div class="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-white/10">
+                            <div>
+                                <span id="statPostsCount" class="block text-base font-black text-cyan-400">3</span>
+                                <span class="text-[11px] text-slate-400">منشور</span>
+                            </div>
+                            <div>
+                                <span class="block text-base font-black text-gold-400">24</span>
+                                <span class="text-[11px] text-slate-400">حلقة</span>
+                            </div>
+                            <div>
+                                <span id="statGuestsCount" class="block text-base font-black text-white">4</span>
+                                <span class="text-[11px] text-slate-400">شخصية</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- بطاقة أبرز الشخصيات المضافة -->
+                    <div class="glass-panel rounded-3xl p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-gold-400"></i>
+                                شخصيات بارزة
+                            </h3>
+                            <button onclick="switchTab('guests')" class="text-xs text-cyan-400 hover:underline">عرض الكل</button>
+                        </div>
+                        <div id="sidebarGuestsList" class="space-y-3">
+                            <!-- يتم تعبئتها برمجياً -->
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- العمود الأوسط: صندوق النشر السريع + الفلاتر + عمود المنشورات -->
+                <div class="lg:col-span-6 space-y-6">
+                    
+                    <!-- صندوق النشر السريع (Quick Publisher) -->
+                    <div class="glass-panel rounded-3xl p-4 sm:p-6 border border-cyan-500/20 shadow-xl">
+                        <div class="flex items-start gap-3 sm:gap-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-navy-950 font-black text-lg shrink-0">
+                                هـ
+                            </div>
+                            <div class="w-full space-y-3">
+                                <textarea id="postContentInput" rows="3" placeholder="شارك فكرة، مقالاً قصيراً، أو إعلاناً جديداً مع جمهور هاشم TV..." class="w-full bg-navy-950/70 border border-white/10 rounded-2xl p-3.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors resize-none"></textarea>
+                                
+                                <!-- خيارات إضافية للمنشور (رابط صورة + التصنيف) -->
+                                <div id="extraPostFields" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div class="relative">
+                                        <i data-lucide="image" class="w-4 h-4 text-slate-400 absolute right-3.5 top-3"></i>
+                                        <input type="url" id="postImageInput" placeholder="رابط صورة (اختياري) https://..." class="w-full bg-navy-950/70 border border-white/10 rounded-xl pr-10 pl-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+                                    </div>
+                                    <select id="postCategoryInput" class="w-full bg-navy-950/70 border border-white/10 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
+                                        <option value="articles">📝 مقال فكري / تدوينة</option>
+                                        <option value="media">🖼️ صور وميديا</option>
+                                        <option value="ads">📢 إعلان وتنويه</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex items-center justify-between pt-2 border-t border-white/5">
+                                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="flex items-center gap-1 text-cyan-400"><i data-lucide="zap" class="w-3.5 h-3.5"></i> نشر فوري</span>
+                                        <span>•</span>
+                                        <span>يدعم الصور والروابط</span>
+                                    </div>
+                                    <button onclick="publishNewPost()" class="bg-cyan-500 hover:bg-cyan-400 text-navy-950 font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-cyan-500/25 flex items-center gap-2 transition-all active:scale-95">
+                                        <i data-lucide="send" class="w-4 h-4"></i>
+                                        <span>نشر الآن</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- شريط فلترة المنشورات -->
+                    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                        <button onclick="filterPosts('all')" data-filter="all" class="filter-btn active bg-cyan-500 text-navy-950 font-bold text-xs sm:text-sm px-4 py-2 rounded-xl shrink-0 transition-all">
+                            الكل
+                        </button>
+                        <button onclick="filterPosts('articles')" data-filter="articles" class="filter-btn bg-navy-800/80 text-slate-300 hover:text-white font-bold text-xs sm:text-sm px-4 py-2 rounded-xl shrink-0 border border-white/5 transition-all">
+                            📝 مقالات فكرية
+                        </button>
+                        <button onclick="filterPosts('media')" data-filter="media" class="filter-btn bg-navy-800/80 text-slate-300 hover:text-white font-bold text-xs sm:text-sm px-4 py-2 rounded-xl shrink-0 border border-white/5 transition-all">
+                            🖼️ صور وميديا
+                        </button>
+                        <button onclick="filterPosts('ads')" data-filter="ads" class="filter-btn bg-navy-800/80 text-slate-300 hover:text-white font-bold text-xs sm:text-sm px-4 py-2 rounded-xl shrink-0 border border-white/5 transition-all">
+                            📢 إعلانات وعروض
+                        </button>
+                    </div>
+
+                    <!-- حاوية عرض المنشورات -->
+                    <div id="postsFeedContainer" class="space-y-6">
+                        <!-- يتم توليد بطاقات المنشورات هنا عبر JavaScript -->
+                    </div>
+                </div>
+
+                <!-- العمود الجانبي الأيسر: أحدث حلقة فيديو + أحدث بودكاست -->
+                <aside class="lg:col-span-3 space-y-6 sticky top-24">
+                    <!-- بطاقة الحلقة المميزة -->
+                    <div class="glass-panel rounded-3xl p-5 border border-gold-500/20">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-extrabold text-gold-400 flex items-center gap-1.5">
+                                <i data-lucide="flame" class="w-4 h-4"></i>
+                                حلقة الأسبوع
+                            </span>
+                            <span class="text-[11px] bg-navy-950 px-2 py-0.5 rounded-lg text-slate-400">18:45</span>
+                        </div>
+                        <div class="relative rounded-2xl overflow-hidden group cursor-pointer mb-3" onclick="switchTab('videos')">
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="حلقة الأسبوع" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-navy-950/40 flex items-center justify-center">
+                                <div class="w-12 h-12 rounded-full bg-cyan-500 text-navy-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                    <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-sm text-white leading-snug">مستقبل الإعلام الرقمي وصناعة المحتوى في العالم العربي</h4>
+                        <p class="text-xs text-slate-400 mt-1.5 line-clamp-2">نظرة معمقة حول التحولات التكنولوجية وكيفية بناء منصات مستقلة ذات تأثير.</p>
+                    </div>
+
+                    <!-- بطاقة البودكاست السريع -->
+                    <div class="glass-panel rounded-3xl p-5">
+                        <h3 class="text-sm font-extrabold text-white flex items-center gap-2 mb-4">
+                            <i data-lucide="radio" class="w-4 h-4 text-cyan-400"></i>
+                            استمع الآن (بودكاست)
+                        </h3>
+                        <div class="space-y-3">
+                            <div onclick="playPodcast(0)" class="flex items-center gap-3 p-2.5 rounded-2xl bg-navy-950/60 hover:bg-navy-800 border border-white/5 cursor-pointer transition-all group">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="ضيف" class="w-12 h-12 rounded-xl object-cover">
+                                <div class="flex-1 min-w-0">
+                                    <h5 class="text-xs font-bold text-white truncate group-hover:text-cyan-400">أسرار بناء الهوية الرقمية</h5>
+                                    <p class="text-[11px] text-slate-400 truncate">مع د. طارق المنصور</p>
+                                </div>
+                                <div class="w-8 h-8 rounded-full bg-cyan-500/10 text-cyan-400 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-navy-950 transition-colors">
+                                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                            <div onclick="playPodcast(1)" class="flex items-center gap-3 p-2.5 rounded-2xl bg-navy-950/60 hover:bg-navy-800 border border-white/5 cursor-pointer transition-all group">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="ضيفة" class="w-12 h-12 rounded-xl object-cover">
+                                <div class="flex-1 min-w-0">
+                                    <h5 class="text-xs font-bold text-white truncate group-hover:text-cyan-400">اقتصاد المعرفة وريادة الأعمال</h5>
+                                    <p class="text-[11px] text-slate-400 truncate">مع أ. سارة العبدالله</p>
+                                </div>
+                                <div class="w-8 h-8 rounded-full bg-cyan-500/10 text-cyan-400 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-navy-950 transition-colors">
+                                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             القسم 2: الفيديوهات والحلقات (Video Hub & Cinema Mode)
+             ========================================================= -->
+        <section id="section-videos" class="tab-section hidden space-y-6">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                        <i data-lucide="film" class="w-6 h-6 text-cyan-400"></i>
+                        مكتبة الفيديوهات والحلقات
+                    </h2>
+                    <p class="text-sm text-slate-400 mt-1">شاهد أحدث السلاسل الوثائقية، الحلقات التعليمية، والتقارير الحصرية</p>
+                </div>
+                <button onclick="toggleCinemaMode()" id="cinemaModeBtn" class="self-start sm:self-auto flex items-center gap-2 bg-navy-800 hover:bg-navy-700 text-gold-400 border border-gold-500/30 px-4 py-2.5 rounded-xl text-sm font-bold transition-all">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
+                    <span>وضع السينما</span>
+                </button>
+            </div>
+
+            <!-- المشغل الرئيسي + قائمة التشغيل -->
+            <div id="videoTheaterContainer" class="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-40">
+                
+                <!-- المشغل الرئيسي -->
+                <div class="lg:col-span-8 glass-panel rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                    <div class="aspect-video bg-navy-950 relative">
+                        <iframe id="mainVideoIframe" class="w-full h-full" src="https://www.youtube.com/embed/aqz-KE-bpKQ?rel=0" title="مشغل هاشم TV" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-5 sm:p-6">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <span id="currentVideoCategory" class="bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 text-xs font-bold px-3 py-1 rounded-full">سلسلة وثائقية</span>
+                            <div class="flex items-center gap-3 text-xs text-slate-400">
+                                <span id="currentVideoViews" class="flex items-center gap-1"><i data-lucide="eye" class="w-4 h-4"></i> 14.2 ألف مشاهدة</span>
+                                <span id="currentVideoDate">منذ يومين</span>
+                            </div>
+                        </div>
+                        <h3 id="currentVideoTitle" class="text-xl sm:text-2xl font-extrabold text-white mb-2">رحلة في عالم الابتكار التقني وصناعة المستقبل</h3>
+                        <p id="currentVideoDesc" class="text-sm text-slate-300 leading-relaxed">حلقة خاصة تستعرض أبرز المحطات التقنية الحديثة وكيف يمكن للشباب العربي استثمار الأدوات الرقمية لبناء مشاريع إعلامية وتجارية ناجحة.</p>
+                        
+                        <div class="mt-5 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                            <button onclick="openAiSummary('ملخص الحلقة المرئية', document.getElementById('currentVideoTitle').innerText, ['تحليل شامل لأهم 3 تقنيات تغير شكل الإعلام الحديث.', 'خطوات عملية لبناء جمهور مستهدف ومخلص للمحتوى الهادف.', 'نصائح ذهبية لتجنب التشتت الرقمي والتركيز على الجودة.'])" class="flex items-center gap-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl shadow-lg transition-all">
+                                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                <span>ملخص الذكاء الاصطناعي للحلقة</span>
+                            </button>
+                            <button onclick="showToast('تم نسخ رابط الحلقة للمشاركة!')" class="flex items-center gap-2 bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs sm:text-sm font-bold px-4 py-2 rounded-xl transition-all">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                                <span>مشاركة الحلقة</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قائمة التشغيل الجانبية (Playlist) -->
+                <div class="lg:col-span-4 glass-panel rounded-3xl p-5 flex flex-col max-h-[620px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
+                        <h4 class="font-extrabold text-base text-white flex items-center gap-2">
+                            <i data-lucide="list-video" class="w-5 h-5 text-gold-400"></i>
+                            قائمة الحلقات
+                        </h4>
+                        <span class="text-xs text-slate-400">4 حلقات</span>
+                    </div>
+                    <div id="videoPlaylistContainer" class="space-y-3 overflow-y-auto pr-1 flex-1">
+                        <!-- يتم تعبئة قائمة الفيديو برمجياً -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             القسم 3: البودكاست والصوتيات (Podcast Hub)
+             ========================================================= -->
+        <section id="section-podcasts" class="tab-section hidden space-y-6">
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 bg-gradient-to-l from-cyan-950/40 via-navy-800/80 to-navy-900 border border-cyan-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-3 max-w-2xl">
+                    <span class="inline-flex items-center gap-1.5 bg-cyan-500/20 text-cyan-400 text-xs font-extrabold px-3 py-1 rounded-full">
+                        <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                        بودكاست هاشم TV
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">حوارات عميقة تلهم العقل وتثري المعرفة</h2>
+                    <p class="text-sm text-slate-300 leading-relaxed">استمع إلى لقاءاتنا الصوتية مع نخبة من المفكرين والخبراء. يمكنك تشغيل أي حلقة ومتابعة تصفح باقي أقسام المنصة بينما يستمر الصوت في العمل بسلاسة.</p>
+                </div>
+                <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-gradient-to-tr from-cyan-500 to-gold-500 p-1 shrink-0 shadow-2xl shadow-cyan-500/20">
+                    <div class="w-full h-full bg-navy-950 rounded-[22px] flex flex-col items-center justify-center text-center p-2">
+                        <i data-lucide="headphones" class="w-10 h-10 text-cyan-400 mb-1"></i>
+                        <span class="text-xs font-black text-white">AUDIO</span>
+                        <span class="text-[10px] text-gold-400">HD QUALITY</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قائمة حلقات البودكاست -->
+            <div id="podcastsListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- يتم توليد حلقات البودكاست برمجياً -->
+            </div>
+        </section>
+
+        <!-- =========================================================
+             القسم 4: دليل الشخصيات والضيوف (VIP & Guests Directory)
+             ========================================================= -->
+        <section id="section-guests" class="tab-section hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                        <i data-lucide="award" class="w-6 h-6 text-gold-400"></i>
+                        دليل الشخصيات والضيوف
+                    </h2>
+                    <p class="text-sm text-slate-400 mt-1">نخبة المفكرين، الخبراء، والشخصيات التي استضافتها أو أضافتها منصة هاشم TV</p>
+                </div>
+                <button onclick="openAddGuestModal()" class="self-start sm:self-auto flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-navy-950 px-5 py-2.5 rounded-xl text-sm font-extrabold shadow-lg shadow-cyan-500/20 transition-all">
+                    <i data-lucide="user-plus" class="w-4 h-4"></i>
+                    <span>إضافة شخصية جديدة</span>
+                </button>
+            </div>
+
+            <!-- شبكة بطاقات الشخصيات -->
+            <div id="guestsDirectoryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- يتم توليد بطاقات الشخصيات برمجياً -->
+            </div>
+        </section>
+
+        <!-- =========================================================
+             القسم 5: المتجر والخدمات الإعلانية (Store & Ads)
+             ========================================================= -->
+        <section id="section-store" class="tab-section hidden space-y-6">
+            <div class="text-center max-w-2xl mx-auto space-y-2 py-4">
+                <span class="text-xs font-extrabold text-gold-400 bg-gold-500/10 border border-gold-500/20 px-3 py-1 rounded-full">شراكات النمو والتسويق</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white">باقات الإعلان والخدمات الرقمية</h2>
+                <p class="text-sm text-slate-400">روّج لعلامتك التجارية أو مشروعك أمام جمهور نوعي ومتفاعل عبر برامج ومنصات هاشم TV</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- باقة 1 -->
+                <div class="glass-panel rounded-3xl p-6 flex flex-col justify-between border border-white/10 hover:border-cyan-500/40 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4">
+                            <i data-lucide="megaphone" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white">باقة الانتشار السريع</h3>
+                        <p class="text-xs text-slate-400 mt-1">مثالية للمتاجر الناشئة والمبادرات الرقمية</p>
+                        <div class="my-5">
+                            <span class="text-3xl font-black text-white">$99</span>
+                            <span class="text-xs text-slate-400">/ للحملة</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-6">
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0"></i> منشور مثبت في الصفحة الرئيسية لمدة 7 أيام</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0"></i> تنويه إعلاني في شريط الأخبار العاجلة</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0"></i> تصميم بنر إعلاني احترافي مجاناً</li>
+                        </ul>
+                    </div>
+                    <button onclick="bookService('باقة الانتشار السريع ($99)')" class="w-full py-3 rounded-xl bg-navy-800 hover:bg-cyan-500 text-white hover:text-navy-950 font-extrabold text-sm transition-all">
+                        طلب الباقة الآن
+                    </button>
+                </div>
+
+                <!-- باقة 2 (الأكثر طلباً) -->
+                <div class="glass-panel rounded-3xl p-6 flex flex-col justify-between border-2 border-gold-500 relative shadow-2xl shadow-gold-500/10">
+                    <span class="absolute -top-3.5 left-6 bg-gold-500 text-navy-950 text-xs font-black px-3 py-1 rounded-full shadow-md">الأكثر طلباً</span>
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-gold-500/20 text-gold-400 flex items-center justify-center mb-4">
+                            <i data-lucide="crown" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white">رعاية الحلقات والبودكاست</h3>
+                        <p class="text-xs text-slate-400 mt-1">تواجد حصري ومؤثر داخل المحتوى المرئي والصوتي</p>
+                        <div class="my-5">
+                            <span class="text-3xl font-black text-gold-400">$249</span>
+                            <span class="text-xs text-slate-400">/ للحلقة</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-200 mb-6">
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0"></i> فقرة إعلانية مدمجة (60 ثانية) داخل حلقة الفيديو</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0"></i> رعاية صوتية في افتتاحية البودكاست</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0"></i> إضافة ملف الشركة في دليل الشخصيات والشركاء</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0"></i> رابط مباشر في وصف جميع المنصات</li>
+                        </ul>
+                    </div>
+                    <button onclick="bookService('رعاية الحلقات والبودكاست ($249)')" class="w-full py-3 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-300 text-navy-950 font-extrabold text-sm shadow-lg shadow-gold-500/25 transition-all">
+                        احجز الرعاية الآن
+                    </button>
+                </div>
+
+                <!-- باقة 3 -->
+                <div class="glass-panel rounded-3xl p-6 flex flex-col justify-between border border-white/10 hover:border-cyan-500/40 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4">
+                            <i data-lucide="laptop" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white">إنتاج وتطوير المنصات</h3>
+                        <p class="text-xs text-slate-400 mt-1">خدمات تقنية وإنتاجية متكاملة لصناع المحتوى</p>
+                        <div class="my-5">
+                            <span class="text-3xl font-black text-white">$499</span>
+                            <span class="text-xs text-slate-400">/ للمشروع</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-6">
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0"></i> تصميم وبناء منصة إعلامية متكاملة بهويتك</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0"></i> مونتاج احترافي لـ 4 حلقات فيديو كاملة</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0"></i> استشارة استراتيجية لنمو الجمهور</li>
+                        </ul>
+                    </div>
+                    <button onclick="bookService('إنتاج وتطوير المنصات ($499)')" class="w-full py-3 rounded-xl bg-navy-800 hover:bg-cyan-500 text-white hover:text-navy-950 font-extrabold text-sm transition-all">
+                        تواصل لبدء المشروع
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================================
+         المشغل الصوتي السفلي الثابت (Sticky Podcast Audio Player)
+         ========================================================= -->
+    <div id="stickyAudioPlayer" class="fixed bottom-16 md:bottom-0 inset-x-0 z-40 glass-panel border-t border-cyan-500/30 shadow-2xl transform translate-y-full transition-transform duration-300">
+        <div class="max-w-7xl mx-auto px-4 py-2.5 sm:py-3 flex items-center justify-between gap-3 sm:gap-6">
+            
+            <!-- معلومات الحلقة -->
+            <div class="flex items-center gap-3 min-w-0 flex-1 sm:flex-initial sm:w-64">
+                <img id="playerCover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="غلاف البودكاست" class="w-11 h-11 rounded-xl object-cover border border-white/10 shrink-0">
+                <div class="min-w-0">
+                    <h4 id="playerTitle" class="text-xs sm:text-sm font-extrabold text-white truncate">عنوان حلقة البودكاست</h4>
+                    <p id="playerGuest" class="text-[11px] text-cyan-400 truncate">اسم الضيف</p>
+                </div>
+            </div>
+
+            <!-- أزرار التحكم وشريط التقدم -->
+            <div class="flex flex-col items-center flex-1 max-w-xl">
+                <div class="flex items-center gap-4">
+                    <button onclick="skipAudio(-15)" class="text-slate-400 hover:text-white transition-colors hidden sm:block" title="تراجع 15 ثانية">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </button>
+                    <button id="playPauseBtn" onclick="togglePlayPause()" class="w-10 h-10 rounded-full bg-cyan-500 hover:bg-cyan-400 text-navy-950 flex items-center justify-center shadow-lg shadow-cyan-500/30 transition-transform active:scale-95">
+                        <i id="playPauseIcon" data-lucide="play" class="w-5 h-5 fill-current"></i>
+                    </button>
+                    <button onclick="skipAudio(15)" class="text-slate-400 hover:text-white transition-colors hidden sm:block" title="تقديم 15 ثانية">
+                        <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                
+                <div class="w-full hidden sm:flex items-center gap-2 mt-1.5">
+                    <span id="currentTimeDisplay" class="text-[10px] text-slate-400 font-mono w-9 text-left">00:00</span>
+                    <input type="range" id="audioProgressBar" value="0" min="0" max="100" class="w-full">
+                    <span id="durationDisplay" class="text-[10px] text-slate-400 font-mono w-9">00:00</span>
+                </div>
+            </div>
+
+            <!-- التحكم بالسرعة والإغلاق -->
+            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <button id="speedBtn" onclick="cyclePlaybackSpeed()" class="bg-navy-800 hover:bg-navy-700 text-gold-400 border border-gold-500/20 text-xs font-extrabold px-2.5 py-1.5 rounded-lg transition-colors">
+                    1x
+                </button>
+                <button onclick="closeAudioPlayer()" class="text-slate-400 hover:text-red-400 p-1.5 transition-colors" title="إغلاق المشغل">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        <!-- عنصر الصوت الفعلي (نستخدم صوت مجاني موثوق للتجربة الحية) -->
+        <audio id="htmlAudioElement" preload="metadata"></audio>
+    </div>
+
+    <!-- =========================================================
+         شريط التنقل السفلي الثابت للهواتف (Mobile Bottom Navigation)
+         ========================================================= -->
+    <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 glass-panel border-t border-white/10 px-2 py-1.5 flex items-center justify-around">
+        <button onclick="switchTab('feed')" data-tab="feed" class="mobile-nav-btn active flex flex-col items-center gap-1 p-2 rounded-xl text-cyan-400">
+            <i data-lucide="newspaper" class="w-5 h-5"></i>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </button>
+        <button onclick="switchTab('videos')" data-tab="videos" class="mobile-nav-btn flex flex-col items-center gap-1 p-2 rounded-xl text-slate-400">
+            <i data-lucide="play-circle" class="w-5 h-5"></i>
+            <span class="text-[10px] font-bold">الفيديو</span>
+        </button>
+        <button onclick="switchTab('podcasts')" data-tab="podcasts" class="mobile-nav-btn flex flex-col items-center gap-1 p-2 rounded-xl text-slate-400">
+            <i data-lucide="headphones" class="w-5 h-5"></i>
+            <span class="text-[10px] font-bold">البودكاست</span>
+        </button>
+        <button onclick="switchTab('guests')" data-tab="guests" class="mobile-nav-btn flex flex-col items-center gap-1 p-2 rounded-xl text-slate-400">
+            <i data-lucide="users" class="w-5 h-5"></i>
+            <span class="text-[10px] font-bold">الشخصيات</span>
+        </button>
+        <button onclick="switchTab('store')" data-tab="store" class="mobile-nav-btn flex flex-col items-center gap-1 p-2 rounded-xl text-slate-400">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span class="text-[10px] font-bold">المتجر</span>
+        </button>
+    </nav>
+
+    <!-- =========================================================
+         النوافذ المنبثقة (Modals): إضافة شخصية + ملخص الذكاء الاصطناعي
+         ========================================================= -->
+    
+    <!-- 1. نافذة إضافة شخصية جديدة للدليل -->
+    <div id="addGuestModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/80 backdrop-blur-sm">
+        <div class="glass-panel rounded-3xl max-w-md w-full p-6 border border-cyan-500/30 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
+                    <i data-lucide="user-plus" class="w-5 h-5 text-cyan-400"></i>
+                    إضافة شخصية / ضيف جديد
+                </h3>
+                <button onclick="closeAddGuestModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">الاسم الكامل واللقب *</label>
+                    <input type="text" id="guestNameInput" placeholder="مثال: د. عبدالله الشامسي" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">التخصص أو الصفة *</label>
+                    <input type="text" id="guestRoleInput" placeholder="مثال: باحث في الاقتصاد الرقمي" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">رابط الصورة الشخصية (اختياري)</label>
+                    <input type="url" id="guestAvatarInput" placeholder="https://..." class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">نبذة مختصرة *</label>
+                    <textarea id="guestBioInput" rows="3" placeholder="اكتب نبذة تعريفية عن الضيف وإنجازاته..." class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 resize-none"></textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-2 pt-3 border-t border-white/10">
+                <button onclick="closeAddGuestModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white">إلغاء</button>
+                <button onclick="saveNewGuest()" class="bg-cyan-500 hover:bg-cyan-400 text-navy-950 font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-lg">حفظ وإضافة للدليل</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. نافذة ملخص الذكاء الاصطناعي (AI Summary Modal) -->
+    <div id="aiSummaryModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/80 backdrop-blur-sm">
+        <div class="glass-panel rounded-3xl max-w-lg w-full p-6 border border-cyan-400/40 shadow-2xl space-y-4 relative overflow-hidden">
+            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-cyan-400 via-gold-400 to-cyan-400"></div>
+            <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5 bg-cyan-500/15 text-cyan-400 text-xs font-extrabold px-3 py-1 rounded-full">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    <span id="aiModalBadge">ملخص الذكاء الاصطناعي</span>
+                </span>
+                <button onclick="closeAiSummary()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            
+            <h3 id="aiModalTitle" class="text-lg font-extrabold text-white leading-snug">عنوان المحتوى</h3>
+            
+            <div class="bg-navy-950/80 rounded-2xl p-4 border border-white/5 space-y-2.5">
+                <p class="text-xs font-bold text-gold-400">أبرز النقاط المستخلصة:</p>
+                <ul id="aiModalPoints" class="space-y-2 text-sm text-slate-200 list-disc list-inside">
+                    <!-- النقاط تضاف برمجياً -->
+                </ul>
+            </div>
+
+            <div class="flex justify-end">
+                <button onclick="closeAiSummary()" class="bg-navy-800 hover:bg-navy-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl">إغلاق الملخص</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         المنطق البرمجي التفاعلي (JavaScript Engine)
+         ========================================================= -->
+    <script>
+        // 1. البيانات الابتدائية للمنصة (قابلة للتعديل والإضافة الحية)
+        let postsData = [
+            {
+                id: 1,
+                author: "هاشم محمد",
+                role: "مؤسس منصة هاشم TV",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+                time: "منذ ساعتين",
+                category: "articles",
+                categoryLabel: "📝 مقال فكري",
+                content: "مرحباً بكم في النسخة المطورة من منصة هاشم TV! هدفنا أن نجمع بين عمق المحتوى المرئي والصوتي وبين التفاعل المجتمعي الراقي. تصفحوا الحلقات الجديدة في قسم الفيديو، واستمعوا للبودكاست أثناء تصفحكم للمنشورات.",
+                image: "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=1000&q=80",
+                likes: 48,
+                liked: false,
+                aiSummary: [
+                    "إطلاق الهوية الجديدة لمنصة هاشم TV بتجربة مستخدم متكاملة.",
+                    "الدمج بين البودكاست المستمر في الخلفية وأعمدة المنشورات التفاعلية.",
+                    "دعوة الجمهور للمشاركة الفعالة في النقاشات واقتراح الضيوف."
+                ],
+                comments: [
+                    { user: "أحمد السالم", text: "تصميم رائع جداً وفكرة المشغل الصوتي المستمر مذهلة!" },
+                    { user: "سارة المنصور", text: "بالتوفيق الدائم، منصة ترفع الرأس." }
+                ]
             },
-            body: JSON.stringify(payload)
-          }, 45000);
+            {
+                id: 2,
+                author: "د. طارق المنصور",
+                role: "مستشار التحول الرقمي",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+                time: "منذ 5 ساعات",
+                category: "media",
+                categoryLabel: "🖼️ صور وميديا",
+                content: "كواليس تسجيل حلقتنا الجديدة في استوديوهات هاشم TV حول مستقبل الذكاء الاصطناعي وتأثيره على صناعة الإعلام العربي. ترقبوا الحلقة كاملة مساء اليوم!",
+                image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1000&q=80",
+                likes: 85,
+                liked: true,
+                aiSummary: [
+                    "توثيق كواليس الحلقة القادمة حول الذكاء الاصطناعي في الإعلام.",
+                    "مناقشة الأدوات الحديثة التي تساعد صناع المحتوى المستقلين."
+                ],
+                comments: [
+                    { user: "خالد العتيبي", text: "في انتظار الحلقة بفارغ الصبر دكتور طارق." }
+                ]
+            },
+            {
+                id: 3,
+                author: "إدارة الإعلانات والرعاية",
+                role: "هاشم TV للأعمال",
+                avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80",
+                time: "منذ يوم",
+                category: "ads",
+                categoryLabel: "📢 إعلان وتنويه",
+                content: "هل لديك مشروع ناشئ أو علامة تجارية ترغب في إيصالها لآلاف المهتمين؟ افتتحنا باب الحجز لرعاية حلقات الموسم الجديد بخصم 25% لفترة محدودة. تفضل بزيارة قسم المتجر والإعلانات.",
+                image: "",
+                likes: 29,
+                liked: false,
+                aiSummary: [
+                    "فتح باب الرعاية الإعلانية للموسم الجديد على منصة هاشم TV.",
+                    "خصم 25% للشركات الناشئة والمبادرات لفترة محدودة."
+                ],
+                comments: []
+            }
+        ];
 
-          const data = await res.json();
-          if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-            return cleanFormatting(data.candidates[0].content.parts[0].text);
-          } else if (data.error && data.error.message?.includes("API key")) {
-            localStorage.removeItem('hashim_tv_api_key');
-            break;
-          }
-        } catch (e) {}
-      }
-      return "";
-    }
+        const videosData = [
+            {
+                id: 1,
+                title: "رحلة في عالم الابتكار التقني وصناعة المستقبل",
+                category: "سلسلة وثائقية",
+                duration: "18:45",
+                views: "14.2 ألف مشاهدة",
+                date: "منذ يومين",
+                embedUrl: "https://www.youtube.com/embed/aqz-KE-bpKQ?rel=0",
+                thumb: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80",
+                desc: "حلقة خاصة تستعرض أبرز المحطات التقنية الحديثة وكيف يمكن للشباب العربي استثمار الأدوات الرقمية لبناء مشاريع إعلامية وتجارية ناجحة."
+            },
+            {
+                id: 2,
+                title: "كيف تبني منصة محتوى مستقلة من الصفر؟",
+                category: "دروس وتطوير",
+                duration: "24:10",
+                views: "9.8 ألف مشاهدة",
+                date: "منذ 5 أيام",
+                embedUrl: "https://www.youtube.com/embed/ScMzIvxBSi4?rel=0",
+                thumb: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80",
+                desc: "شرح عملي لخطوات تأسيس المنصات الرقمية، اختيار الهوية البصرية، وتنويع مصادر الدخل عبر الرعايات والمنتجات الرقمية."
+            },
+            {
+                id: 3,
+                title: "حوار خاص: الثقافة والمعرفة في عصر السرعة",
+                category: "لقاءات حصرية",
+                duration: "32:00",
+                views: "21.5 ألف مشاهدة",
+                date: "منذ أسبوع",
+                embedUrl: "https://www.youtube.com/embed/LXb3EKWsInQ?rel=0",
+                thumb: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80",
+                desc: "نقاش معمق حول الحفاظ على جودة المحتوى المعرفي وسط طوفان المحتوى السريع على شبكات التواصل الاجتماعي."
+            },
+            {
+                id: 4,
+                title: "ملخص أخبار التكنولوجيا والريادة لهذا الأسبوع",
+                category: "نشرة أسبوعية",
+                duration: "12:15",
+                views: "6.4 ألف مشاهدة",
+                date: "منذ أسبوعين",
+                embedUrl: "https://www.youtube.com/embed/jNQXAC9IVRw?rel=0",
+                thumb: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80",
+                desc: "أهم المستجدات في عالم الشركات الناشئة والذكاء الاصطناعي في المنطقة العربية والعالم."
+            }
+        ];
 
-    async function sendPrompt() {
-      const apiKey = getApiKey();
-      if (!apiKey) return;
+        const podcastsData = [
+            {
+                id: 0,
+                title: "أسرار بناء الهوية الرقمية وتأثيرها على الجمهور",
+                guest: "د. طارق المنصور",
+                duration: "38:20",
+                episode: "الحلقة #14",
+                cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+                desc: "كيف تصنع بصمة خاصة بك في الفضاء الرقمي تجعل الجمهور يثق بما تقدمه ويعود إليك باستمرار.",
+                audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+            },
+            {
+                id: 1,
+                title: "اقتصاد المعرفة وفرص ريادة الأعمال للشباب",
+                guest: "أ. سارة العبدالله",
+                duration: "45:10",
+                episode: "الحلقة #13",
+                cover: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+                desc: "استعراض لأهم الفرص الاستثمارية في قطاع التعليم الرقمي وصناعة المحتوى المتخصص.",
+                audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+            },
+            {
+                id: 2,
+                title: "فن السرد القصصي في الأفلام الوثائقية",
+                guest: "م. كريم الحسن",
+                duration: "29:50",
+                episode: "الحلقة #12",
+                cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+                desc: "كيف تحول فكرة بسيطة إلى قصة وثائقية مشوقة تلامس مشاعر المشاهدين وتبقى في الذاكرة.",
+                audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+            },
+            {
+                id: 3,
+                title: "التوازن النفسي والإنتاجية في عصر العمل عن بعد",
+                guest: "د. ليلى الناصر",
+                duration: "41:05",
+                episode: "الحلقة #11",
+                cover: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80",
+                desc: "نصائح عملية لتنظيم الوقت وتجنب الاحتراق الوظيفي أثناء إدارة المشاريع الرقمية.",
+                audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+            }
+        ];
 
-      const input = document.getElementById('userInput');
-      const text = input.value.trim();
-      if (!text && !selectedImageBase64) return;
+        let guestsData = [
+            {
+                id: 1,
+                name: "د. طارق المنصور",
+                role: "مستشار التحول الرقمي",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+                bio: "خبير في استراتيجيات الإعلام الرقمي والذكاء الاصطناعي، ومؤلف لعدة كتب في بناء الهوية المؤسسية.",
+                episodesCount: 5,
+                verified: true
+            },
+            {
+                id: 2,
+                name: "أ. سارة العبدالله",
+                role: "رائدة أعمال ومستثمرة",
+                avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+                bio: "مؤسسة حاضنة أعمال للمشاريع التقنية الناشئة ومهتمة بتمكين الشباب في اقتصاد المعرفة.",
+                episodesCount: 3,
+                verified: true
+            },
+            {
+                id: 3,
+                name: "م. كريم الحسن",
+                role: "مخرج ومنتج وثائقي",
+                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+                bio: "أخرج أكثر من 20 فيلماً وثائقياً حائزاً على جوائز إقليمية في مجال التوثيق الثقافي والتاريخي.",
+                episodesCount: 4,
+                verified: true
+            },
+            {
+                id: 4,
+                name: "د. ليلى الناصر",
+                role: "أخصائية علم النفس المعرفي",
+                avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80",
+                bio: "باحثة في سلوك المستخدمين الرقميين وتأثير منصات التواصل على التركيز والإبداع.",
+                episodesCount: 2,
+                verified: true
+            }
+        ];
 
-      const chatBox = document.getElementById('chatBox');
-      const sendBtn = document.getElementById('sendBtn');
+        let currentFilter = 'all';
+        let isCinemaMode = false;
 
-      const userDiv = document.createElement('div');
-      userDiv.className = 'chat-msg user';
-
-      const hadImage = Boolean(selectedImageBase64);
-      if (selectedImageDataUrl) {
-        const imgEl = document.createElement('img');
-        imgEl.src = selectedImageDataUrl;
-        userDiv.appendChild(imgEl);
-      }
-
-      const displayPrompt = text || "حلل هذه الصورة بالتفصيل واكتب وصفاً لتحسينها وتطويرها.";
-      const textSpan = document.createElement('div');
-      textSpan.innerText = displayPrompt;
-      userDiv.appendChild(textSpan);
-      chatBox.appendChild(userDiv);
-
-      const currentBase64 = selectedImageBase64;
-      const currentMime = selectedImageMime;
-
-      input.value = '';
-      clearImage();
-      sendBtn.disabled = true;
-      chatBox.scrollTop = chatBox.scrollHeight;
-
-      const loadingDiv = document.createElement('div');
-      loadingDiv.className = 'chat-msg bot';
-
-      const isImgTask = detectImageRequest(displayPrompt);
-      loadingDiv.innerText = isImgTask ? '🎨 جاري تصميم وتوليد الصورة لك الآن...' : '⚡ جاري إعداد الإجابة الكاملة...';
-      chatBox.appendChild(loadingDiv);
-      chatBox.scrollTop = chatBox.scrollHeight;
-
-      if (isImgTask) {
-        const promptParts = [{
-          text: hadImage
-            ? `Analyze the attached image in detail (subject, pose, clothing, features) and combine it with the user's request: "${displayPrompt}". Output ONLY a rich, photorealistic English image generation prompt (40-70 words) to recreate and enhance this exact scene in ultra high quality 8k. Do not write any Arabic or explanations.`
-            : `Convert this Arabic image request into a rich, detailed, photorealistic English image generation prompt (40-70 words, 8k, cinematic lighting): "${displayPrompt}". Output ONLY the English prompt without any other text.`
-        }];
-        if (currentBase64) {
-          promptParts.push({ inlineData: { mimeType: currentMime, data: currentBase64 } });
-        }
-
-        const engPrompt = await callGemini(apiKey, [{ role: 'user', parts: promptParts }], "You are an expert AI image prompt engineer. Output only the English prompt.");
-
-        if (engPrompt) {
-          const seed = Math.floor(Math.random() * 100000);
-          const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(engPrompt)}?width=1024&height=1024&seed=${seed}&nologo=true`;
-
-          loadingDiv.innerHTML = '';
-          const genImg = document.createElement('img');
-          genImg.src = imageUrl;
-          genImg.alt = "الصورة المولدة";
-          loadingDiv.appendChild(genImg);
-
-          const descDiv = document.createElement('div');
-          descDiv.innerText = "تم تصميم الصورة بنجاح! يمكنك تحميلها مباشرة أو فتح محرر الصور لإجراء تعديلات يدوية دقيقة:";
-          loadingDiv.appendChild(descDiv);
-
-          const actionRow = document.createElement('div');
-          actionRow.className = 'action-row';
-
-          const openImgBtn = document.createElement('a');
-          openImgBtn.className = 'action-btn green';
-          openImgBtn.href = imageUrl;
-          openImgBtn.target = '_blank';
-          openImgBtn.innerText = '⬇️ فتح وتحميل الصورة عالية الدقة';
-
-          const editorLink = document.createElement('a');
-          editorLink.className = 'tool-link-btn';
-          editorLink.href = 'https://pixlr.com/ar/express/';
-          editorLink.target = '_blank';
-          editorLink.innerText = '🖌️ تعديل وتحسين الصور (Pixlr)';
-
-          const copyPromptBtn = document.createElement('button');
-          copyPromptBtn.className = 'action-btn';
-          copyPromptBtn.innerText = '📋 نسخ الوصف الإنجليزي';
-          copyPromptBtn.onclick = () => copyText(copyPromptBtn, engPrompt);
-
-          actionRow.appendChild(openImgBtn);
-          actionRow.appendChild(editorLink);
-          actionRow.appendChild(copyPromptBtn);
-          loadingDiv.appendChild(actionRow);
-
-          sendBtn.disabled = false;
-          chatBox.scrollTop = chatBox.scrollHeight;
-          return;
-        }
-      }
-
-      const userParts = [{ text: displayPrompt }];
-      if (currentBase64) {
-        userParts.push({
-          inlineData: {
-            mimeType: currentMime,
-            data: currentBase64
-          }
+        // 2. التهيئة عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderPosts();
+            renderVideosPlaylist();
+            renderPodcastsList();
+            renderGuestsDirectory();
+            setupAudioEvents();
         });
-      }
 
-      conversationHistory.push({ role: 'user', parts: userParts });
-      if (conversationHistory.length > 6) {
-        conversationHistory = conversationHistory.slice(-6);
-      }
+        // 3. نظام التنقل بين الأقسام (Tabs)
+        function switchTab(tabId) {
+            // إخفاء جميع الأقسام
+            document.querySelectorAll('.tab-section').forEach(sec => sec.classList.add('hidden'));
+            // إظهار القسم المطلوب
+            const targetSec = document.getElementById(`section-${tabId}`);
+            if (targetSec) targetSec.classList.remove('hidden');
 
-      const systemInstructionText = "أنت المساعد الذكي الخبير والموسوعي في (منصة هاشم TV). تجيب على جميع الأسئلة في كل مجالات المعرفة (التعليم، الجامعات، الروابط الدراسية، التجارة، السفر، البرمجة، التسويق، الاستشارات، وصناعة المحتوى) بإجابات وافية، شاملة، مكتملة للنهاية، منظمة في نقاط واضحة، ومقنعة تغطي كافة الجوانب دون أي اختصار أو بتر في الجمل. لا تقل أبداً أنك لا تستطيع رسم الصور. وعندما يطلب منك المستخدم تصميم فيديو أو إعلان أو مشاهد، بادر فوراً بتقسيم الفيديو إلى مشاهد مرقمة بالثواني واكتب لكل مشهد: الوصف البصري، التعليق الصوتي بالعربية، وأمر التوليد بالإنجليزية (Prompt) في سطر مستقل تماماً. التزم بالدخول في صلب الإجابة مباشرة باللغة العربية الواضحة وبدون استخدام رموز النجوم أو الهاشتاق.";
+            // تحديث أزرار الكمبيوتر
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add('bg-cyan-500', 'text-navy-950', 'shadow-md', 'shadow-cyan-500/20');
+                    btn.classList.remove('text-slate-300');
+                } else {
+                    btn.classList.remove('bg-cyan-500', 'text-navy-950', 'shadow-md', 'shadow-cyan-500/20');
+                    btn.classList.add('text-slate-300');
+                }
+            });
 
-      const output = await callGemini(apiKey, conversationHistory, systemInstructionText);
+            // تحديث أزرار الهاتف السفلية
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add('text-cyan-400');
+                    btn.classList.remove('text-slate-400');
+                } else {
+                    btn.classList.remove('text-cyan-400');
+                    btn.classList.add('text-slate-400');
+                }
+            });
 
-      if (output) {
-        conversationHistory.push({ role: 'model', parts: [{ text: output }] });
-        loadingDiv.innerText = output;
-
-        const actionRow = document.createElement('div');
-        actionRow.className = 'action-row';
-
-        const isVideo = detectVideoRequest(displayPrompt, output);
-
-        if (isVideo) {
-          const promptCopyBtn = document.createElement('button');
-          promptCopyBtn.className = 'action-btn green';
-          promptCopyBtn.innerText = '🎯 نسخ أمر الفيديو الإنجليزي';
-          promptCopyBtn.onclick = () => copyText(promptCopyBtn, extractEnglishPrompts(output));
-
-          const pixverseLink = document.createElement('a');
-          pixverseLink.className = 'tool-link-btn';
-          pixverseLink.href = 'https://app.pixverse.ai';
-          pixverseLink.target = '_blank';
-          pixverseLink.innerText = '🎬 تنفيذ الفيديو (PixVerse)';
-
-          const klingLink = document.createElement('a');
-          klingLink.className = 'tool-link-btn';
-          klingLink.href = 'https://klingai.com';
-          klingLink.target = '_blank';
-          klingLink.innerText = '🎥 بديل (Kling AI)';
-
-          actionRow.appendChild(promptCopyBtn);
-          actionRow.appendChild(pixverseLink);
-          actionRow.appendChild(klingLink);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        const copyBtn = document.createElement('button');
-        copyBtn.className = 'action-btn';
-        copyBtn.innerText = isVideo ? '📋 نسخ السكربت الكامل' : '📋 نسخ الإجابة';
-        copyBtn.onclick = () => copyText(copyBtn, output);
-        actionRow.appendChild(copyBtn);
+        // 4. إدارة وعرض المنشورات (Feed System)
+        function renderPosts() {
+            const container = document.getElementById('postsFeedContainer');
+            const filtered = currentFilter === 'all' ? postsData : postsData.filter(p => p.category === currentFilter);
+            
+            document.getElementById('statPostsCount').innerText = postsData.length;
 
-        const contBtn = document.createElement('button');
-        contBtn.className = 'action-btn green';
-        contBtn.innerText = '➕ أكمل الشرح';
-        contBtn.onclick = () => continueAnswer();
-        actionRow.appendChild(contBtn);
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="glass-panel rounded-3xl p-8 text-center text-slate-400">لا توجد منشورات في هذا التصنيف حالياً.</div>`;
+                return;
+            }
 
-        loadingDiv.appendChild(actionRow);
-      } else {
-        loadingDiv.innerText = "عذراً، الخادم مشغول حالياً. اضغط (إرسال) مرة أخرى.";
-      }
+            container.innerHTML = filtered.map(post => `
+                <article class="glass-panel rounded-3xl p-5 sm:p-6 border border-white/10 hover:border-white/20 transition-all space-y-4">
+                    <!-- رأس المنشور -->
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <img src="${post.avatar}" alt="${post.author}" onerror="this.src='https://placehold.co/100x100/131C31/06B6D4?text=TV'" class="w-11 h-11 rounded-2xl object-cover border border-cyan-500/30">
+                            <div>
+                                <h4 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-1.5">
+                                    ${post.author}
+                                    <i data-lucide="badge-check" class="w-4 h-4 text-cyan-400"></i>
+                                </h4>
+                                <p class="text-[11px] text-slate-400">${post.role} • ${post.time}</p>
+                            </div>
+                        </div>
+                        <span class="text-[11px] font-bold bg-navy-950/80 text-slate-300 border border-white/10 px-3 py-1 rounded-full shrink-0">
+                            ${post.categoryLabel}
+                        </span>
+                    </div>
 
-      sendBtn.disabled = false;
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
-  </script>
+                    <!-- نص المنشور -->
+                    <p class="text-sm sm:text-base text-slate-200 leading-relaxed whitespace-pre-line">${post.content}</p>
+
+                    <!-- صورة المنشور إن وجدت -->
+                    ${post.image ? `
+                        <div class="rounded-2xl overflow-hidden border border-white/10 bg-navy-950">
+                            <img src="${post.image}" alt="صورة المنشور" onerror="this.style.display='none'" class="w-full max-h-96 object-cover hover:scale-[1.02] transition-transform duration-500">
+                        </div>
+                    ` : ''}
+
+                    <!-- شريط التفاعل والذكاء الاصطناعي -->
+                    <div class="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-2 sm:gap-3">
+                            <button onclick="toggleLikePost(${post.id})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${post.liked ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' : 'bg-navy-950/60 text-slate-300 hover:text-white'}">
+                                <i data-lucide="heart" class="w-4 h-4 ${post.liked ? 'fill-current' : ''}"></i>
+                                <span>${post.likes}</span>
+                            </button>
+                            <button onclick="toggleCommentsBox(${post.id})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-navy-950/60 text-slate-300 hover:text-white text-xs font-bold transition-all">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                <span>${post.comments.length} تعليق</span>
+                            </button>
+                            <button onclick="showToast('تم نسخ رابط المنشور للمشاركة!')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-navy-950/60 text-slate-300 hover:text-white text-xs font-bold transition-all">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <button onclick='openAiSummary("ملخص الذكاء الاصطناعي للمنشور", "${post.author}", ${JSON.stringify(post.aiSummary)})' class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 text-xs font-bold transition-all">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                            <span>تلخيص AI</span>
+                        </button>
+                    </div>
+
+                    <!-- قسم التعليقات القابل للفتح -->
+                    <div id="comments-box-${post.id}" class="hidden pt-3 border-t border-white/5 space-y-3">
+                        <div class="space-y-2 max-h-40 overflow-y-auto">
+                            ${post.comments.map(c => `
+                                <div class="bg-navy-950/70 rounded-xl p-2.5 text-xs">
+                                    <span class="font-extrabold text-cyan-400">${c.user}: </span>
+                                    <span class="text-slate-300">${c.text}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="comment-input-${post.id}" placeholder="اكتب تعليقك هنا..." class="flex-1 bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                            <button onclick="addCommentToPost(${post.id})" class="bg-cyan-500 hover:bg-cyan-400 text-navy-950 font-extrabold text-xs px-3.5 py-2 rounded-xl">إرسال</button>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function filterPosts(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.classList.add('bg-cyan-500', 'text-navy-950');
+                    btn.classList.remove('bg-navy-800/80', 'text-slate-300');
+                } else {
+                    btn.classList.remove('bg-cyan-500', 'text-navy-950');
+                    btn.classList.add('bg-navy-800/80', 'text-slate-300');
+                }
+            });
+            renderPosts();
+        }
+
+        function publishNewPost() {
+            const contentInput = document.getElementById('postContentInput');
+            const imageInput = document.getElementById('postImageInput');
+            const categoryInput = document.getElementById('postCategoryInput');
+
+            const text = contentInput.value.trim();
+            if (!text) {
+                showToast('يرجى كتابة نص المنشور أولاً!', 'error');
+                return;
+            }
+
+            const catLabels = {
+                'articles': '📝 مقال فكري',
+                'media': '🖼️ صور وميديا',
+                'ads': '📢 إعلان وتنويه'
+            };
+
+            const newPost = {
+                id: Date.now(),
+                author: "هاشم محمد",
+                role: "إدارة منصة هاشم TV",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+                time: "الآن",
+                category: categoryInput.value,
+                categoryLabel: catLabels[categoryInput.value],
+                content: text,
+                image: imageInput.value.trim(),
+                likes: 1,
+                liked: true,
+                aiSummary: [
+                    text.substring(0, 80) + (text.length > 80 ? '...' : ''),
+                    "منشور جديد تمت إضافته مباشرة عبر نظام النشر الفوري."
+                ],
+                comments: []
+            };
+
+            postsData.unshift(newPost);
+            contentInput.value = '';
+            imageInput.value = '';
+            renderPosts();
+            showToast('تم نشر مشاركتك بنجاح في المنصة!');
+        }
+
+        function toggleLikePost(id) {
+            const post = postsData.find(p => p.id === id);
+            if (post) {
+                post.liked = !post.liked;
+                post.likes += post.liked ? 1 : -1;
+                renderPosts();
+            }
+        }
+
+        function toggleCommentsBox(id) {
+            const box = document.getElementById(`comments-box-${id}`);
+            if (box) box.classList.toggle('hidden');
+        }
+
+        function addCommentToPost(id) {
+            const input = document.getElementById(`comment-input-${id}`);
+            const text = input.value.trim();
+            if (!text) return;
+
+            const post = postsData.find(p => p.id === id);
+            if (post) {
+                post.comments.push({ user: "زائر المنصة", text });
+                renderPosts();
+                document.getElementById(`comments-box-${id}`).classList.remove('hidden');
+                showToast('تمت إضافة تعليقك!');
+            }
+        }
+
+        // 5. إدارة الفيديوهات ووضع السينما (Video Hub)
+        function renderVideosPlaylist() {
+            const container = document.getElementById('videoPlaylistContainer');
+            container.innerHTML = videosData.map((vid, idx) => `
+                <div onclick="selectVideo(${idx})" class="flex items-start gap-3 p-2.5 rounded-2xl bg-navy-950/60 hover:bg-navy-800 border border-white/5 hover:border-cyan-500/30 cursor-pointer transition-all group">
+                    <div class="relative w-28 h-16 rounded-xl overflow-hidden shrink-0">
+                        <img src="${vid.thumb}" alt="${vid.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                        <span class="absolute bottom-1 left-1 bg-navy-950/90 text-[10px] font-bold text-white px-1.5 py-0.5 rounded">${vid.duration}</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <span class="text-[10px] font-bold text-cyan-400">${vid.category}</span>
+                        <h5 class="text-xs font-extrabold text-white line-clamp-2 group-hover:text-cyan-300 leading-snug mt-0.5">${vid.title}</h5>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectVideo(index) {
+            const vid = videosData[index];
+            if (!vid) return;
+            document.getElementById('mainVideoIframe').src = vid.embedUrl;
+            document.getElementById('currentVideoCategory').innerText = vid.category;
+            document.getElementById('currentVideoTitle').innerText = vid.title;
+            document.getElementById('currentVideoDesc').innerText = vid.desc;
+            document.getElementById('currentVideoViews').innerHTML = `<i data-lucide="eye" class="w-4 h-4"></i> ${vid.views}`;
+            document.getElementById('currentVideoDate').innerText = vid.date;
+            lucide.createIcons();
+            showToast(`تم تشغيل: ${vid.title}`);
+        }
+
+        function toggleCinemaMode() {
+            isCinemaMode = !isCinemaMode;
+            const backdrop = document.getElementById('cinemaBackdrop');
+            const btn = document.getElementById('cinemaModeBtn');
+            if (isCinemaMode) {
+                backdrop.classList.remove('hidden');
+                btn.innerHTML = `<i data-lucide="sun" class="w-4 h-4"></i><span>إغلاق وضع السينما</span>`;
+            } else {
+                backdrop.classList.add('hidden');
+                btn.innerHTML = `<i data-lucide="moon" class="w-4 h-4"></i><span>وضع السينما</span>`;
+            }
+            lucide.createIcons();
+        }
+
+        // 6. إدارة البودكاست والمشغل السفلي المستمر (Sticky Audio Player)
+        const audioEl = document.getElementById('htmlAudioElement');
+        let playbackSpeeds = [1, 1.5, 2];
+        let currentSpeedIdx = 0;
+
+        function renderPodcastsList() {
+            const container = document.getElementById('podcastsListContainer');
+            container.innerHTML = podcastsData.map((pod, idx) => `
+                <div class="glass-panel rounded-3xl p-5 border border-white/10 hover:border-cyan-500/40 transition-all flex flex-col sm:flex-row items-center gap-4">
+                    <img src="${pod.cover}" alt="${pod.guest}" class="w-24 h-24 rounded-2xl object-cover border border-white/10 shrink-0">
+                    <div class="flex-1 text-center sm:text-right space-y-1.5">
+                        <div class="flex items-center justify-center sm:justify-start gap-2">
+                            <span class="text-[11px] font-extrabold bg-gold-500/15 text-gold-400 px-2.5 py-0.5 rounded-full">${pod.episode}</span>
+                            <span class="text-xs text-slate-400 flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${pod.duration}</span>
+                        </div>
+                        <h3 class="text-base font-extrabold text-white leading-snug">${pod.title}</h3>
+                        <p class="text-xs font-bold text-cyan-400">الضيف: ${pod.guest}</p>
+                        <p class="text-xs text-slate-400 line-clamp-2">${pod.desc}</p>
+                    </div>
+                    <button onclick="playPodcast(${idx})" class="w-12 h-12 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-navy-950 flex items-center justify-center shadow-lg shadow-cyan-500/25 shrink-0 transition-transform active:scale-95" title="استماع للحلقة">
+                        <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function playPodcast(index) {
+            const pod = podcastsData[index];
+            if (!pod) return;
+
+            document.getElementById('playerCover').src = pod.cover;
+            document.getElementById('playerTitle').innerText = pod.title;
+            document.getElementById('playerGuest').innerText = pod.guest;
+            
+            audioEl.src = pod.audioUrl;
+            audioEl.play().catch(() => showToast('اضغط على زر التشغيل في المشغل السفلي للبدء'));
+            
+            // إظهار المشغل السفلي
+            document.getElementById('stickyAudioPlayer').classList.remove('translate-y-full');
+            updatePlayPauseUI(true);
+            showToast(`جاري تشغيل بودكاست: ${pod.title}`);
+        }
+
+        function togglePlayPause() {
+            if (audioEl.paused) {
+                audioEl.play();
+                updatePlayPauseUI(true);
+            } else {
+                audioEl.pause();
+                updatePlayPauseUI(false);
+            }
+        }
+
+        function updatePlayPauseUI(isPlaying) {
+            const btn = document.getElementById('playPauseBtn');
+            btn.innerHTML = isPlaying 
+                ? `<i data-lucide="pause" class="w-5 h-5 fill-current"></i>` 
+                : `<i data-lucide="play" class="w-5 h-5 fill-current"></i>`;
+            lucide.createIcons();
+        }
+
+        function skipAudio(seconds) {
+            audioEl.currentTime = Math.max(0, Math.min(audioEl.duration || 0, audioEl.currentTime + seconds));
+        }
+
+        function cyclePlaybackSpeed() {
+            currentSpeedIdx = (currentSpeedIdx + 1) % playbackSpeeds.length;
+            const newSpeed = playbackSpeeds[currentSpeedIdx];
+            audioEl.playbackRate = newSpeed;
+            document.getElementById('speedBtn').innerText = `${newSpeed}x`;
+        }
+
+        function closeAudioPlayer() {
+            audioEl.pause();
+            document.getElementById('stickyAudioPlayer').classList.add('translate-y-full');
+        }
+
+        function setupAudioEvents() {
+            const progressBar = document.getElementById('audioProgressBar');
+            const currentTimeDisp = document.getElementById('currentTimeDisplay');
+            const durationDisp = document.getElementById('durationDisplay');
+
+            audioEl.addEventListener('timeupdate', () => {
+                if (audioEl.duration) {
+                    const percent = (audioEl.currentTime / audioEl.duration) * 100;
+                    progressBar.value = percent;
+                    currentTimeDisp.innerText = formatTime(audioEl.currentTime);
+                    durationDisp.innerText = formatTime(audioEl.duration);
+                }
+            });
+
+            progressBar.addEventListener('input', () => {
+                if (audioEl.duration) {
+                    audioEl.currentTime = (progressBar.value / 100) * audioEl.duration;
+                }
+            });
+
+            audioEl.addEventListener('ended', () => updatePlayPauseUI(false));
+        }
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        // 7. إدارة دليل الشخصيات والضيوف (VIP Directory)
+        function renderGuestsDirectory() {
+            const grid = document.getElementById('guestsDirectoryGrid');
+            const sidebarList = document.getElementById('sidebarGuestsList');
+            
+            document.getElementById('statGuestsCount').innerText = guestsData.length;
+
+            // الشبكة الرئيسية
+            grid.innerHTML = guestsData.map(guest => `
+                <div class="glass-panel rounded-3xl p-5 border border-white/10 hover:border-gold-500/40 transition-all flex flex-col justify-between text-center group">
+                    <div>
+                        <div class="relative w-24 h-24 mx-auto mb-4">
+                            <img src="${guest.avatar}" alt="${guest.name}" onerror="this.src='https://placehold.co/200x200/131C31/F59E0B?text=VIP'" class="w-full h-full rounded-2xl object-cover border-2 border-gold-500/40 group-hover:scale-105 transition-transform">
+                            ${guest.verified ? `<span class="absolute -bottom-2 -left-2 bg-cyan-500 text-navy-950 p-1 rounded-lg shadow-md"><i data-lucide="badge-check" class="w-4 h-4"></i></span>` : ''}
+                        </div>
+                        <h3 class="text-base font-extrabold text-white">${guest.name}</h3>
+                        <span class="inline-block text-xs font-bold text-cyan-400 mt-0.5">${guest.role}</span>
+                        <p class="text-xs text-slate-400 mt-3 leading-relaxed line-clamp-3">${guest.bio}</p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+                        <span class="text-gold-400 font-bold">${guest.episodesCount} مشاركات</span>
+                        <button onclick="switchTab('podcasts')" class="text-slate-300 hover:text-cyan-400 font-bold flex items-center gap-1">
+                            <span>استمع للحلقات</span>
+                            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // القائمة الجانبية المختصرة
+            if (sidebarList) {
+                sidebarList.innerHTML = guestsData.slice(0, 3).map(g => `
+                    <div onclick="switchTab('guests')" class="flex items-center gap-3 p-2 rounded-xl hover:bg-navy-800/70 cursor-pointer transition-colors">
+                        <img src="${g.avatar}" alt="${g.name}" class="w-10 h-10 rounded-xl object-cover">
+                        <div class="min-w-0 flex-1">
+                            <h5 class="text-xs font-bold text-white truncate">${g.name}</h5>
+                            <p class="text-[11px] text-slate-400 truncate">${g.role}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            lucide.createIcons();
+        }
+
+        function openAddGuestModal() {
+            const modal = document.getElementById('addGuestModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAddGuestModal() {
+            const modal = document.getElementById('addGuestModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function saveNewGuest() {
+            const name = document.getElementById('guestNameInput').value.trim();
+            const role = document.getElementById('guestRoleInput').value.trim();
+            const avatar = document.getElementById('guestAvatarInput').value.trim() || 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80';
+            const bio = document.getElementById('guestBioInput').value.trim();
+
+            if (!name || !role || !bio) {
+                showToast('يرجى تعبئة الاسم والتخصص والنبذة!', 'error');
+                return;
+            }
+
+            guestsData.unshift({
+                id: Date.now(),
+                name,
+                role,
+                avatar,
+                bio,
+                episodesCount: 1,
+                verified: true
+            });
+
+            document.getElementById('guestNameInput').value = '';
+            document.getElementById('guestRoleInput').value = '';
+            document.getElementById('guestAvatarInput').value = '';
+            document.getElementById('guestBioInput').value = '';
+
+            closeAddGuestModal();
+            renderGuestsDirectory();
+            switchTab('guests');
+            showToast(`تمت إضافة "${name}" إلى دليل الشخصيات بنجاح!`);
+        }
+
+        // 8. ميزة ملخص الذكاء الاصطناعي وحجز الخدمات
+        function openAiSummary(badge, title, points) {
+            document.getElementById('aiModalBadge').innerText = badge;
+            document.getElementById('aiModalTitle').innerText = title;
+            document.getElementById('aiModalPoints').innerHTML = points.map(pt => `<li>${pt}</li>`).join('');
+            
+            const modal = document.getElementById('aiSummaryModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAiSummary() {
+            const modal = document.getElementById('aiSummaryModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function bookService(packageName) {
+            showToast(`تم تسجيل طلبك لـ "${packageName}". سيتواصل معك فريق هاشم TV قريباً!`);
+        }
+
+        // 9. نظام الإشعارات الأنيقة (Toast Notifications)
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const borderColor = type === 'error' ? 'border-rose-500/50 text-rose-300' : 'border-cyan-500/50 text-white';
+            const iconName = type === 'error' ? 'alert-circle' : 'check-circle-2';
+            const iconColor = type === 'error' ? 'text-rose-400' : 'text-cyan-400';
+
+            toast.className = `glass-panel border ${borderColor} px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-bold pointer-events-auto transition-all duration-300 transform translate-y-0`;
+            toast.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4 ${iconColor} shrink-0"></i><span>${message}</span>`;
+            
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
 </body>
 </html>
+```
