@@ -85,7 +85,7 @@
         </span>
         <div class="overflow-hidden w-full relative">
             <div class="animate-marquee text-slate-300 font-semibold">
-                مرحباً بكم في منصة هاشم TV PRO • تم تحديث مكتبة الفيديو لدعم حلقات TikTok و YouTube • ترقبوا حلقة البودكاست الخاصة: "العقد الاجتماعي والممارسات السياسية في السودان" مع د. بهاء الدين آدم • باقات إعلانية وحلول رقمية متكاملة.
+                مرحباً بكم في منصة هاشم TV PRO • ترقبوا حلقة البودكاست الخاصة: "العقد الاجتماعي والممارسات السياسية في السودان" مع الأستاذ والمفكر بهاء الدين آدم • استكشفوا سلسلة التحول الرقمي والركائز الخمسة • باقات إعلانية وحلول رقمية متكاملة.
             </div>
         </div>
     </div>
@@ -128,7 +128,8 @@
         <section id="tab-feed" class="tab-content space-y-5">
             <div class="glass-card rounded-2xl p-4 shadow-xl">
                 <div class="flex gap-3">
-                    <div style="background-color:#06B6D4; color:#060a14" class="w-10 h-10 rounded-full font-black flex items-center justify-center shrink-0 text-lg">هـ</div>
+                    <img src="founder.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover border border-cyan-400 shrink-0">
+                    <div style="background-color:#06B6D4; color:#060a14; display:none;" class="w-10 h-10 rounded-full font-black items-center justify-center shrink-0 text-lg">هـ</div>
                     <div class="w-full space-y-3">
                         <textarea id="post-text" rows="2" placeholder="شارك فكرة، مقالاً قصيراً، أو إعلاناً جديداً مع جمهور هاشم TV..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none"></textarea>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -167,7 +168,7 @@
             <div id="posts-container" class="space-y-4"></div>
         </section>
 
-        <!-- 2. قسم الفيديو والحلقات (يدعم YouTube + TikTok + MP4) -->
+        <!-- 2. قسم الفيديو والحلقات -->
         <section id="tab-videos" class="tab-content hidden space-y-5">
             <div id="cinema-backdrop" class="cinema-dim hidden" onclick="toggleCinemaMode()"></div>
             <div id="video-player-wrapper" class="relative z-40 glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
@@ -203,7 +204,6 @@
                 </button>
             </div>
 
-            <!-- فلاتر الفيديو -->
             <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
                 <button onclick="filterVideos('الكل', this)" style="background-color:#06B6D4; color:#060a14" class="v-filter-btn active font-bold text-xs px-4 py-1.5 rounded-full shrink-0">جميع الحلقات</button>
                 <button onclick="filterVideos('حلقات TikTok', this)" style="background-color:#131C31" class="v-filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-1.5 rounded-full shrink-0">حلقات TikTok</button>
@@ -353,8 +353,8 @@
                 <h3 class="text-base font-black text-white">إضافة شخصية / ضيف للمنصة</h3>
                 <button onclick="closePersonModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <input id="p-name" type="text" placeholder="الاسم الكامل (مثلاً: د. بهاء الدين آدم)" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
-            <input id="p-role" type="text" placeholder="الصفة الأكاديمية أو المهنية" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <input id="p-name" type="text" placeholder="الاسم الكامل" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <input id="p-role" type="text" placeholder="الصفة أو اللقب" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
             <input id="p-avatar" type="url" placeholder="رابط الصورة الشخصية (اختياري)" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
             <textarea id="p-bio" rows="2" placeholder="نبذة مختصرة عن الشخصية..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white"></textarea>
             <button onclick="saveNewPerson()" style="background-color:#F59E0B; color:#060a14" class="w-full font-extrabold text-xs py-3 rounded-xl">حفظ وإضافة للدليل</button>
@@ -399,7 +399,8 @@
         let postsData = [
             {
                 id: 1,
-                author: "هاشم محمد",
+                author: "هاشم محمد آدم",
+                avatar: "founder.jpg",
                 role: "مؤسس منصة هاشم TV",
                 time: "منذ ساعتين",
                 category: "مقال فكري",
@@ -411,7 +412,8 @@
             },
             {
                 id: 2,
-                author: "هاشم محمد",
+                author: "هاشم محمد آدم",
+                avatar: "founder.jpg",
                 role: "مؤسس منصة هاشم TV",
                 time: "أمس",
                 category: "صور وميديا",
@@ -423,8 +425,6 @@
             }
         ];
 
-        // قائمة الحلقات (تضم حلقاتك الـ 22 من TikTok + الحلقات التعليمية)
-        // لتشغيل أي حلقة TikTok داخل المشغل مباشرة: ضع الرقم الطويل للفيديو في خانة embedId
         const tiktokCodes = [
             "ZSsLYbqAg", "ZSsLYB8GW", "ZSsLY5Aex", "ZSsLYpeWn", "ZSsLYpMqs",
             "ZSsLY5JqD", "ZSsLYXqPy", "ZSsLYC2by", "ZSsLYsSTS", "ZSsLYsapk",
@@ -450,7 +450,7 @@
                 category: "حلقات TikTok",
                 duration: "قصير",
                 type: "tiktok",
-                source: "", // ضع رقم الفيديو المكون من 19 رقماً هنا للتضمين الداخلي
+                source: "",
                 externalUrl: TK_BASE + code + "/",
                 thumb: TK_THUMB
             }))
@@ -460,11 +460,11 @@
             {
                 id: 1,
                 title: "العقد الاجتماعي والممارسات السياسية في السودان",
-                guest: "د. بهاء الدين آدم",
+                guest: "الأستاذ والمفكر بهاء الدين آدم",
                 duration: "42:15",
                 date: "قريباً • حلقة خاصة",
                 audioUrl: H + "www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                cover: H + "images.unsplash.com/photo-1478737270239-2f02b77fc618?w=300&q=80",
+                cover: "bahaa.jpg",
                 summary: "تناقش الحلقة الجذور الفكرية للعقد الاجتماعي، وتحليل الممارسات السياسية المعاصرة وسبل بناء توافق وطني مستدام."
             },
             {
@@ -474,7 +474,7 @@
                 duration: "28:10",
                 date: "نوفمبر 2026",
                 audioUrl: H + "www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-                cover: H + "images.unsplash.com/photo-1590602847861-f357a9332bbc?w=300&q=80",
+                cover: "founder.jpg",
                 summary: "كيف يمكن للمتاجر والصيدليات التحول للعمل السحابي وزيادة المبيعات بأقل التكاليف التقنية."
             }
         ];
@@ -484,15 +484,15 @@
                 id: 1,
                 name: "هاشم محمد آدم",
                 role: "مؤسس منصة هاشم TV ورئيس مجلس إدارة HMA Trading",
-                avatar: H + "images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80",
+                avatar: "founder.jpg",
                 bio: "رائد أعمال ومطور حلول رقمية، يقدم سلسلة محاضرات التحول الرقمي والمحتوى الثقافي والتقني."
             },
             {
                 id: 2,
-                name: "د. بهاء الدين آدم",
-                role: "أكاديمي ومفكر سياسي",
-                avatar: H + "images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80",
-                bio: "باحث وأكاديمي متخصص في الفكر السياسي والعقد الاجتماعي، وضيف الحلقات الحوارية على هاشم TV."
+                name: "بهاء الدين آدم",
+                role: "الأستاذ والمفكر",
+                avatar: "bahaa.jpg",
+                bio: "مفكر وباحث في الفكر السياسي والعقد الاجتماعي، وضيف الحلقات الحوارية على منصة هاشم TV."
             }
         ];
 
@@ -501,7 +501,7 @@
         // =========================================================================
 
         document.getElementById('main-video-frame').src = H + "www.youtube.com/embed/dQw4w9WgXcQ";
-        document.getElementById('player-cover').src = H + "images.unsplash.com/photo-1590602847861-f357a9332bbc?w=100&q=80";
+        document.getElementById('player-cover').src = "founder.jpg";
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -530,7 +530,8 @@
                 <article class="glass-card rounded-2xl p-4 sm:p-5 space-y-3 border border-white/10">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div style="background:linear-gradient(135deg,#06B6D4,#2563EB); color:#060a14" class="w-10 h-10 rounded-full font-black flex items-center justify-center">${post.author[0]}</div>
+                            <img src="${post.avatar || 'founder.jpg'}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover border border-cyan-400">
+                            <div style="background:linear-gradient(135deg,#06B6D4,#2563EB); color:#060a14; display:none;" class="w-10 h-10 rounded-full font-black items-center justify-center">${post.author[0]}</div>
                             <div>
                                 <div class="flex items-center gap-1.5">
                                     <h3 class="text-sm font-extrabold text-white">${post.author}</h3>
@@ -584,7 +585,8 @@
 
             postsData.unshift({
                 id: Date.now(),
-                author: "هاشم محمد",
+                author: "هاشم محمد آدم",
+                avatar: "founder.jpg",
                 role: "مؤسس منصة هاشم TV",
                 time: "الآن",
                 category,
@@ -630,9 +632,7 @@
             window.open(H + `wa.me/?text=${encodeURIComponent('مرحباً، أرغب في الاستفسار عن: ' + item)}`, '_blank');
         }
 
-        // =========================================================================
-        // قسم الفيديو (YouTube + TikTok + MP4)
-        // =========================================================================
+        // قسم الفيديو
         function renderVideos(filter = 'الكل') {
             const list = filter === 'الكل' ? videosData : videosData.filter(v => v.category === filter);
             document.getElementById('videos-count').innerText = list.length;
@@ -697,7 +697,7 @@
                             <i class="fa-brands fa-tiktok"></i>
                         </div>
                         <h3 class="text-sm sm:text-base font-extrabold text-white">${v.title}</h3>
-                        <p class="text-xs text-slate-400 max-w-md mx-auto">هذا الرابط مختصر من TikTok؛ اضغط أدناه للمشاهدة الفورية أو أضف الرقم التعريفي للفيديو (19 رقماً) لتشغيله داخل الإطار.</p>
+                        <p class="text-xs text-slate-400 max-w-md mx-auto">اضغط أدناه لمشاهدة الحلقة مباشرة بجودتها الكاملة.</p>
                         <a href="${v.externalUrl}" target="_blank" style="background-color:#06B6D4; color:#060a14" class="inline-flex items-center gap-2 font-extrabold text-xs px-5 py-2.5 rounded-xl">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             <span>تشغيل الحلقة الآن</span>
@@ -756,14 +756,12 @@
             btnText.innerText = dim.classList.contains('hidden') ? 'وضع السينما' : 'إغلاق السينما';
         }
 
-        // =========================================================================
         // البودكاست
-        // =========================================================================
         function renderPodcasts() {
             document.getElementById('podcasts-list').innerHTML = podcastsData.map(pod => `
                 <div class="glass-card rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10 transition">
                     <div class="flex items-center gap-3.5">
-                        <img src="${pod.cover}" class="w-16 h-16 rounded-xl object-cover shrink-0 border border-white/10">
+                        <img src="${pod.cover}" onerror="this.src='${H}images.unsplash.com/photo-1478737270239-2f02b77fc618?w=300&q=80'" class="w-16 h-16 rounded-xl object-cover object-top shrink-0 border border-white/10">
                         <div>
                             <div style="color:#FBBF24" class="flex items-center gap-2 text-[11px] font-bold">
                                 <span>${pod.date}</span> • <span><i class="fa-regular fa-clock"></i> ${pod.duration}</span>
@@ -818,7 +816,7 @@
         function closePodcastModal() { document.getElementById('podcast-modal').classList.add('hidden'); }
         function saveNewPodcast() {
             const title = document.getElementById('pod-title').value.trim();
-            const guest = document.getElementById('pod-guest').value.trim() || 'هاشم محمد';
+            const guest = document.getElementById('pod-guest').value.trim() || 'هاشم محمد آدم';
             const audioUrl = document.getElementById('pod-url').value.trim() || (H + 'www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
             const duration = document.getElementById('pod-duration').value.trim() || '30:00';
             const summary = document.getElementById('pod-summary').value.trim() || 'حلقة جديدة على بودكاست هاشم TV.';
@@ -829,7 +827,7 @@
                 title, guest, duration,
                 date: 'جديد اليوم',
                 audioUrl,
-                cover: H + 'images.unsplash.com/photo-1590602847861-f357a9332bbc?w=300&q=80',
+                cover: 'founder.jpg',
                 summary
             });
             renderPodcasts();
@@ -840,7 +838,7 @@
         function renderPeople() {
             document.getElementById('people-grid').innerHTML = peopleData.map(person => `
                 <div class="glass-card rounded-2xl p-5 text-center space-y-3 border border-white/10">
-                    <img src="${person.avatar}" style="border-color:#22D3EE" class="w-20 h-20 rounded-full object-cover mx-auto border-2 p-0.5">
+                    <img src="${person.avatar}" onerror="this.src='${H}images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80'" style="border-color:#22D3EE" class="w-24 h-24 rounded-full object-cover object-top mx-auto border-2 p-0.5 shadow-lg">
                     <div>
                         <h3 class="text-base font-black text-white">${person.name}</h3>
                         <p style="color:#FBBF24" class="text-xs font-bold mt-0.5">${person.role}</p>
