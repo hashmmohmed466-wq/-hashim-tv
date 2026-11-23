@@ -1,46 +1,38 @@
-
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>هاشم TV PRO | المنصة الإعلامية والرقمية المتكاملة</title>
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-    <link href="[https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap](https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap)" rel="stylesheet">
-    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css)">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Cairo', 'sans-serif'],
-                    },
-                    colors: {
-                        navy: {
-                            950: '#060a14',
-                            900: '#0B1120',
-                            800: '#131C31',
-                            700: '#1E293B',
-                        },
-                        cyan: {
-                            400: '#22D3EE',
-                            500: '#06B6D4',
-                        },
-                        gold: {
-                            400: '#FBBF24',
-                            500: '#F59E0B',
-                        }
-                    }
-                }
-            }
-        }
+        (function() {
+            const p = "https://";
+            const assets = [
+                { t: "script", a: { src: p + "cdn.tailwindcss.com" } },
+                { t: "link", a: { rel: "stylesheet", href: p + "fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" } },
+                { t: "link", a: { rel: "stylesheet", href: p + "cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" } }
+            ];
+            assets.forEach(item => {
+                const el = document.createElement(item.t);
+                Object.keys(item.a).forEach(k => el.setAttribute(k, item.a[k]));
+                document.head.appendChild(el);
+            });
+        })();
     </script>
     <style>
+        :root {
+            --navy-950: #060a14;
+            --navy-900: #0B1120;
+            --navy-800: #131C31;
+            --cyan-400: #22D3EE;
+            --cyan-500: #06B6D4;
+            --gold-400: #FBBF24;
+            --gold-500: #F59E0B;
+        }
         body {
             background-color: #0B1120;
             color: #F8FAFC;
-            font-family: 'Cairo', sans-serif;
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
             overflow-x: hidden;
             padding-bottom: 135px;
         }
@@ -61,7 +53,7 @@
         .animate-marquee:hover { animation-play-state: paused; }
         
         .glass-card {
-            background: rgba(19, 28, 49, 0.85);
+            background: rgba(19, 28, 49, 0.88);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
@@ -76,12 +68,12 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="antialiased selection:bg-cyan-500 selection:text-navy-950">
+<body class="antialiased selection:bg-cyan-500 selection:text-slate-950">
 
     <!-- شريط الأخبار العاجلة -->
-    <div class="bg-navy-950 border-b border-white/10 text-xs py-2 px-3 flex items-center gap-3 sticky top-0 z-50">
-        <span class="bg-gold-500 text-navy-950 font-extrabold px-2.5 py-0.5 rounded-full shrink-0 flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-navy-950 animate-ping"></span>
+    <div style="background-color:#060a14" class="border-b border-white/10 text-xs py-2 px-3 flex items-center gap-3 sticky top-0 z-50">
+        <span style="background-color:#F59E0B; color:#060a14" class="font-extrabold px-2.5 py-0.5 rounded-full shrink-0 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
             مباشر وحصري
         </span>
         <div class="overflow-hidden w-full relative">
@@ -95,19 +87,19 @@
     <header class="glass-card sticky top-8 z-40 border-b border-white/10 px-4 py-3">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchTab('feed')">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-navy-950 shadow-lg shadow-cyan-500/20">
+                <div style="background:linear-gradient(135deg,#22D3EE,#06B6D4); color:#060a14" class="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg">
                     <i class="fa-solid fa-tv text-lg"></i>
                 </div>
                 <div>
                     <div class="flex items-center gap-1.5">
-                        <h1 class="text-xl font-black tracking-tight text-white">هاشم <span class="text-cyan-400">TV</span></h1>
-                        <span class="text-[10px] font-extrabold bg-gold-500/20 text-gold-400 border border-gold-500/30 px-1.5 py-0.5 rounded">PRO</span>
+                        <h1 class="text-xl font-black tracking-tight text-white">هاشم <span style="color:#22D3EE">TV</span></h1>
+                        <span style="background:rgba(245,158,11,0.2); color:#FBBF24; border:1px solid rgba(245,158,11,0.3)" class="text-[10px] font-extrabold px-1.5 py-0.5 rounded">PRO</span>
                     </div>
                 </div>
             </div>
 
             <!-- قائمة التنقل لسطح المكتب -->
-            <nav class="hidden md:flex items-center gap-1 bg-navy-900/90 p-1 rounded-xl border border-white/5">
+            <nav style="background:#0B1120" class="hidden md:flex items-center gap-1 p-1 rounded-xl border border-white/5">
                 <button onclick="switchTab('feed')" class="nav-btn-desk active px-4 py-2 rounded-lg text-sm font-bold transition" data-tab="feed">الرئيسية</button>
                 <button onclick="switchTab('videos')" class="nav-btn-desk px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition" data-tab="videos">الفيديو والحلقات</button>
                 <button onclick="switchTab('podcasts')" class="nav-btn-desk px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition" data-tab="podcasts">البودكاست</button>
@@ -115,7 +107,7 @@
                 <button onclick="switchTab('store')" class="nav-btn-desk px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition" data-tab="store">المتجر والإعلانات</button>
             </nav>
 
-            <button onclick="openQuickModal()" class="bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold text-xs sm:text-sm px-4 py-2 rounded-full flex items-center gap-1.5 shadow-lg shadow-gold-500/20 transition transform active:scale-95">
+            <button onclick="openQuickModal()" style="background-color:#F59E0B; color:#060a14" class="font-extrabold text-xs sm:text-sm px-4 py-2 rounded-full flex items-center gap-1.5 shadow-lg transition transform active:scale-95">
                 <i class="fa-solid fa-circle-plus"></i>
                 <span>نشر جديد</span>
             </button>
@@ -125,20 +117,19 @@
     <!-- المحتوى الرئيسي -->
     <main class="max-w-6xl mx-auto px-4 pt-5">
 
-        <!-- ================= 1. قسم الرئيسية والمنشورات (FEED) ================= -->
+        <!-- 1. قسم الرئيسية والمنشورات -->
         <section id="tab-feed" class="tab-content space-y-5">
-            <!-- صندوق النشر السريع -->
             <div class="glass-card rounded-2xl p-4 shadow-xl">
                 <div class="flex gap-3">
-                    <div class="w-10 h-10 rounded-full bg-cyan-500 text-navy-950 font-black flex items-center justify-center shrink-0 text-lg">هـ</div>
+                    <div style="background-color:#06B6D4; color:#060a14" class="w-10 h-10 rounded-full font-black flex items-center justify-center shrink-0 text-lg">هـ</div>
                     <div class="w-full space-y-3">
-                        <textarea id="post-text" rows="2" placeholder="شارك فكرة، مقالاً قصيراً، أو إعلاناً جديداً مع جمهور هاشم TV..." class="w-full bg-navy-950/80 border border-white/10 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition"></textarea>
+                        <textarea id="post-text" rows="2" placeholder="شارك فكرة، مقالاً قصيراً، أو إعلاناً جديداً مع جمهور هاشم TV..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none"></textarea>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             <div class="relative">
                                 <i class="fa-regular fa-image absolute left-3 top-3 text-slate-400"></i>
-                                <input id="post-image" type="url" placeholder="رابط صورة (اختياري) https://..." class="w-full bg-navy-950/80 border border-white/10 rounded-xl py-2 pr-3 pl-9 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400">
+                                <input id="post-image" type="url" placeholder="رابط صورة (اختياري)" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl py-2 pr-3 pl-9 text-xs text-white placeholder-slate-500 focus:outline-none">
                             </div>
-                            <select id="post-category" class="w-full bg-navy-950/80 border border-white/10 rounded-xl py-2 px-3 text-xs text-white focus:outline-none focus:border-cyan-400">
+                            <select id="post-category" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl py-2 px-3 text-xs text-white focus:outline-none">
                                 <option value="مقال فكري">📝 مقال فكري / تدوينة</option>
                                 <option value="صور وميديا">🖼️ صور وميديا</option>
                                 <option value="إعلان وتقنية">📢 إعلان وخدمات تقنية</option>
@@ -146,10 +137,10 @@
                         </div>
                         <div class="flex items-center justify-between pt-1">
                             <div class="flex items-center gap-3 text-[11px] text-slate-400">
-                                <span class="text-cyan-400 font-bold"><i class="fa-solid fa-bolt"></i> نشر فوري</span>
+                                <span style="color:#22D3EE" class="font-bold"><i class="fa-solid fa-bolt"></i> نشر فوري</span>
                                 <span>• يدعم الصور والروابط</span>
                             </div>
-                            <button onclick="addNewPost()" class="bg-cyan-500 hover:bg-cyan-400 text-navy-950 font-extrabold text-xs px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition">
+                            <button onclick="addNewPost()" style="background-color:#06B6D4; color:#060a14" class="font-extrabold text-xs px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition">
                                 <span>نشر الآن</span>
                                 <i class="fa-solid fa-paper-plane"></i>
                             </button>
@@ -160,29 +151,28 @@
 
             <!-- فلاتر المنشورات -->
             <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-                <button onclick="filterPosts('الكل', this)" class="filter-btn active bg-cyan-500 text-navy-950 font-bold text-xs px-4 py-2 rounded-full shrink-0">الكل</button>
-                <button onclick="filterPosts('مقال فكري', this)" class="filter-btn bg-navy-800 text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">📝 مقالات فكرية</button>
-                <button onclick="filterPosts('صور وميديا', this)" class="filter-btn bg-navy-800 text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">🖼️ صور وميديا</button>
-                <button onclick="filterPosts('إعلان وتقنية', this)" class="filter-btn bg-navy-800 text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">📢 إعلان وتقنية</button>
+                <button onclick="filterPosts('الكل', this)" style="background-color:#06B6D4; color:#060a14" class="filter-btn active font-bold text-xs px-4 py-2 rounded-full shrink-0">الكل</button>
+                <button onclick="filterPosts('مقال فكري', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">📝 مقالات فكرية</button>
+                <button onclick="filterPosts('صور وميديا', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">🖼️ صور وميديا</button>
+                <button onclick="filterPosts('إعلان وتقنية', this)" style="background-color:#131C31" class="filter-btn text-slate-300 border border-white/10 font-bold text-xs px-4 py-2 rounded-full shrink-0">📢 إعلان وتقنية</button>
             </div>
 
-            <!-- قائمة المنشورات -->
             <div id="posts-container" class="space-y-4"></div>
         </section>
 
-        <!-- ================= 2. قسم الفيديو والحلقات (VIDEOS) ================= -->
+        <!-- 2. قسم الفيديو والحلقات -->
         <section id="tab-videos" class="tab-content hidden space-y-5">
             <div id="cinema-backdrop" class="cinema-dim hidden" onclick="toggleCinemaMode()"></div>
             <div id="video-player-wrapper" class="relative z-40 glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
                 <div class="aspect-video bg-black relative">
-                    <iframe id="main-video-frame" class="w-full h-full" src="[https://www.youtube.com/embed/dQw4w9WgXcQ](https://www.youtube.com/embed/dQw4w9WgXcQ)" title="مشغل هاشم TV" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="main-video-frame" class="w-full h-full" title="مشغل هاشم TV" frameborder="0" allowfullscreen></iframe>
                 </div>
-                <div class="p-4 flex flex-wrap items-center justify-between gap-3 bg-navy-900">
+                <div style="background-color:#0B1120" class="p-4 flex flex-wrap items-center justify-between gap-3">
                     <div>
-                        <span id="current-video-cat" class="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded-full">سلسلة التحول الرقمي</span>
+                        <span id="current-video-cat" style="color:#22D3EE; background:rgba(6,182,212,0.1)" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full">سلسلة التحول الرقمي</span>
                         <h2 id="current-video-title" class="text-base sm:text-lg font-extrabold text-white mt-1">الحلقة الأولى: الركائز الخمسة للتحول الرقمي الحديث</h2>
                     </div>
-                    <button onclick="toggleCinemaMode()" class="bg-navy-800 hover:bg-navy-700 text-gold-400 border border-gold-500/30 text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-2 transition">
+                    <button onclick="toggleCinemaMode()" style="background-color:#131C31; color:#FBBF24; border:1px solid rgba(245,158,11,0.3)" class="text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-2 transition">
                         <i class="fa-solid fa-film"></i>
                         <span id="cinema-btn-text">وضع السينما</span>
                     </button>
@@ -191,38 +181,37 @@
 
             <div class="flex items-center justify-between">
                 <h3 class="text-base font-extrabold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-list-ul text-cyan-400"></i>
+                    <i style="color:#22D3EE" class="fa-solid fa-list-ul"></i>
                     <span>قائمة الحلقات والمسلسلات</span>
                 </h3>
             </div>
             <div id="videos-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </section>
 
-        <!-- ================= 3. قسم البودكاست (PODCASTS) ================= -->
+        <!-- 3. قسم البودكاست -->
         <section id="tab-podcasts" class="tab-content hidden space-y-5">
             <div class="glass-card rounded-2xl p-5 border border-cyan-500/20 flex flex-wrap items-center justify-between gap-4">
                 <div>
-                    <span class="text-xs font-bold text-gold-400">إذاعة وبودكاست هاشم TV</span>
+                    <span style="color:#FBBF24" class="text-xs font-bold">إذاعة وبودكاست هاشم TV</span>
                     <h2 class="text-xl font-black text-white mt-0.5">حوارات فكرية وثقافية معمقة</h2>
                     <p class="text-xs text-slate-400 mt-1">استمع للحلقات الصوتية أثناء تصفحك لباقي أقسام المنصة.</p>
                 </div>
-                <button onclick="openPodcastModal()" class="bg-cyan-500 hover:bg-cyan-400 text-navy-950 font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-cyan-500/20">
+                <button onclick="openPodcastModal()" style="background-color:#06B6D4; color:#060a14" class="font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-lg">
                     <i class="fa-solid fa-microphone-lines"></i>
                     <span>إضافة حلقة بودكاست</span>
                 </button>
             </div>
-
             <div id="podcasts-list" class="space-y-3"></div>
         </section>
 
-        <!-- ================= 4. قسم الشخصيات والضيوف (PEOPLE) ================= -->
+        <!-- 4. قسم الشخصيات والضيوف -->
         <section id="tab-people" class="tab-content hidden space-y-5">
             <div class="flex flex-wrap items-center justify-between gap-3">
                 <div>
                     <h2 class="text-xl font-black text-white">دليل الشخصيات والضيوف</h2>
                     <p class="text-xs text-slate-400">نخبة المفكرين، الضيوف، وصناع المحتوى في منصة هاشم TV</p>
                 </div>
-                <button onclick="openPersonModal()" class="bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2">
+                <button onclick="openPersonModal()" style="background-color:#F59E0B; color:#060a14" class="font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2">
                     <i class="fa-solid fa-user-plus"></i>
                     <span>إضافة شخصية</span>
                 </button>
@@ -230,68 +219,68 @@
             <div id="people-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </section>
 
-        <!-- ================= 5. قسم المتجر والخدمات الإعلانية (STORE) ================= -->
+        <!-- 5. قسم المتجر والخدمات الإعلانية -->
         <section id="tab-store" class="tab-content hidden space-y-5">
             <div class="text-center max-w-2xl mx-auto space-y-2 py-2">
-                <span class="text-xs font-extrabold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full">الحلول الرقمية والإعلانية</span>
+                <span style="color:#22D3EE; background:rgba(6,182,212,0.1)" class="text-xs font-extrabold px-3 py-1 rounded-full">الحلول الرقمية والإعلانية</span>
                 <h2 class="text-2xl font-black text-white">طوّر أعمالك مع هاشم TV و HMA Trading</h2>
                 <p class="text-xs sm:text-sm text-slate-400">باقات إعلانية للوصول لآلاف المتابعين، بالإضافة إلى تصميم المواقع والأنظمة السحابية.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-col justify-between space-y-4">
                     <div>
-                        <span class="text-xs font-bold text-cyan-400">باقة الانتشار</span>
+                        <span style="color:#22D3EE" class="text-xs font-bold">باقة الانتشار</span>
                         <h3 class="text-lg font-black text-white mt-1">إعلان فيديو ترويجي (AI)</h3>
                         <p class="text-xs text-slate-400 mt-2 leading-relaxed">إنتاج فيديو إعلاني احترافي بتعليق صوتي جذاب ونشره عبر منصات هاشم TV وصفحاتنا.</p>
                     </div>
-                    <a href="[https://wa.me/?text=مرحبا](https://wa.me/?text=مرحبا)ً، أرغب في الاستفسار عن باقة الإعلان الترويجي في هاشم TV" target="_blank" class="w-full bg-navy-800 hover:bg-cyan-500 hover:text-navy-950 text-white font-bold text-xs py-3 rounded-xl text-center border border-white/10 transition">اطلب الباقة الآن</a>
+                    <button onclick="contactOrder('باقة الإعلان الترويجي في هاشم TV')" style="background-color:#131C31" class="w-full text-white font-bold text-xs py-3 rounded-xl text-center border border-white/10 transition">اطلب الباقة الآن</button>
                 </div>
-                <div class="glass-card rounded-2xl p-5 border-2 border-gold-500/50 flex flex-col justify-between space-y-4 relative">
-                    <span class="absolute -top-3 left-4 bg-gold-500 text-navy-950 text-[10px] font-black px-2.5 py-0.5 rounded-full">الأكثر طلباً</span>
+                <div style="border:2px solid rgba(245,158,11,0.5)" class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4 relative">
+                    <span style="background-color:#F59E0B; color:#060a14" class="absolute -top-3 left-4 text-[10px] font-black px-2.5 py-0.5 rounded-full">الأكثر طلباً</span>
                     <div>
-                        <span class="text-xs font-bold text-gold-400">باقة الأعمال المتكاملة</span>
+                        <span style="color:#FBBF24" class="text-xs font-bold">باقة الأعمال المتكاملة</span>
                         <h3 class="text-lg font-black text-white mt-1">موقع إلكتروني + متجر سحابي</h3>
                         <p class="text-xs text-slate-400 mt-2 leading-relaxed">تصميم موقع خاص لشركتك، صيدليتك، أو متجرك مع لوحة تحكم سحابية وربط مباشر بالواتساب.</p>
                     </div>
-                    <a href="[https://wa.me/?text=مرحبا](https://wa.me/?text=مرحبا)ً، أرغب في تصميم موقع إلكتروني ومتجر سحابي" target="_blank" class="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold text-xs py-3 rounded-xl text-center transition">ابدأ مشروعك الرقمي</a>
+                    <button onclick="contactOrder('تصميم موقع إلكتروني ومتجر سحابي')" style="background-color:#F59E0B; color:#060a14" class="w-full font-extrabold text-xs py-3 rounded-xl text-center transition">ابدأ مشروعك الرقمي</button>
                 </div>
                 <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-col justify-between space-y-4">
                     <div>
-                        <span class="text-xs font-bold text-cyan-400">باقة الرعاية</span>
+                        <span style="color:#22D3EE" class="text-xs font-bold">باقة الرعاية</span>
                         <h3 class="text-lg font-black text-white mt-1">رعاية حلقات البودكاست</h3>
                         <p class="text-xs text-slate-400 mt-2 leading-relaxed">ظهور شعارك واسم علامتك التجارية كراعٍ رسمي في الحلقات الحوارية والمحاضرات التعليمية.</p>
                     </div>
-                    <a href="[https://wa.me/?text=مرحبا](https://wa.me/?text=مرحبا)ً، أرغب في رعاية حلقات بودكاست هاشم TV" target="_blank" class="w-full bg-navy-800 hover:bg-cyan-500 hover:text-navy-950 text-white font-bold text-xs py-3 rounded-xl text-center border border-white/10 transition">تواصل للرعاية</a>
+                    <button onclick="contactOrder('رعاية حلقات بودكاست هاشم TV')" style="background-color:#131C31" class="w-full text-white font-bold text-xs py-3 rounded-xl text-center border border-white/10 transition">تواصل للرعاية</button>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- ================= مشغل البودكاست السفلي الثابت (STICKY PLAYER) ================= -->
-    <div id="sticky-audio-player" class="hidden fixed bottom-16 md:bottom-0 left-0 right-0 z-50 bg-navy-950/95 backdrop-blur-xl border-t border-cyan-500/30 px-4 py-2.5 shadow-2xl">
+    <!-- مشغل البودكاست السفلي الثابت -->
+    <div id="sticky-audio-player" style="background-color:rgba(6,10,20,0.96); border-top:1px solid rgba(6,182,212,0.35)" class="hidden fixed bottom-16 md:bottom-0 left-0 right-0 z-50 backdrop-blur-xl px-4 py-2.5 shadow-2xl">
         <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
-                <img id="player-cover" src="[https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=100&q=80](https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=100&q=80)" class="w-11 h-11 rounded-xl object-cover border border-white/10 shrink-0">
+                <img id="player-cover" class="w-11 h-11 rounded-xl object-cover border border-white/10 shrink-0">
                 <div class="min-w-0">
                     <h4 id="player-title" class="text-xs sm:text-sm font-extrabold text-white truncate">عنوان الحلقة</h4>
-                    <p id="player-guest" class="text-[11px] text-cyan-400 truncate">اسم الضيف</p>
+                    <p id="player-guest" style="color:#22D3EE" class="text-[11px] truncate">اسم الضيف</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 sm:gap-4 shrink-0">
-                <button onclick="togglePlayPause()" class="w-10 h-10 rounded-full bg-cyan-500 text-navy-950 flex items-center justify-center font-bold shadow-lg shadow-cyan-500/30">
+                <button onclick="togglePlayPause()" style="background-color:#06B6D4; color:#060a14" class="w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-lg">
                     <i id="play-pause-icon" class="fa-solid fa-pause"></i>
                 </button>
-                <button onclick="changeSpeed()" id="speed-btn" class="text-[11px] font-extrabold bg-navy-800 text-gold-400 px-2.5 py-1.5 rounded-lg border border-white/10">1x</button>
+                <button onclick="changeSpeed()" id="speed-btn" style="background-color:#131C31; color:#FBBF24" class="text-[11px] font-extrabold px-2.5 py-1.5 rounded-lg border border-white/10">1x</button>
                 <button onclick="closeAudioPlayer()" class="text-slate-400 hover:text-white p-1.5"><i class="fa-solid fa-xmark"></i></button>
             </div>
         </div>
         <audio id="html-audio" class="hidden"></audio>
     </div>
 
-    <!-- ================= شريط التنقل السفلي للهواتف ================= -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-navy-950/95 backdrop-blur-lg border-t border-white/10 grid grid-cols-5 py-2 px-1 text-center">
-        <button onclick="switchTab('feed')" class="nav-btn-mob active flex flex-col items-center gap-1 text-cyan-400" data-tab="feed">
+    <!-- شريط التنقل السفلي للهواتف -->
+    <nav style="background-color:rgba(6,10,20,0.96)" class="md:hidden fixed bottom-0 left-0 right-0 z-50 backdrop-blur-lg border-t border-white/10 grid grid-cols-5 py-2 px-1 text-center">
+        <button onclick="switchTab('feed')" style="color:#22D3EE" class="nav-btn-mob active flex flex-col items-center gap-1" data-tab="feed">
             <i class="fa-regular fa-newspaper text-base"></i>
             <span class="text-[10px] font-bold">الرئيسية</span>
         </button>
@@ -320,11 +309,11 @@
                 <h3 class="text-base font-black text-white">إضافة شخصية / ضيف للمنصة</h3>
                 <button onclick="closePersonModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <input id="p-name" type="text" placeholder="الاسم الكامل (مثلاً: د. بهاء الدين آدم)" class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white">
-            <input id="p-role" type="text" placeholder="الصفة الأكاديمية أو المهنية" class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white">
-            <input id="p-avatar" type="url" placeholder="رابط الصورة الشخصية (اختياري)" class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white">
-            <textarea id="p-bio" rows="2" placeholder="نبذة مختصرة عن الشخصية..." class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white"></textarea>
-            <button onclick="saveNewPerson()" class="w-full bg-gold-500 text-navy-950 font-extrabold text-xs py-3 rounded-xl">حفظ وإضافة للدليل</button>
+            <input id="p-name" type="text" placeholder="الاسم الكامل (مثلاً: د. بهاء الدين آدم)" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <input id="p-role" type="text" placeholder="الصفة الأكاديمية أو المهنية" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <input id="p-avatar" type="url" placeholder="رابط الصورة الشخصية (اختياري)" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <textarea id="p-bio" rows="2" placeholder="نبذة مختصرة عن الشخصية..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white"></textarea>
+            <button onclick="saveNewPerson()" style="background-color:#F59E0B; color:#060a14" class="w-full font-extrabold text-xs py-3 rounded-xl">حفظ وإضافة للدليل</button>
         </div>
     </div>
 
@@ -335,16 +324,18 @@
                 <h3 class="text-base font-black text-white">إضافة حلقة بودكاست جديدة</h3>
                 <button onclick="closePodcastModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <input id="pod-title" type="text" placeholder="عنوان الحلقة" class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white">
-            <input id="pod-guest" type="text" placeholder="اسم الضيف أو المتحدث" class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white">
-            <input id="pod-url" type="url" placeholder="رابط ملف الصوت المباشر (MP3)" class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white">
-            <input id="pod-duration" type="text" placeholder="مدة الحلقة (مثلاً: 35:00)" class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white">
-            <textarea id="pod-summary" rows="2" placeholder="ملخص الذكاء الاصطناعي للحلقة..." class="w-full bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white"></textarea>
-            <button onclick="saveNewPodcast()" class="w-full bg-cyan-500 text-navy-950 font-extrabold text-xs py-3 rounded-xl">نشر الحلقة الآن</button>
+            <input id="pod-title" type="text" placeholder="عنوان الحلقة" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <input id="pod-guest" type="text" placeholder="اسم الضيف أو المتحدث" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <input id="pod-url" type="url" placeholder="رابط ملف الصوت المباشر (MP3)" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <input id="pod-duration" type="text" placeholder="مدة الحلقة (مثلاً: 35:00)" style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white">
+            <textarea id="pod-summary" rows="2" placeholder="ملخص الذكاء الاصطناعي للحلقة..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-xs text-white"></textarea>
+            <button onclick="saveNewPodcast()" style="background-color:#06B6D4; color:#060a14" class="w-full font-extrabold text-xs py-3 rounded-xl">نشر الحلقة الآن</button>
         </div>
     </div>
 
     <script>
+        const H = "https://";
+
         // =========================================================================
         // 1. قاعدة بيانات المحتوى (عدّل هنا لإضافة حلقات ومنشورات دائمة لجميع الزوار)
         // =========================================================================
@@ -369,7 +360,7 @@
                 time: "أمس",
                 category: "صور وميديا",
                 text: "لقطات من التحضيرات المستمرة لإنتاج السلسلة الوثائقية والقصصية حول المدن والمعالم الجغرافية والتاريخية بأحدث تقنيات الذكاء الاصطناعي.",
-                image: "[https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80](https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80)",
+                image: H + "images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80",
                 likes: 73,
                 comments: ["في انتظار الحلقات القادمة بشغف!"],
                 aiSummary: "استعراض كواليس إنتاج السلسلة الوثائقية للمدن والمعالم باستخدام تقنيات الذكاء الاصطناعي."
@@ -383,7 +374,7 @@
                 category: "سلسلة التحول الرقمي",
                 duration: "14:20",
                 youtubeId: "dQw4w9WgXcQ",
-                thumb: "[https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80](https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80)"
+                thumb: H + "images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80"
             },
             {
                 id: 2,
@@ -391,7 +382,7 @@
                 category: "وثائقيات المدن",
                 duration: "03:45",
                 youtubeId: "LXb3EKWsInQ",
-                thumb: "[https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80](https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80)"
+                thumb: H + "images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80"
             },
             {
                 id: 3,
@@ -399,11 +390,10 @@
                 category: "سلسلة ريكول الكوميدية",
                 duration: "02:15",
                 youtubeId: "ysz5S6PUM-U",
-                thumb: "[https://images.unsplash.com/photo-1535016120720-40c646be5580?w=600&q=80](https://images.unsplash.com/photo-1535016120720-40c646be5580?w=600&q=80)"
+                thumb: H + "images.unsplash.com/photo-1535016120720-40c646be5580?w=600&q=80"
             }
         ];
 
-        // لإضافة حلقة بودكاست دائمة: انسخ أحد العناصر أدناه وضعه في بداية القائمة
         let podcastsData = [
             {
                 id: 1,
@@ -411,8 +401,8 @@
                 guest: "د. بهاء الدين آدم",
                 duration: "42:15",
                 date: "قريباً • حلقة خاصة",
-                audioUrl: "[https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3](https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3)",
-                cover: "[https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=300&q=80](https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=300&q=80)",
+                audioUrl: H + "www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                cover: H + "images.unsplash.com/photo-1478737270239-2f02b77fc618?w=300&q=80",
                 summary: "تناقش الحلقة الجذور الفكرية للعقد الاجتماعي، وتحليل الممارسات السياسية المعاصرة وسبل بناء توافق وطني مستدام."
             },
             {
@@ -421,8 +411,8 @@
                 guest: "هاشم محمد آدم",
                 duration: "28:10",
                 date: "نوفمبر 2026",
-                audioUrl: "[https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3](https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3)",
-                cover: "[https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=300&q=80](https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=300&q=80)",
+                audioUrl: H + "www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                cover: H + "images.unsplash.com/photo-1590602847861-f357a9332bbc?w=300&q=80",
                 summary: "كيف يمكن للمتاجر والصيدليات التحول للعمل السحابي وزيادة المبيعات بأقل التكاليف التقنية."
             }
         ];
@@ -432,21 +422,24 @@
                 id: 1,
                 name: "هاشم محمد آدم",
                 role: "مؤسس منصة هاشم TV ورئيس مجلس إدارة HMA Trading",
-                avatar: "[https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80](https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80)",
+                avatar: H + "images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80",
                 bio: "رائد أعمال ومطور حلول رقمية، يقدم سلسلة محاضرات التحول الرقمي والمحتوى الثقافي والتقني."
             },
             {
                 id: 2,
                 name: "د. بهاء الدين آدم",
                 role: "أكاديمي ومفكر سياسي",
-                avatar: "[https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80](https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80)",
+                avatar: H + "images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80",
                 bio: "باحث وأكاديمي متخصص في الفكر السياسي والعقد الاجتماعي، وضيف الحلقات الحوارية على هاشم TV."
             }
         ];
 
         // =========================================================================
-        // 2. منطق التشغيل والتفاعل (لا يحتاج لتعديل)
+        // 2. منطق التشغيل والتفاعل
         // =========================================================================
+
+        document.getElementById('main-video-frame').src = H + "www.youtube.com/embed/dQw4w9WgXcQ";
+        document.getElementById('player-cover').src = H + "images.unsplash.com/photo-1590602847861-f357a9332bbc?w=100&q=80";
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -454,22 +447,16 @@
 
             document.querySelectorAll('.nav-btn-desk').forEach(btn => {
                 if (btn.dataset.tab === tabId) {
-                    btn.classList.add('bg-cyan-500', 'text-navy-950');
-                    btn.classList.remove('text-slate-400');
+                    btn.style.backgroundColor = '#06B6D4';
+                    btn.style.color = '#060a14';
                 } else {
-                    btn.classList.remove('bg-cyan-500', 'text-navy-950');
-                    btn.classList.add('text-slate-400');
+                    btn.style.backgroundColor = 'transparent';
+                    btn.style.color = '#94A3B8';
                 }
             });
 
             document.querySelectorAll('.nav-btn-mob').forEach(btn => {
-                if (btn.dataset.tab === tabId) {
-                    btn.classList.add('text-cyan-400');
-                    btn.classList.remove('text-slate-400');
-                } else {
-                    btn.classList.remove('text-cyan-400');
-                    btn.classList.add('text-slate-400');
-                }
+                btn.style.color = btn.dataset.tab === tabId ? '#22D3EE' : '#94A3B8';
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -481,33 +468,33 @@
                 <article class="glass-card rounded-2xl p-4 sm:p-5 space-y-3 border border-white/10">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 text-navy-950 font-black flex items-center justify-center">${post.author[0]}</div>
+                            <div style="background:linear-gradient(135deg,#06B6D4,#2563EB); color:#060a14" class="w-10 h-10 rounded-full font-black flex items-center justify-center">${post.author[0]}</div>
                             <div>
                                 <div class="flex items-center gap-1.5">
                                     <h3 class="text-sm font-extrabold text-white">${post.author}</h3>
-                                    <i class="fa-solid fa-circle-check text-cyan-400 text-xs"></i>
+                                    <i style="color:#22D3EE" class="fa-solid fa-circle-check text-xs"></i>
                                 </div>
                                 <p class="text-[11px] text-slate-400">${post.role} • ${post.time}</p>
                             </div>
                         </div>
-                        <span class="text-[11px] font-bold bg-navy-950 text-gold-400 border border-white/10 px-3 py-1 rounded-full">${post.category}</span>
+                        <span style="background-color:#060a14; color:#FBBF24" class="text-[11px] font-bold border border-white/10 px-3 py-1 rounded-full">${post.category}</span>
                     </div>
                     <p class="text-sm text-slate-200 leading-relaxed">${post.text}</p>
                     ${post.image ? `<img src="${post.image}" class="w-full max-h-96 object-cover rounded-xl border border-white/10">` : ''}
                     
-                    <div id="ai-box-${post.id}" class="hidden bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-3 text-xs text-cyan-200">
-                        <strong class="text-cyan-400"><i class="fa-solid fa-wand-magic-sparkles"></i> ملخص AI:</strong> ${post.aiSummary}
+                    <div id="ai-box-${post.id}" style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3)" class="hidden rounded-xl p-3 text-xs text-cyan-200">
+                        <strong style="color:#22D3EE"><i class="fa-solid fa-wand-magic-sparkles"></i> ملخص AI:</strong> ${post.aiSummary}
                     </div>
 
                     <div class="pt-2 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
                         <div class="flex items-center gap-4">
-                            <button onclick="likePost(${post.id})" class="hover:text-cyan-400 flex items-center gap-1.5 font-bold transition">
-                                <i class="fa-regular fa-heart text-cyan-400"></i> <span>${post.likes}</span>
+                            <button onclick="likePost(${post.id})" class="hover:text-white flex items-center gap-1.5 font-bold transition">
+                                <i style="color:#22D3EE" class="fa-regular fa-heart"></i> <span>${post.likes}</span>
                             </button>
                             <button onclick="toggleComments(${post.id})" class="hover:text-white flex items-center gap-1.5 font-bold transition">
                                 <i class="fa-regular fa-comment"></i> <span>${post.comments.length} تعليق</span>
                             </button>
-                            <button onclick="toggleAiSummary(${post.id})" class="text-gold-400 hover:text-gold-300 flex items-center gap-1 font-bold">
+                            <button onclick="toggleAiSummary(${post.id})" style="color:#FBBF24" class="flex items-center gap-1 font-bold">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> <span>ملخص AI</span>
                             </button>
                         </div>
@@ -516,11 +503,11 @@
 
                     <div id="comments-${post.id}" class="hidden pt-2 space-y-2 border-t border-white/5">
                         <div class="space-y-1.5">
-                            ${post.comments.map(c => `<div class="bg-navy-950/70 rounded-lg px-3 py-2 text-xs text-slate-300">${c}</div>`).join('')}
+                            ${post.comments.map(c => `<div style="background-color:rgba(6,10,20,0.7)" class="rounded-lg px-3 py-2 text-xs text-slate-300">${c}</div>`).join('')}
                         </div>
                         <div class="flex gap-2">
-                            <input id="c-input-${post.id}" type="text" placeholder="اكتب تعليقك..." class="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white">
-                            <button onclick="addComment(${post.id})" class="bg-cyan-500 text-navy-950 font-bold text-xs px-3 rounded-lg">إرسال</button>
+                            <input id="c-input-${post.id}" type="text" placeholder="اكتب تعليقك..." style="background-color:#060a14" class="w-full border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white">
+                            <button onclick="addComment(${post.id})" style="background-color:#06B6D4; color:#060a14" class="font-bold text-xs px-3 rounded-lg">إرسال</button>
                         </div>
                     </div>
                 </article>
@@ -552,11 +539,11 @@
 
         function filterPosts(cat, btn) {
             document.querySelectorAll('.filter-btn').forEach(b => {
-                b.classList.remove('bg-cyan-500', 'text-navy-950');
-                b.classList.add('bg-navy-800', 'text-slate-300');
+                b.style.backgroundColor = '#131C31';
+                b.style.color = '#CBD5E1';
             });
-            btn.classList.add('bg-cyan-500', 'text-navy-950');
-            btn.classList.remove('bg-navy-800', 'text-slate-300');
+            btn.style.backgroundColor = '#06B6D4';
+            btn.style.color = '#060a14';
             renderPosts(cat);
         }
 
@@ -575,22 +562,25 @@
             document.getElementById('comments-' + id).classList.remove('hidden');
         }
         function shareWhatsApp(text) {
-            window.open(`[https://wa.me/?text=$](https://wa.me/?text=$){encodeURIComponent(text + ' - عبر منصة هاشم TV')}`, '_blank');
+            window.open(H + `wa.me/?text=${encodeURIComponent(text + ' - عبر منصة هاشم TV')}`, '_blank');
+        }
+        function contactOrder(item) {
+            window.open(H + `wa.me/?text=${encodeURIComponent('مرحباً، أرغب في الاستفسار عن: ' + item)}`, '_blank');
         }
 
         // الفيديو
         function renderVideos() {
             document.getElementById('videos-list').innerHTML = videosData.map(v => `
-                <div onclick="playVideo('${v.youtubeId}', '${v.title}', '${v.category}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group border border-white/10 hover:border-cyan-500/50 transition">
+                <div onclick="playVideo('${v.youtubeId}', '${v.title}', '${v.category}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group border border-white/10 transition">
                     <div class="relative aspect-video">
                         <img src="${v.thumb}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                         <span class="absolute bottom-2 left-2 bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded">${v.duration}</span>
                         <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                            <span class="w-11 h-11 rounded-full bg-cyan-500 text-navy-950 flex items-center justify-center"><i class="fa-solid fa-play"></i></span>
+                            <span style="background-color:#06B6D4; color:#060a14" class="w-11 h-11 rounded-full flex items-center justify-center"><i class="fa-solid fa-play"></i></span>
                         </div>
                     </div>
                     <div class="p-3.5">
-                        <span class="text-[10px] font-bold text-cyan-400">${v.category}</span>
+                        <span style="color:#22D3EE" class="text-[10px] font-bold">${v.category}</span>
                         <h4 class="text-xs sm:text-sm font-extrabold text-white mt-1 line-clamp-2">${v.title}</h4>
                     </div>
                 </div>
@@ -598,7 +588,7 @@
         }
 
         function playVideo(ytId, title, cat) {
-            document.getElementById('main-video-frame').src = `[https://www.youtube.com/embed/$](https://www.youtube.com/embed/$){ytId}?autoplay=1`;
+            document.getElementById('main-video-frame').src = H + `www.youtube.com/embed/${ytId}?autoplay=1`;
             document.getElementById('current-video-title').innerText = title;
             document.getElementById('current-video-cat').innerText = cat;
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -614,19 +604,19 @@
         // البودكاست
         function renderPodcasts() {
             document.getElementById('podcasts-list').innerHTML = podcastsData.map(pod => `
-                <div class="glass-card rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10 hover:border-cyan-500/40 transition">
+                <div class="glass-card rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10 transition">
                     <div class="flex items-center gap-3.5">
                         <img src="${pod.cover}" class="w-16 h-16 rounded-xl object-cover shrink-0 border border-white/10">
                         <div>
-                            <div class="flex items-center gap-2 text-[11px] text-gold-400 font-bold">
+                            <div style="color:#FBBF24" class="flex items-center gap-2 text-[11px] font-bold">
                                 <span>${pod.date}</span> • <span><i class="fa-regular fa-clock"></i> ${pod.duration}</span>
                             </div>
                             <h3 class="text-sm sm:text-base font-extrabold text-white mt-0.5">${pod.title}</h3>
-                            <p class="text-xs text-cyan-400 font-semibold mt-0.5">الضيف: ${pod.guest}</p>
+                            <p style="color:#22D3EE" class="text-xs font-semibold mt-0.5">الضيف: ${pod.guest}</p>
                             <p class="text-xs text-slate-400 mt-1 line-clamp-2">${pod.summary}</p>
                         </div>
                     </div>
-                    <button onclick="playPodcast(${pod.id})" class="w-full sm:w-auto shrink-0 bg-cyan-500 hover:bg-cyan-400 text-navy-950 font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20">
+                    <button onclick="playPodcast(${pod.id})" style="background-color:#06B6D4; color:#060a14" class="w-full sm:w-auto shrink-0 font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-lg">
                         <i class="fa-solid fa-play"></i>
                         <span>استمع الآن</span>
                     </button>
@@ -672,7 +662,7 @@
         function saveNewPodcast() {
             const title = document.getElementById('pod-title').value.trim();
             const guest = document.getElementById('pod-guest').value.trim() || 'هاشم محمد';
-            const audioUrl = document.getElementById('pod-url').value.trim() || '[https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3](https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3)';
+            const audioUrl = document.getElementById('pod-url').value.trim() || (H + 'www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
             const duration = document.getElementById('pod-duration').value.trim() || '30:00';
             const summary = document.getElementById('pod-summary').value.trim() || 'حلقة جديدة على بودكاست هاشم TV.';
             if (!title) return;
@@ -682,7 +672,7 @@
                 title, guest, duration,
                 date: 'جديد اليوم',
                 audioUrl,
-                cover: '[https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=300&q=80](https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=300&q=80)',
+                cover: H + 'images.unsplash.com/photo-1590602847861-f357a9332bbc?w=300&q=80',
                 summary
             });
             renderPodcasts();
@@ -693,10 +683,10 @@
         function renderPeople() {
             document.getElementById('people-grid').innerHTML = peopleData.map(person => `
                 <div class="glass-card rounded-2xl p-5 text-center space-y-3 border border-white/10">
-                    <img src="${person.avatar}" class="w-20 h-20 rounded-full object-cover mx-auto border-2 border-cyan-400 p-0.5">
+                    <img src="${person.avatar}" style="border-color:#22D3EE" class="w-20 h-20 rounded-full object-cover mx-auto border-2 p-0.5">
                     <div>
                         <h3 class="text-base font-black text-white">${person.name}</h3>
-                        <p class="text-xs text-gold-400 font-bold mt-0.5">${person.role}</p>
+                        <p style="color:#FBBF24" class="text-xs font-bold mt-0.5">${person.role}</p>
                     </div>
                     <p class="text-xs text-slate-400 leading-relaxed">${person.bio}</p>
                 </div>
@@ -708,7 +698,7 @@
         function saveNewPerson() {
             const name = document.getElementById('p-name').value.trim();
             const role = document.getElementById('p-role').value.trim();
-            const avatar = document.getElementById('p-avatar').value.trim() || '[https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80](https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80)';
+            const avatar = document.getElementById('p-avatar').value.trim() || (H + 'images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80');
             const bio = document.getElementById('p-bio').value.trim();
             if (!name) return;
 
@@ -723,6 +713,7 @@
         }
 
         // تشغيل أولي
+        switchTab('feed');
         renderPosts();
         renderVideos();
         renderPodcasts();
