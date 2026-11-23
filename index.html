@@ -68,11 +68,11 @@
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-slate-950">
 
-    <!-- شاشة التحميل الترحيبية -->
-    <div id="app-loader" style="position:fixed;inset:0;background:#060a14;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity 0.35s ease;">
+    <!-- شاشة التحميل الترحيبية السريعة -->
+    <div id="app-loader" style="position:fixed;inset:0;background:#060a14;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity 0.25s ease;">
         <div class="loader-logo" style="width:62px;height:62px;border-radius:18px;background:linear-gradient(135deg,#22D3EE,#06B6D4);display:flex;align-items:center;justify-content:center;color:#060a14;font-weight:900;font-size:24px;">TV</div>
         <div style="color:#F8FAFC;font-weight:900;font-size:20px;letter-spacing:-0.5px;">هاشم <span style="color:#22D3EE">TV</span> <span style="font-size:11px;background:rgba(245,158,11,0.2);color:#FBBF24;border:1px solid rgba(245,158,11,0.4);padding:2px 6px;border-radius:6px;vertical-align:middle;">PRO</span></div>
-        <div style="color:#64748B;font-size:12px;font-weight:600;">جاري تجهيز استوديو البث والأرشيف...</div>
+        <div style="color:#64748B;font-size:12px;font-weight:600;">جاري فتح المنصة...</div>
     </div>
 
     <!-- شريط الأخبار العاجلة / البث المباشر -->
@@ -501,11 +501,11 @@
             const loader = document.getElementById('app-loader');
             if (loader) {
                 loader.style.opacity = '0';
-                setTimeout(() => loader.remove(), 350);
+                setTimeout(() => loader.remove(), 250);
             }
         }
-        window.addEventListener('load', () => setTimeout(hideLoader, 300));
-        setTimeout(hideLoader, 2500);
+        window.addEventListener('DOMContentLoaded', () => setTimeout(hideLoader, 350));
+        setTimeout(hideLoader, 700);
 
         const H = "https://";
         const CLOUD_API = H + "script.google.com/macros/s/AKfycbzzmw4BJBT2wY421KB7VEvFzY2KfgLdUz4pC4Cp8OCgs5jMP8nbBvD6ZtoSau041NSceQ/exec";
@@ -879,4 +879,347 @@
             document.querySelectorAll('.nav-btn-desk').forEach(btn => {
                 if (btn.dataset.tab === tabId) {
                     btn.style.backgroundColor = '#06B6D4';
-                    btn.style.color = '#060
+                    btn.style.color = '#060a14';
+                } else {
+                    btn.style.backgroundColor = 'transparent';
+                    btn.style.color = '#94A3B8';
+                }
+            });
+
+            document.querySelectorAll('.nav-btn-mob').forEach(btn => {
+                btn.style.color = btn.dataset.tab === tabId ? '#22D3EE' : '#94A3B8';
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderPosts(filter = 'الكل') {
+            currentFilter = filter;
+            const container = document.getElementById('posts-container');
+            const filtered = filter === 'الكل' ? postsData : postsData.filter(p => p.category === filter);
+            container.innerHTML = filtered.map(post => `
+                <article class="glass-card rounded-2xl p-4 sm:p-5 space-y-3 border border-white/10">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                            <img src="${post.avatar || 'founder.jpg'}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400">
+                            <div style="background:linear-gradient(135deg,#06B6D4,#2563EB); color:#060a14; display:none;" class="w-10 h-10 rounded-full font-black items-center justify-center">${post.author[0]}</div>
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <h3 class="text-sm font-extrabold text-white">${post.author}</h3>
+                                    <i style="color:#22D3EE" class="fa-solid fa-circle-check text-xs"></i>
+                                </div>
+                                <p class="text-[11px] text-slate-400"><i class="fa-regular fa-calendar-days"></i> ${post.time}</p>
+                            </div>
+                        </div>
+                        <span style="background-color:#060a14; color:#FBBF24" class="text-[11px] font-bold border border-white/10 px-3 py-1 rounded-full shrink-0">${post.category}</span>
+                    </div>
+                    <p class="text-sm text-slate-200 leading-relaxed whitespace-pre-line">${post.text}</p>
+                    ${post.image ? `<img src="${post.image}" class="w-full max-h-96 object-cover rounded-xl border border-white/10">` : ''}
+                    
+                    <div id="ai-box-${post.id}" style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3)" class="hidden rounded-xl p-3 text-xs text-cyan-200">
+                        <strong style="color:#22D3EE"><i class="fa-solid fa-wand-magic-sparkles"></i> ملخص AI:</strong> ${post.aiSummary}
+                    </div>
+
+                    <div class="pt-2 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+                        <div class="flex items-center gap-4">
+                            <button onclick="likePost(${post.id})" class="hover:text-white flex items-center gap-1.5 font-bold transition">
+                                <i style="color:#22D3EE" class="fa-regular fa-heart"></i> <span>${post.likes}</span>
+                            </button>
+                            <button onclick="toggleComments(${post.id})" class="hover:text-white flex items-center gap-1.5 font-bold transition">
+                                <i class="fa-regular fa-comment"></i> <span>${post.comments.length} تعليق</span>
+                            </button>
+                            <button onclick="toggleAiSummary(${post.id})" style="color:#FBBF24" class="flex items-center gap-1 font-bold">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> <span>ملخص AI</span>
+                            </button>
+                        </div>
+                        <button onclick="shareWhatsApp('${encodeURIComponent(post.text)}')" class="hover:text-green-400"><i class="fa-brands fa-whatsapp text-base"></i></button>
+                    </div>
+
+                    <div id="comments-${post.id}" class="hidden pt-2 space-y-2 border-t border-white/5">
+                        <div class="space-y-1.5">
+                            ${post.comments.map(c => `<div style="background-color:rgba(6,10,20,0.7)" class="rounded-lg px-3 py-2 text-xs text-slate-300">${c}</div>`).join('')}
+                        </div>
+                        <div class="flex gap-2">
+                            <input id="c-input-${post.id}" type="text" placeholder="اكتب تعليقك..." style="background-color:#060a14" class="w-full border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white">
+                            <button onclick="addComment(${post.id})" style="background-color:#06B6D4; color:#060a14" class="font-bold text-xs px-3 rounded-lg">إرسال</button>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function filterPosts(cat, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.style.backgroundColor = '#131C31';
+                b.style.color = '#CBD5E1';
+            });
+            btn.style.backgroundColor = '#06B6D4';
+            btn.style.color = '#060a14';
+            renderPosts(cat);
+        }
+
+        function likePost(id) {
+            const p = postsData.find(x => x.id === id);
+            if (p) { p.likes++; renderPosts(currentFilter); }
+        }
+        function toggleComments(id) { document.getElementById('comments-' + id).classList.toggle('hidden'); }
+        function toggleAiSummary(id) { document.getElementById('ai-box-' + id).classList.toggle('hidden'); }
+        function addComment(id) {
+            const input = document.getElementById('c-input-' + id);
+            if (!input.value.trim()) return;
+            const p = postsData.find(x => x.id === id);
+            p.comments.push(input.value.trim());
+            renderPosts(currentFilter);
+            document.getElementById('comments-' + id).classList.remove('hidden');
+        }
+        function shareWhatsApp(encodedText) {
+            window.open(H + `wa.me/?text=${encodedText}%20-%20${encodeURIComponent('عبر منصة هاشم TV')}`, '_blank');
+        }
+        function contactOrder(item) {
+            window.open(H + `wa.me/?text=${encodeURIComponent('مرحباً، أرغب في الاستفسار عن: ' + item)}`, '_blank');
+        }
+
+        function renderVideos(filter = 'الكل') {
+            const list = filter === 'الكل' ? videosData : videosData.filter(v => v.category === filter);
+            document.getElementById('videos-count').innerText = list.length;
+            document.getElementById('videos-list').innerHTML = list.map(v => `
+                <div onclick="playVideoItem(${v.id})" class="glass-card rounded-2xl overflow-hidden cursor-pointer group border border-white/10 transition">
+                    <div class="relative aspect-video">
+                        <img src="${v.thumb}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        <span class="absolute bottom-2 left-2 bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded">${v.duration}</span>
+                        <span style="background:rgba(6,10,20,0.85); color:${v.type === 'tiktok' ? '#22D3EE' : '#FBBF24'}" class="absolute top-2 right-2 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-white/10">
+                            ${v.type === 'tiktok' ? '<i class="fa-brands fa-tiktok"></i> TikTok' : '<i class="fa-brands fa-youtube"></i> فيديو'}
+                        </span>
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                            <span style="background-color:#06B6D4; color:#060a14" class="w-11 h-11 rounded-full flex items-center justify-center"><i class="fa-solid fa-play"></i></span>
+                        </div>
+                    </div>
+                    <div class="p-3.5 flex items-center justify-between gap-2">
+                        <div>
+                            <span style="color:#22D3EE" class="text-[10px] font-bold">${v.category}</span>
+                            <h4 class="text-xs sm:text-sm font-extrabold text-white mt-0.5 line-clamp-1">${v.title}</h4>
+                        </div>
+                        ${v.externalUrl ? `<a href="${v.externalUrl}" target="_blank" onclick="event.stopPropagation()" style="background:#060a14; color:#22D3EE" class="shrink-0 text-[11px] font-bold px-2.5 py-1.5 rounded-lg border border-white/10">تشغيل</a>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterVideos(cat, btn) {
+            document.querySelectorAll('.v-filter-btn').forEach(b => {
+                b.style.backgroundColor = '#131C31';
+                b.style.color = '#CBD5E1';
+            });
+            btn.style.backgroundColor = '#06B6D4';
+            btn.style.color = '#060a14';
+            renderVideos(cat);
+        }
+
+        function playVideoItem(id) {
+            const v = videosData.find(x => x.id === id);
+            if (!v) return;
+            const stage = document.getElementById('player-stage');
+            const extLink = document.getElementById('external-video-link');
+            document.getElementById('current-video-title').innerText = v.title;
+            document.getElementById('current-video-cat').innerText = v.category;
+
+            if (v.externalUrl) {
+                extLink.href = v.externalUrl;
+                extLink.classList.remove('hidden');
+            } else {
+                extLink.classList.add('hidden');
+            }
+
+            if (v.type === 'youtube') {
+                stage.innerHTML = `<iframe id="main-video-frame" class="w-full h-full" src="${H}www.youtube.com/embed/${v.source}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+            } else if (v.type === 'tiktok' && v.source) {
+                stage.innerHTML = `<iframe class="w-full h-full" src="${H}www.tiktok.com/embed/v2/${v.source}" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+            } else if (v.type === 'mp4') {
+                stage.innerHTML = `<video class="w-full h-full" src="${v.source}" controls autoplay playsinline></video>`;
+            } else if (v.externalUrl) {
+                stage.innerHTML = `
+                    <div class="text-center p-6 space-y-3">
+                        <div style="background:rgba(34,211,238,0.15); color:#22D3EE" class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-extrabold text-white">${v.title}</h3>
+                        <p class="text-xs text-slate-400 max-w-md mx-auto">اضغط أدناه لمشاهدة الحلقة مباشرة بجودتها الكاملة.</p>
+                        <a href="${v.externalUrl}" target="_blank" style="background-color:#06B6D4; color:#060a14" class="inline-flex items-center gap-2 font-extrabold text-xs px-5 py-2.5 rounded-xl">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <span>تشغيل الحلقة الآن</span>
+                        </a>
+                    </div>
+                `;
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openVideoModal() { document.getElementById('video-modal').classList.remove('hidden'); }
+        function closeVideoModal() { document.getElementById('video-modal').classList.add('hidden'); }
+        function saveNewVideo() {
+            const title = document.getElementById('vid-title').value.trim();
+            const type = document.getElementById('vid-type').value;
+            let raw = document.getElementById('vid-source').value.trim();
+            const category = document.getElementById('vid-cat').value.trim() || (type === 'tiktok' ? 'حلقات TikTok' : 'سلسلة التحول الرقمي');
+            if (!title || !raw) return;
+
+            let source = raw;
+            let externalUrl = "";
+
+            if (type === 'youtube') {
+                const m = raw.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+                if (m) source = m[1];
+            } else if (type === 'tiktok') {
+                const numMatch = raw.match(/\/video\/(\d+)/) || raw.match(/^(\d{15,22})$/);
+                if (numMatch) {
+                    source = numMatch[1];
+                    externalUrl = raw.startsWith('http') ? raw : `${H}www.tiktok.com/@hashimtv/video/${source}`;
+                } else {
+                    source = "";
+                    externalUrl = raw.startsWith('http') ? raw : H + raw;
+                }
+            }
+
+            videosData.unshift({
+                id: Date.now(),
+                title,
+                category,
+                duration: type === 'tiktok' ? 'قصير' : 'جديد',
+                type,
+                source,
+                externalUrl,
+                thumb: TK_THUMB
+            });
+            renderVideos();
+            closeVideoModal();
+            playVideoItem(videosData[0].id);
+        }
+
+        function toggleCinemaMode() {
+            const dim = document.getElementById('cinema-backdrop');
+            const btnText = document.getElementById('cinema-btn-text');
+            dim.classList.toggle('hidden');
+            btnText.innerText = dim.classList.contains('hidden') ? 'وضع السينما' : 'إغلاق السينما';
+        }
+
+        // البودكاست
+        function renderPodcasts() {
+            document.getElementById('podcasts-list').innerHTML = podcastsData.map(pod => `
+                <div class="glass-card rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10 transition">
+                    <div class="flex items-center gap-3.5">
+                        <img src="${pod.cover}" onerror="this.src='${H}images.unsplash.com/photo-1478737270239-2f02b77fc618?w=300&q=80'" class="w-16 h-16 rounded-xl object-cover object-top shrink-0 border border-white/10">
+                        <div>
+                            <div style="color:#FBBF24" class="flex items-center gap-2 text-[11px] font-bold">
+                                <span>${pod.date}</span> • <span><i class="fa-regular fa-clock"></i> ${pod.duration}</span>
+                            </div>
+                            <h3 class="text-sm sm:text-base font-extrabold text-white mt-0.5">${pod.title}</h3>
+                            <p style="color:#22D3EE" class="text-xs font-semibold mt-0.5">الضيف: ${pod.guest}</p>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">${pod.summary}</p>
+                        </div>
+                    </div>
+                    <button onclick="playPodcast(${pod.id})" style="background-color:#06B6D4; color:#060a14" class="w-full sm:w-auto shrink-0 font-extrabold text-xs px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-solid fa-play"></i>
+                        <span>استمع الآن</span>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        const audioEl = document.getElementById('html-audio');
+        let speeds = [1, 1.25, 1.5, 2];
+        let speedIdx = 0;
+
+        function playPodcast(id) {
+            const pod = podcastsData.find(p => p.id === id);
+            if (!pod) return;
+            document.getElementById('sticky-audio-player').classList.remove('hidden');
+            document.getElementById('player-title').innerText = pod.title;
+            document.getElementById('player-guest').innerText = pod.guest;
+            document.getElementById('player-cover').src = pod.cover;
+            audioEl.src = pod.audioUrl;
+            audioEl.play();
+            document.getElementById('play-pause-icon').className = 'fa-solid fa-pause';
+        }
+
+        function togglePlayPause() {
+            const icon = document.getElementById('play-pause-icon');
+            if (audioEl.paused) { audioEl.play(); icon.className = 'fa-solid fa-pause'; }
+            else { audioEl.pause(); icon.className = 'fa-solid fa-play'; }
+        }
+
+        function changeSpeed() {
+            speedIdx = (speedIdx + 1) % speeds.length;
+            audioEl.playbackRate = speeds[speedIdx];
+            document.getElementById('speed-btn').innerText = speeds[speedIdx] + 'x';
+        }
+
+        function closeAudioPlayer() {
+            audioEl.pause();
+            document.getElementById('sticky-audio-player').classList.add('hidden');
+        }
+
+        function openPodcastModal() { document.getElementById('podcast-modal').classList.remove('hidden'); }
+        function closePodcastModal() { document.getElementById('podcast-modal').classList.add('hidden'); }
+        function saveNewPodcast() {
+            const title = document.getElementById('pod-title').value.trim();
+            const guest = document.getElementById('pod-guest').value.trim() || 'هاشم محمد آدم';
+            const audioUrl = document.getElementById('pod-url').value.trim() || (H + 'www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+            const duration = document.getElementById('pod-duration').value.trim() || '30:00';
+            const summary = document.getElementById('pod-summary').value.trim() || 'حلقة جديدة على بودكاست هاشم TV.';
+            if (!title) return;
+
+            podcastsData.unshift({
+                id: Date.now(),
+                title, guest, duration,
+                date: 'جديد اليوم',
+                audioUrl,
+                cover: 'founder.jpg',
+                summary
+            });
+            renderPodcasts();
+            closePodcastModal();
+        }
+
+        // الشخصيات
+        function renderPeople() {
+            document.getElementById('people-grid').innerHTML = peopleData.map(person => `
+                <div class="glass-card rounded-2xl p-5 text-center space-y-3 border border-white/10">
+                    <img src="${person.avatar}" onerror="this.src='${H}images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80'" style="border-color:#22D3EE" class="w-24 h-24 rounded-full object-cover object-top mx-auto border-2 p-0.5 shadow-lg">
+                    <div>
+                        <h3 class="text-base font-black text-white">${person.name}</h3>
+                        <p style="color:#FBBF24" class="text-xs font-bold mt-0.5">${person.role}</p>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">${person.bio}</p>
+                </div>
+            `).join('');
+        }
+
+        function openPersonModal() { document.getElementById('person-modal').classList.remove('hidden'); }
+        function closePersonModal() { document.getElementById('person-modal').classList.add('hidden'); }
+        function saveNewPerson() {
+            const name = document.getElementById('p-name').value.trim();
+            const role = document.getElementById('p-role').value.trim();
+            const avatar = document.getElementById('p-avatar').value.trim() || (H + 'images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80');
+            const bio = document.getElementById('p-bio').value.trim();
+            if (!name) return;
+
+            peopleData.unshift({ id: Date.now(), name, role, avatar, bio });
+            renderPeople();
+            closePersonModal();
+        }
+
+        function openQuickModal() {
+            switchTab('feed');
+            document.getElementById('post-text').focus();
+        }
+
+        // تشغيل أولي
+        switchTab('feed');
+        renderPosts();
+        applyLiveUI();
+        loadCloudData(false);
+        renderVideos();
+        renderPodcasts();
+        renderPeople();
+    </script>
+</body>
+</html>
