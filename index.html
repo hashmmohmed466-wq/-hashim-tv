@@ -153,7 +153,7 @@
         <section id="tab-feed" class="tab-content space-y-5">
             <div class="glass-card rounded-2xl p-4 shadow-xl">
                 <div class="flex gap-3">
-                    <img src="founder.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400 shrink-0">
+                    <img src="founder.jpg" onerror="this.onerror=null; this.src='Founder.jpg'; this.onerror=function(){this.style.display='none'; this.nextElementSibling.style.display='flex';};" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400 shrink-0">
                     <div style="background-color:#06B6D4; color:#060a14; display:none;" class="w-10 h-10 rounded-full font-black items-center justify-center shrink-0 text-lg">هـ</div>
                     <div class="w-full space-y-3">
                         <textarea id="post-text" rows="3" placeholder="اكتب منشوراً أو مقالاً ليُحفظ في الأرشيف السحابي باليوم والتاريخ..." style="background-color:#060a14" class="w-full border border-white/10 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none"></textarea>
@@ -170,7 +170,7 @@
                         </div>
                         <div class="flex items-center justify-between pt-1">
                             <div class="flex items-center gap-2 text-[11px] text-slate-400">
-                                <span id="cloud-status" style="color:#22D3EE" class="font-bold"><i class="fa-solid fa-cloud-check"></i> متصل بالأرشيف السحابي</span>
+                                <span id="cloud-status" style="color:#22D3EE" class="font-bold"><i class="fa-solid fa-cloud-check"></i> جاري مزامنة الأرشيف...</span>
                             </div>
                             <button id="publish-btn" onclick="addNewPost()" style="background-color:#06B6D4; color:#060a14" class="font-extrabold text-xs px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition">
                                 <span>نشر وحفظ بالمرجع</span>
@@ -232,12 +232,12 @@
 
             <!-- لوحة تحكم المؤسس لإطلاق البث وإضافة المضيفين -->
             <div id="live-studio-controls" class="glass-card rounded-2xl p-5 border border-cyan-500/30 space-y-4">
-                <div class="flex items-center justify-between">
+                <div class="flex flex-wrap items-center justify-between gap-2">
                     <h3 class="text-base font-black text-white flex items-center gap-2">
                         <i style="color:#22D3EE" class="fa-solid fa-video"></i>
                         <span>لوحة إطلاق البث المباشر وإضافة المضيفين</span>
                     </h3>
-                    <span class="text-[11px] text-amber-400 font-bold"><i class="fa-solid fa-lock"></i> محمي برمز المؤسس</span>
+                    <span class="text-[11px] text-cyan-400 font-bold"><i class="fa-solid fa-gauge-high"></i> وضع توفير البيانات للشبكات المتوسطة مُفعّل</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -281,7 +281,7 @@
                     </div>
                     <button type="button" onclick="createGuestInviteRoom()" style="background-color:rgba(34,211,238,0.12); color:#22D3EE; border:1px solid rgba(34,211,238,0.3)" class="text-xs font-bold px-3.5 py-2.5 rounded-xl flex items-center gap-1.5">
                         <i class="fa-solid fa-link"></i>
-                        <span>إنشاء رابط دعوة لضيف عن بُعد</span>
+                        <span>إنشاء رابط دعوة خفيف لضيف عن بُعد</span>
                     </button>
                 </div>
             </div>
@@ -526,7 +526,7 @@
         }
 
         // =========================================================================
-        // 1. إدارة البث المباشر والمضيفين (Live Studio)
+        // 1. إدارة البث المباشر والمضيفين (مع ضغط الفيديو للشبكات الضعيفة)
         // =========================================================================
         let liveState = {
             active: false,
@@ -544,7 +544,7 @@
             const hostsToShow = liveState.hosts.length ? liveState.hosts : draftHosts;
             listEl.innerHTML = hostsToShow.map(h => `
                 <div style="background-color:#131C31" class="flex items-center gap-3 p-2.5 rounded-xl border border-white/10">
-                    <img src="${h.avatar || 'founder.jpg'}" onerror="this.src='founder.jpg'" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400 shrink-0">
+                    <img src="${h.avatar || 'founder.jpg'}" onerror="this.onerror=null; this.src='Founder.jpg';" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400 shrink-0">
                     <div class="min-w-0">
                         <h5 class="text-xs font-extrabold text-white truncate">${h.name}</h5>
                         <p class="text-[11px] text-amber-400 truncate">${h.role}</p>
@@ -642,7 +642,7 @@
             const url = document.getElementById('input-live-url').value.trim();
 
             if (isActive && !url) {
-                alert("يرجى لصق رابط البث المباشر (YouTube Live أو VDO.Ninja) أولاً.");
+                alert("يرجى لصق رابط البث المباشر أولاً.");
                 return;
             }
 
@@ -665,12 +665,13 @@
             } catch (e) {}
         }
 
+        // إنشاء رابط غرفة خفيفة جداً للشبكات الضعيفة (350kbps / 20fps)
         function createGuestInviteRoom() {
             const roomId = "HashimTV_" + Math.floor(1000 + Math.random() * 9000);
-            const guestLink = `${H}vdo.ninja/?room=${roomId}&push`;
-            const obsViewLink = `${H}vdo.ninja/?room=${roomId}&scene`;
+            const guestLink = `${H}vdo.ninja/?room=${roomId}&push&quality=2&bitrate=350&fps=20&autostart`;
+            const obsViewLink = `${H}vdo.ninja/?room=${roomId}&scene&bitrate=400&fps=20`;
             document.getElementById('input-live-url').value = obsViewLink;
-            prompt("تم إنشاء غرفة لقاء مباشر فورية! انسخ هذا الرابط وأرسله للضيف ليدخل معك بالصوت والصورة، وتم وضع رابط العرض في خانة البث تلقائياً:", guestLink);
+            prompt("تم إنشاء غرفة خفيفة للشبكات الضعيفة! افتح هذا الرابط في تبويب جديد لك وأرسله للضيف على الواتساب:", guestLink);
         }
 
         function toggleLiveStudioPanel() {
@@ -679,7 +680,7 @@
         }
 
         // =========================================================================
-        // 2. المنشورات السحابية الدائمة
+        // 2. المنشورات السحابية الدائمة (مزامنة Google Sheets + تخزين فوري)
         // =========================================================================
         const defaultPosts = [
             {
@@ -697,8 +698,21 @@
             }
         ];
 
-        let postsData = [...defaultPosts];
+        // تحميل أي منشورات محفوظة محلياً فوراً ريثما تكتمل مزامنة السحابة
+        let localSaved = [];
+        try {
+            localSaved = JSON.parse(localStorage.getItem('hashim_tv_archive') || '[]');
+        } catch (e) { localSaved = []; }
+
+        let postsData = [...localSaved, ...defaultPosts];
         let currentFilter = 'الكل';
+
+        function saveLocalBackup(postsArray) {
+            try {
+                const toStore = postsArray.filter(p => p.id !== 1);
+                localStorage.setItem('hashim_tv_archive', JSON.stringify(toStore));
+            } catch (e) {}
+        }
 
         async function loadCloudData(manual = false) {
             const statusEl = document.getElementById('cloud-status');
@@ -706,11 +720,12 @@
                 statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تحديث الأرشيف...';
             }
             try {
-                const res = await fetch(CLOUD_API);
-                const payload = await res.json();
+                const res = await fetch(CLOUD_API, { method: "GET", redirect: "follow" });
+                const textData = await res.text();
+                const payload = JSON.parse(textData);
                 const items = Array.isArray(payload) ? payload : (payload.posts || []);
 
-                if (Array.isArray(items)) {
+                if (Array.isArray(items) && items.length > 0) {
                     const mapped = items.map(item => ({
                         id: item.id || Date.now() + Math.random(),
                         author: "هاشم محمد آدم",
@@ -725,6 +740,7 @@
                         aiSummary: (item.text || "").slice(0, 100) + "..."
                     }));
                     postsData = [...mapped, ...defaultPosts];
+                    saveLocalBackup(postsData);
                     renderPosts(currentFilter);
                 }
 
@@ -739,7 +755,7 @@
                 }
             } catch (err) {
                 if (statusEl) {
-                    statusEl.innerHTML = '<i class="fa-solid fa-cloud"></i> متصل بالأرشيف';
+                    statusEl.innerHTML = '<i class="fa-solid fa-database"></i> الأرشيف محفوظ (' + postsData.length + ' منشور)';
                 }
             }
         }
@@ -756,6 +772,34 @@
             btn.disabled = true;
             btn.innerHTML = '<span>جاري الحفظ في السحابة...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
 
+            const nowStr = new Date().toLocaleDateString('ar-EG', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            const newPostObj = {
+                id: Date.now(),
+                author: "هاشم محمد آدم",
+                avatar: "founder.jpg",
+                role: "مؤسس منصة هاشم TV",
+                time: nowStr,
+                category,
+                text,
+                image,
+                likes: 1,
+                comments: [],
+                aiSummary: text.slice(0, 100) + "..."
+            };
+
+            // حفظ فوري في الذاكرة المحلية وعرضه في الصفحة
+            postsData.unshift(newPostObj);
+            saveLocalBackup(postsData);
+            renderPosts(currentFilter);
+
+            document.getElementById('post-text').value = '';
+            document.getElementById('post-image').value = '';
+
+            // إرسال للسحابة (Google Sheets)
             try {
                 await fetch(CLOUD_API, {
                     method: "POST",
@@ -763,36 +807,11 @@
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify({ category, text, image })
                 });
+                setTimeout(() => loadCloudData(false), 2500);
+            } catch (e) {}
 
-                const nowStr = new Date().toLocaleDateString('ar-EG', {
-                    year: 'numeric', month: '2-digit', day: '2-digit',
-                    hour: '2-digit', minute: '2-digit'
-                });
-
-                postsData.unshift({
-                    id: Date.now(),
-                    author: "هاشم محمد آدم",
-                    avatar: "founder.jpg",
-                    role: "مؤسس منصة هاشم TV",
-                    time: nowStr,
-                    category,
-                    text,
-                    image,
-                    likes: 1,
-                    comments: [],
-                    aiSummary: text.slice(0, 100) + "..."
-                });
-
-                document.getElementById('post-text').value = '';
-                document.getElementById('post-image').value = '';
-                renderPosts(currentFilter);
-                setTimeout(() => loadCloudData(false), 2000);
-            } catch (e) {
-                alert("تعذر الاتصال بالسحابة، يرجى التحقق من الإنترنت.");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalHTML;
-            }
+            btn.disabled = false;
+            btn.innerHTML = originalHTML;
         }
 
         // =========================================================================
@@ -900,7 +919,7 @@
                 <article class="glass-card rounded-2xl p-4 sm:p-5 space-y-3 border border-white/10">
                     <div class="flex items-center justify-between gap-2">
                         <div class="flex items-center gap-3">
-                            <img src="${post.avatar || 'founder.jpg'}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400">
+                            <img src="${post.avatar || 'founder.jpg'}" onerror="this.onerror=null; this.src='Founder.jpg'; this.onerror=function(){this.style.display='none'; this.nextElementSibling.style.display='flex';};" class="w-10 h-10 rounded-full object-cover object-top border border-cyan-400">
                             <div style="background:linear-gradient(135deg,#06B6D4,#2563EB); color:#060a14; display:none;" class="w-10 h-10 rounded-full font-black items-center justify-center">${post.author[0]}</div>
                             <div>
                                 <div class="flex items-center gap-1.5">
